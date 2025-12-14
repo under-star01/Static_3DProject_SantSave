@@ -1,6 +1,6 @@
 # Tag System (캐릭터 교체 시스템)
 
-![이미지 설명](Design/Images/TestImage.jpg)
+![이미지](Images/TestImage.jpg)
 
 ## 1. 목적
 - 플레이어가 3명의 캐릭터를 **쿨타임 기반으로 교체(Tag)** 하며 전투 리듬을 만들도록 유도
