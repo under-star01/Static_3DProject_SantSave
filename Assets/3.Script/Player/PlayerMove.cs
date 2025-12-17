@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     private Animator animator;
     private Vector2 moveInput;
     private Vector2 mousePos;
+    private Vector3 mouseWorldPos;
+    private bool hasMouseWorldPos;
 
     private void Awake()
     {
@@ -51,19 +53,36 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        // 마우스 위치로 회전
+        UpdateMouseWorldPosition();
+        RotateToMouse();
+        UpdateAnimation();
+    }
+
+    private void UpdateMouseWorldPosition()
+    {
         Ray ray = cam.ScreenPointToRay(mousePos);
-        if (Physics.Raycast(ray, out RaycastHit hit, 999f, groundMask))
+        hasMouseWorldPos = Physics.Raycast(ray, out RaycastHit hit, 999f, groundMask);
+
+        if (hasMouseWorldPos)
         {
-            Vector3 dir = hit.point - transform.position;
-            dir.y = 0f;
-            if (dir.sqrMagnitude < 0.0001f) return;
-
-            Quaternion targetRot = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
+            mouseWorldPos = hit.point;
         }
+    }
 
-        // 애니메이션 동기화
+    private void RotateToMouse()// 마우스 위치로 회전
+    {
+        if (!hasMouseWorldPos) return;
+
+        Vector3 dir = mouseWorldPos - transform.position;
+        dir.y = 0f;
+        if (dir.sqrMagnitude < 0.0001f) return;
+
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
+    }
+
+    private void UpdateAnimation()// 애니메이션 동기화
+    {
         float speed = rb.linearVelocity.magnitude;
         animator.SetFloat("Speed", speed);
     }
@@ -77,4 +96,8 @@ public class PlayerMove : MonoBehaviour
     {
         mousePos = screenPos;
     }
+
+    // 외부 접근용 메서드
+    public Vector3 GetMouseWorldPosition() => mouseWorldPos;
+    public bool HasMouseWorldPosition() => hasMouseWorldPos;
 }

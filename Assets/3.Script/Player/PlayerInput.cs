@@ -28,6 +28,8 @@ public class PlayerInput : MonoBehaviour {
         playerInput.Player.Look.performed += OnLook;
 
         playerInput.Player.TransformSkill.performed += OnTransformSkill;
+        playerInput.Player.DecoySkillStart.performed += OnDecoySkillStart;
+        playerInput.Player.DecoySkillThrow.performed += OnDecoySkillThrow;
         playerInput.Enable(); 
     } 
     
@@ -57,6 +59,22 @@ public class PlayerInput : MonoBehaviour {
         if (playerSkill != null)
         {
             playerSkill.OnTransformSkill();
+        }
+    }
+
+    private void OnDecoySkillStart(InputAction.CallbackContext context)
+    {
+        if (playerSkill != null)
+        {
+            playerSkill.OnDecoySkillStart();
+        }
+    }
+
+    private void OnDecoySkillThrow(InputAction.CallbackContext context)
+    {
+        if (playerSkill != null)
+        {
+            playerSkill.OnDecoySkillThrow();
         }
     }
 }

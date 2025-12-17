@@ -118,6 +118,24 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DecoySkillThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""ced0fa32-7171-4dec-90ca-295a49973a39"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DecoySkillStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a763ea2-72d9-4b21-b29c-88f4d9fb8fd7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -197,6 +215,28 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""TransformSkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4edd7f01-5557-4a83-b3ed-604a99c411fa"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""DecoySkillThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc641daf-9ba3-4747-a533-f14669cc3d18"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""DecoySkillStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -214,6 +254,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_TransformSkill = m_Player.FindAction("TransformSkill", throwIfNotFound: true);
+        m_Player_DecoySkillThrow = m_Player.FindAction("DecoySkillThrow", throwIfNotFound: true);
+        m_Player_DecoySkillStart = m_Player.FindAction("DecoySkillStart", throwIfNotFound: true);
     }
 
     ~@PlayerInputAction()
@@ -297,6 +339,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_TransformSkill;
+    private readonly InputAction m_Player_DecoySkillThrow;
+    private readonly InputAction m_Player_DecoySkillStart;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -320,6 +364,14 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/TransformSkill".
         /// </summary>
         public InputAction @TransformSkill => m_Wrapper.m_Player_TransformSkill;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DecoySkillThrow".
+        /// </summary>
+        public InputAction @DecoySkillThrow => m_Wrapper.m_Player_DecoySkillThrow;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DecoySkillStart".
+        /// </summary>
+        public InputAction @DecoySkillStart => m_Wrapper.m_Player_DecoySkillStart;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -355,6 +407,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @TransformSkill.started += instance.OnTransformSkill;
             @TransformSkill.performed += instance.OnTransformSkill;
             @TransformSkill.canceled += instance.OnTransformSkill;
+            @DecoySkillThrow.started += instance.OnDecoySkillThrow;
+            @DecoySkillThrow.performed += instance.OnDecoySkillThrow;
+            @DecoySkillThrow.canceled += instance.OnDecoySkillThrow;
+            @DecoySkillStart.started += instance.OnDecoySkillStart;
+            @DecoySkillStart.performed += instance.OnDecoySkillStart;
+            @DecoySkillStart.canceled += instance.OnDecoySkillStart;
         }
 
         /// <summary>
@@ -375,6 +433,12 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @TransformSkill.started -= instance.OnTransformSkill;
             @TransformSkill.performed -= instance.OnTransformSkill;
             @TransformSkill.canceled -= instance.OnTransformSkill;
+            @DecoySkillThrow.started -= instance.OnDecoySkillThrow;
+            @DecoySkillThrow.performed -= instance.OnDecoySkillThrow;
+            @DecoySkillThrow.canceled -= instance.OnDecoySkillThrow;
+            @DecoySkillStart.started -= instance.OnDecoySkillStart;
+            @DecoySkillStart.performed -= instance.OnDecoySkillStart;
+            @DecoySkillStart.canceled -= instance.OnDecoySkillStart;
         }
 
         /// <summary>
@@ -449,5 +513,19 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTransformSkill(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DecoySkillThrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDecoySkillThrow(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DecoySkillStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDecoySkillStart(InputAction.CallbackContext context);
     }
 }
