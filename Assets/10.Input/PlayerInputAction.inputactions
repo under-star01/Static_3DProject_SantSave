@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TransformSkill",
+                    "type": "Button",
+                    "id": "fa622e27-b48c-4a7f-b371-f7dd3da20ea9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -91,6 +100,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b2bab380-279e-4485-a01f-99dae6bb4d8b",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "TransformSkill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

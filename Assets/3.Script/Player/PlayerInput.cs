@@ -8,11 +8,13 @@ public class PlayerInput : MonoBehaviour {
     public Vector2 viewingValue = Vector2.zero; 
     private PlayerInputAction playerInput;
     private PlayerMove playerMove;
-    
+    private PlayerSkill playerSkill;
+
     private void Awake() 
     { 
         // 컴포넌트 연결
         TryGetComponent(out playerMove);
+        TryGetComponent(out playerSkill);
 
         // InputAction 생성
         playerInput = new PlayerInputAction();
@@ -24,6 +26,8 @@ public class PlayerInput : MonoBehaviour {
         playerInput.Player.Move.performed += OnMove; 
         playerInput.Player.Move.canceled += OnMove;
         playerInput.Player.Look.performed += OnLook;
+
+        playerInput.Player.TransformSkill.performed += OnTransformSkill;
         playerInput.Enable(); 
     } 
     
@@ -46,5 +50,13 @@ public class PlayerInput : MonoBehaviour {
     private void OnLook(InputAction.CallbackContext context)
     {
         playerMove.SetLookInput(context.ReadValue<Vector2>());
-    } 
+    }
+
+    private void OnTransformSkill(InputAction.CallbackContext context)
+    {
+        if (playerSkill != null)
+        {
+            playerSkill.OnTransformSkill();
+        }
+    }
 }
