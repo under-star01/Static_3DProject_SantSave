@@ -18,9 +18,9 @@ public class EnemyFSM : MonoBehaviour
     public float gaugeFillSpeed = 30f;
     public float gaugeDrainSpeed = 10f;
 
-    //[Header("디버그")]
-    //public float currentGauge = 0f;    
-    //private float maxGauge = 100f;      
+    [Header("디버그")]
+    public float currentGauge = 0f;    
+    private float maxGauge = 100f;      
 
     private NavMeshAgent agent;
     private Transform targetPlayer;
@@ -161,6 +161,13 @@ public class EnemyFSM : MonoBehaviour
             if (dist <= killDistance)
             {
                 // 게이지 증가 로직...
+                // Time.deltaTime * 속도 -> 이만큼 채워달라고 요청
+                // * 2.0f는 여러 마리가 붙었을 때 가중치 (선택 사항)
+                float fearAmount = Time.deltaTime * gaugeFillSpeed;
+
+                // FearManager의 감소 속도보다 더 많이 더해야 게이지가 참
+                // 예: 감소가 10인데 여기서 30을 더하면 실제로는 20씩 참
+                CaughtManager.instance.AddCaught(fearAmount + (CaughtManager.instance.drainSpeed * Time.deltaTime));
             }
 
             yield return null;
