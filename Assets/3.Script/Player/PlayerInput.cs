@@ -41,9 +41,22 @@ public class PlayerInput : MonoBehaviour {
     }
 
     // WASD 방향키 이동 메소드
-    public void OnMove(InputAction.CallbackContext context) 
+    public void OnMove(InputAction.CallbackContext context)
     {
-        playerMove.SetMoveInput(context.ReadValue<Vector2>());
+        Vector2 raw = context.ReadValue<Vector2>();
+
+        float dead = 0.1f;
+        float dirX = 0f;
+        float dirY = 0f;
+
+        // 1, 0, -1로 input 정리
+        if (raw.x > dead) dirX = 1f;
+        if (raw.x < -dead) dirX = -1f;
+        if (raw.y > dead) dirY = 1f;
+        if (raw.y < -dead) dirY = -1f;
+
+        Vector2 move = new Vector2(dirX, dirY);
+        playerMove.SetMoveInput(move);
     } 
     
     // 화면 회전 메소드

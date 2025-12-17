@@ -309,7 +309,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -334,7 +334,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2746262, y: 0.36538365, z: -0.113744885, w: 0.88212097}
-  m_LocalPosition: {x: 18.306992, y: 12.63756, z: 5.546992}
+  m_LocalPosition: {x: 18.35699, y: 12.652562, z: 6.3569927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -825,7 +825,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 3
+    OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -852,7 +852,7 @@ Transform:
   m_GameObject: {fileID: 1499420922}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2746262, y: 0.36538365, z: -0.113744885, w: 0.88212097}
-  m_LocalPosition: {x: 18.306992, y: 12.63756, z: 5.546992}
+  m_LocalPosition: {x: 18.35699, y: 12.652562, z: 6.3569927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1706,8 +1706,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 363049609302531261}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.52383715, z: 0, w: 0.85181844}
-  m_LocalPosition: {x: 29.95, y: 0.285, z: 17.19}
+  m_LocalRotation: {x: -0, y: -0.52132714, z: -0, w: -0.8533569}
+  m_LocalPosition: {x: 30, y: 0.30000007, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1717,7 +1717,7 @@ Transform:
   - {fileID: 305835627397625735}
   - {fileID: 2362994610166957196}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 63.18, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -297.157, z: 0}
 --- !u!1 &1113896870725414205
 GameObject:
   m_ObjectHideFlags: 0
@@ -7068,10 +7068,10 @@ Animator:
   m_GameObject: {fileID: 363049609302531261}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6b2a817efd8e3734486d9ef23e57ae6d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 256bd27979842ac45ab2480983a764fd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2750954a698fb714b8a254bb3a67d785, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -7106,7 +7106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
   moveSpeed: 5
-  currentSpeed: 5
   turnSpeed: 20
   cam: {fileID: 963194227}
   groundMask:
@@ -7160,7 +7159,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &6386724164939537538
 MonoBehaviour:
