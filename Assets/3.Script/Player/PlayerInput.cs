@@ -10,12 +10,14 @@ public class PlayerInput : MonoBehaviour
     private PlayerInputAction playerInput;
     private PlayerMove playerMove;
     private PlayerSkill playerSkill;
+    private PlayerInteract playerInteract;
 
     private void Awake()
     {
         // 컴포넌트 연결
         TryGetComponent(out playerMove);
         TryGetComponent(out playerSkill);
+        TryGetComponent(out playerInteract);
 
         // InputAction 생성
         playerInput = new PlayerInputAction();
@@ -31,6 +33,8 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.TransformSkill.performed += OnTransformSkill;
         playerInput.Player.DecoySkillStart.performed += OnDecoySkillStart;
         playerInput.Player.DecoySkillThrow.performed += OnDecoySkillThrow;
+
+        playerInput.Player.Interact.performed += OnInteract;
         playerInput.Enable();
     }
 
@@ -42,6 +46,7 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Look.performed -= OnLook;
         playerInput.Player.DecoySkillStart.performed -= OnDecoySkillStart;
         playerInput.Player.DecoySkillThrow.performed -= OnDecoySkillThrow;
+        playerInput.Player.Interact.performed -= OnInteract;
         playerInput.Disable();
     }
 
@@ -91,6 +96,14 @@ public class PlayerInput : MonoBehaviour
         if (playerSkill != null)
         {
             playerSkill.OnDecoySkillThrow();
+        }
+    }
+
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        if (playerInteract != null)
+        {
+            playerInteract.TryInteract();
         }
     }
 }
