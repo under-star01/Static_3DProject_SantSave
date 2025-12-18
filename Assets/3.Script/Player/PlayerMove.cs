@@ -63,6 +63,7 @@ public class PlayerMove : MonoBehaviour
         if (hasMouseWorldPos)
         {
             mouseWorldPos = hit.point;
+            mouseWorldPos.y += 0.5f;
         }
     }
 
@@ -95,6 +96,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     // 외부 접근용 메서드
+    public Vector2 GetMoveInput() => moveInput;
     public Vector3 GetMouseWorldPosition() => mouseWorldPos;
     public bool HasMouseWorldPosition() => hasMouseWorldPos;
 }

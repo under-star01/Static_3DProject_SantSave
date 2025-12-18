@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2725492339099864275}
   - component: {fileID: 614017347534430990}
   - component: {fileID: 8897225883134458049}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Tree_Christmas_Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -138,9 +138,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8897225883134458049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,5 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Decoy
   lifetime: 5
-  attractionRadius: 10
-  landingEffect: {fileID: 0}
+  attractionRadius: 4
+  landingEffect: {fileID: 198208151321969884, guid: 7a72619d15b8ef74285e4eafe853faf1, type: 3}

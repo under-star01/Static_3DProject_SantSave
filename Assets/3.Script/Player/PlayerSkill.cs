@@ -8,41 +8,58 @@ public class PlayerSkill : MonoBehaviour
     [Header("변신 스킬")]
     [SerializeField] private float transformCool = 0.5f;
     [SerializeField] private ParticleSystem transformEffect;
+    [SerializeField] private GameObject[] transformPrefabs;
+    [SerializeField] private Vector3 transformOffset = new Vector3(0, 0.5f, 0);
 
     [Header("디코이 스킬")]
     [SerializeField] private GameObject decoyPrefab;
     [SerializeField] private LineRenderer trajectoryLine; // 궤적 표시
+    [SerializeField] private GameObject decoyRangeIndicator; // 디코이 범위 표시
+    [SerializeField] private float decoyAttractionRadius = 5f; //디코이 유인 범위
+    [SerializeField] private float rangeIndicatorHeight = 0.5f; //범위 표시 높이
     [SerializeField] private float maxThrowDistance = 5f; // 최대 투척 거리
-    [SerializeField] private float minThrowForce = 0.5f; // 최소 던지는 힘
+    [SerializeField] private float minThrowForce = 0.1f; // 최소 던지는 힘
     [SerializeField] private float maxThrowForce = 8f; // 최대 던지는 힘
-    [SerializeField] private float minThrowAngle = 30f;
-    [SerializeField] private float maxThrowAngle = 65f;
-    [SerializeField] private int minTrajectoryPoints = 5; // 가까울 때 점 개수
-    [SerializeField] private int maxTrajectoryPoints = 15; // 멀 때 점 개수
+    [SerializeField] private float minThrowAngle = 30f; //최소 각도
+    [SerializeField] private float maxThrowAngle = 65f; //최대 각도
+    [SerializeField] private int minTrajectoryPoints = 3; // 가까울 때 점 개수
+    [SerializeField] private int maxTrajectoryPoints = 16; // 멀 때 점 개수
     [SerializeField] private float decoyCooldown = 1f; // 쿨다운
+    [SerializeField] private float trajectoryDistanceMultiplier = 0.9f; // 거리 게수
+    [SerializeField] private LayerMask wallLayer; //벽 레이어
 
     private Animator animator;
     private PlayerMove playerMove;
+    private Renderer playerRenderer;
 
     // 변신 스킬
     private bool isTransformed = false;
     private float lastTransformTime = -999f;
+    private GameObject currentTransformObject;
 
     // 디코이 스킬
     private bool isDecoyAiming = false;
     private float lastDecoyTime = -999f;
     private float currentThrowAngle;
     private Vector3 targetPosition;
+    private Vector3 finalLandingPosition;
 
     private void Awake()
     {
         TryGetComponent(out animator);
         TryGetComponent(out playerMove);
+        playerRenderer = GetComponentInChildren<Renderer>();
 
         // LineRenderer 초기화
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = false;
+        }
+
+        // 범위 표시 초기화
+        if (decoyRangeIndicator != null)
+        {
+            decoyRangeIndicator.SetActive(false);
         }
     }
 
@@ -52,6 +69,11 @@ public class PlayerSkill : MonoBehaviour
         if (isDecoyAiming)
         {
             UpdateTrajectory();
+        }
+
+        if (isTransformed)
+        {
+            CheckMovementWhileTransformed();
         }
     }
 
@@ -64,27 +86,104 @@ public class PlayerSkill : MonoBehaviour
             return;
         }
 
+        if (isTransformed)
+        {
+            // 변신 해제
+            Detransform();
+        }
+        else
+        {
+            // 변신 시작
+            Transform();
+        }
+
+        lastTransformTime = Time.time;
+    }
+
+    private void Transform()
+    {
+        if (transformPrefabs == null || transformPrefabs.Length == 0)
+        {
+            Debug.LogWarning("변신 프리팹이 설정되지 않았습니다!");
+            return;
+        }
+
+        // 이펙트 재생
         if (transformEffect != null)
         {
             transformEffect.Stop();
             transformEffect.Play();
         }
 
-        if (animator != null)
+        // 랜덤으로 프리팹 선택
+        int randomIndex = UnityEngine.Random.Range(0, transformPrefabs.Length);
+        GameObject selectedPrefab = transformPrefabs[randomIndex];
+
+        // 변신 오브젝트 생성 (플레이어의 자식으로)
+        currentTransformObject = Instantiate(selectedPrefab, transform);
+        currentTransformObject.transform.localPosition = transformOffset;
+        currentTransformObject.transform.localRotation = Quaternion.identity;
+
+        // 플레이어 메시 숨기기
+        if (playerRenderer != null)
         {
-            if (isTransformed)
-            {
-                animator.SetTrigger("Detransform");
-                isTransformed = false;
-            }
-            else
-            {
-                animator.SetTrigger("Transform");
-                isTransformed = true;
-            }
+            playerRenderer.enabled = false;
         }
 
-        lastTransformTime = Time.time;
+        // 이동 중지
+        if (playerMove != null)
+        {
+            playerMove.SetMoveInput(Vector2.zero);
+        }
+
+        isTransformed = true;
+
+        Debug.Log($"변신 완료: {selectedPrefab.name}");
+    }
+
+    private void Detransform()
+    {
+        // 이펙트 재생
+        if (transformEffect != null)
+        {
+            transformEffect.Stop();
+            transformEffect.Play();
+        }
+
+        // 변신 오브젝트 제거
+        if (currentTransformObject != null)
+        {
+            Destroy(currentTransformObject);
+            currentTransformObject = null;
+        }
+
+        // 플레이어 메시 다시 보이기
+        if (playerRenderer != null)
+        {
+            playerRenderer.enabled = true;
+        }
+
+        isTransformed = false;
+
+        Debug.Log("변신 해제");
+    }
+
+    private void CheckMovementWhileTransformed()
+    {
+        if (!isTransformed)
+            return;
+
+        // PlayerMove에서 입력 체크
+        if (playerMove != null)
+        {
+            Vector2 moveInput = playerMove.GetMoveInput();
+
+            if (moveInput.sqrMagnitude > 0.01f) // 입력이 있으면
+            {
+                Debug.Log("이동 감지 - 변신 해제");
+                Detransform();
+            }
+        }
     }
 
     #endregion
@@ -129,6 +228,14 @@ public class PlayerSkill : MonoBehaviour
             trajectoryLine.enabled = true;
         }
 
+        if (decoyRangeIndicator != null)
+        {
+            decoyRangeIndicator.SetActive(true);
+
+            // 범위 크기 설정
+            float diameter = decoyAttractionRadius * 2f;
+            decoyRangeIndicator.transform.localScale = new Vector3(diameter, 0.01f, diameter);
+        }
         Debug.Log("디코이 조준 시작");
     }
 
@@ -173,10 +280,84 @@ public class PlayerSkill : MonoBehaviour
         Vector3 throwVelocity = CalculateThrowVelocity(startPosition, targetPosition, throwForce, currentThrowAngle);
 
         // 궤적 그리기
-        DrawTrajectory(startPosition, throwVelocity, trajectoryPoints);
+        DrawTrajectoryWithWallCheck(startPosition, throwVelocity * trajectoryDistanceMultiplier, trajectoryPoints);
 
-        // 디버그 (선택사항)
-        // Debug.Log($"거리: {distanceToMouse:F2}m, 힘: {throwForce:F2}, 각도: {currentThrowAngle:F1}°, 점: {trajectoryPoints}");
+        UpdateRangeIndicator();
+    }
+
+    // 벽 충돌 체크하며 궤적 그리기
+    private void DrawTrajectoryWithWallCheck(Vector3 startPos, Vector3 initialVelocity, int pointCount)
+    {
+        if (trajectoryLine == null)
+            return;
+
+        List<Vector3> trajectoryPoints = new List<Vector3>();
+
+        Vector3 currentPosition = startPos;
+        Vector3 currentVelocity = initialVelocity;
+        float timeStep = Time.fixedDeltaTime; // 0.1f → Time.fixedDeltaTime (더 정확)
+
+        for (int i = 0; i < 200; i++)
+        {
+            trajectoryPoints.Add(currentPosition);
+
+            // 중력 적용
+            Vector3 gravity = Physics.gravity;
+            Vector3 nextVelocity = currentVelocity + gravity * timeStep;
+            Vector3 nextPosition = currentPosition + currentVelocity * timeStep;
+
+            Vector3 direction = nextPosition - currentPosition;
+            float distance = direction.magnitude;
+
+            if (Physics.Raycast(currentPosition, direction.normalized, out RaycastHit wallHit, distance, wallLayer))
+            {
+                trajectoryPoints.Add(wallHit.point);
+                Vector3 wallHitPoint = wallHit.point;
+
+                Vector3 dropPosition = wallHitPoint;
+                for (int j = 0; j < 10; j++)
+                {
+                    dropPosition += Vector3.down * 0.5f;
+                    trajectoryPoints.Add(dropPosition);
+
+                    if (dropPosition.y <= 0f)
+                    {
+                        finalLandingPosition = new Vector3(wallHitPoint.x, 0f, wallHitPoint.z);
+                        trajectoryPoints.Add(finalLandingPosition);
+                        break;
+                    }
+                }
+                break;
+            }
+
+            currentVelocity = nextVelocity;
+            currentPosition = nextPosition;
+
+            if (currentPosition.y <= 0f)
+            {
+                finalLandingPosition = new Vector3(currentPosition.x, 0f, currentPosition.z);
+                trajectoryPoints.Add(finalLandingPosition);
+                break;
+            }
+        }
+
+        trajectoryLine.positionCount = trajectoryPoints.Count;
+        for (int i = 0; i < trajectoryPoints.Count; i++)
+        {
+            trajectoryLine.SetPosition(i, trajectoryPoints[i]);
+        }
+    }
+
+    // 디코이 범위 표시 위치 업데이트
+    private void UpdateRangeIndicator()
+    {
+        if (decoyRangeIndicator == null) return;
+
+        // 궤적의 마지막 지점 (착지 지점) 계산
+        Vector3 landingPosition = finalLandingPosition;
+        landingPosition.y = rangeIndicatorHeight;
+
+        decoyRangeIndicator.transform.position = landingPosition;
     }
 
     // 던지기 속도 계산
@@ -191,36 +372,6 @@ public class PlayerSkill : MonoBehaviour
         velocity.y = force * Mathf.Sin(angleRad);
 
         return velocity;
-    }
-
-    // 포물선 궤적 그리기
-    private void DrawTrajectory(Vector3 startPos, Vector3 initialVelocity, int pointCount)
-    {
-        if (trajectoryLine == null)
-            return;
-
-        trajectoryLine.positionCount = pointCount;
-
-        Vector3 currentPosition = startPos;
-        Vector3 currentVelocity = initialVelocity;
-        float timeStep = 0.1f;
-
-        for (int i = 0; i < pointCount; i++)
-        {
-            trajectoryLine.SetPosition(i, currentPosition);
-
-            // 다음 위치 계산
-            currentVelocity += Physics.gravity * timeStep;
-            currentPosition += currentVelocity * timeStep;
-
-            // 바닥에 닿으면 중단
-            if (currentPosition.y < 0f)
-            {
-                trajectoryLine.positionCount = i + 1;
-                trajectoryLine.SetPosition(i, new Vector3(currentPosition.x, 0f, currentPosition.z));
-                break;
-            }
-        }
     }
 
     // 디코이 던지기
@@ -277,9 +428,15 @@ public class PlayerSkill : MonoBehaviour
         {
             trajectoryLine.enabled = false;
         }
+        // 범위 표시 비활성화
+        if (decoyRangeIndicator != null)
+        {
+            decoyRangeIndicator.SetActive(false);
+        }
     }
 
     #endregion
 
     public bool IsDecoyAiming => isDecoyAiming;
+    public bool IsTransformed => isTransformed;
 }

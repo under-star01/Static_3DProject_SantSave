@@ -3,7 +3,7 @@ using UnityEngine;
 public class Decoy : MonoBehaviour
 {
     [SerializeField] private float lifetime = 5f; // 지속 시간
-    [SerializeField] private float attractionRadius = 10f; // 유인 범위
+    [SerializeField] private float attractionRadius = 4f; // 유인 범위
     [SerializeField] private ParticleSystem landingEffect; // 착지 이펙트
 
     private bool hasLanded = false;
