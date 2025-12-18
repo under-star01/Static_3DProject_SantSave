@@ -8,32 +8,36 @@ public class TitleMenuManager : MonoBehaviour
     [SerializeField] private Button optionButton; // 옵션메뉴 넣기
     [SerializeField] private Button exitButton; // 종료메뉴 넣기
 
+    private OptionPanelController optionPanelController;
+
     private void Start()
     {
+        // Canvas에서 OptionPanelController 찾기
+        optionPanelController = FindObjectOfType<OptionPanelController>();
+
         // 각 버튼에 공통 컨트롤러 초기화
         // 스타트
-        var startCtrl = startButton.gameObject.GetComponent<ButtonController>();
-        if (startCtrl == null)
-        { 
-            startCtrl = startButton.gameObject.AddComponent<ButtonController>();
+        var sc = startButton.gameObject.GetComponent<ButtonController>();
+        if (sc == null)
+        {
+            sc = startButton.gameObject.AddComponent<ButtonController>();
         }
-        startCtrl.Initialize("START", OnStartClicked); // 스타트 버튼 클릭 이벤트 구독
+            sc.Initialize("START", OnStartClicked); // 클릭시 이벤트 발생
 
-        // 옵션
-        var optionCtrl = optionButton.gameObject.GetComponent<ButtonController>();
-        if (optionCtrl == null)
-        { 
-            optionCtrl = optionButton.gameObject.AddComponent<ButtonController>(); 
+        var oc = optionButton.gameObject.GetComponent<ButtonController>();
+        if (oc == null)
+        {
+            oc = optionButton.gameObject.AddComponent<ButtonController>();
         }
-        optionCtrl.Initialize("OPTION", OnOptionClicked); // 옵션 버튼 클릭 이벤트 구독
 
-        // 종료
-        var exitCtrl = exitButton.gameObject.GetComponent<ButtonController>();
-        if (exitCtrl == null) 
-        { 
-            exitCtrl = exitButton.gameObject.AddComponent<ButtonController>(); 
+        oc.Initialize("OPTION", OnOptionClicked); // 클릭시 이벤트 발생
+
+        var ec = exitButton.gameObject.GetComponent<ButtonController>();
+        if (ec == null)
+        {
+            ec = exitButton.gameObject.AddComponent<ButtonController>();
         }
-        exitCtrl.Initialize("EXIT", OnExitClicked); // 종료 버튼 클릭 이벤트 구독
+            ec.Initialize("EXIT", OnExitClicked); // 클릭시 이벤트 발생
     }
 
     private void OnStartClicked()
@@ -47,6 +51,10 @@ public class TitleMenuManager : MonoBehaviour
     {
         Debug.Log("Option clicked");
         // 옵션 화면 토글 로직
+        if (optionPanelController != null)
+        {
+            optionPanelController.OpenOptionPanel();         
+        }
     }
 
     private void OnExitClicked()
