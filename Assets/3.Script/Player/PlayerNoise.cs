@@ -1,0 +1,63 @@
+//using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerNoise : MonoBehaviour
+{
+    [Header("설정")]
+    public LayerMask enemyLayer;       // 적 레이어
+    public LayerMask obstacleMask;     // 벽 레이어 (소리 차단용)
+
+    [Header("노이즈 설정")]
+    [Tooltip("현재 발생하는 소음의 크기 (반경)")]
+    public float noise = 0f;
+
+    [Tooltip("초당 소음 감소 속도")]
+    public float noiseDecaySpeed = 5.0f;
+
+    private void Update()
+    {
+        // 노이즈는 지속적으로 감소
+        if (noise > 0)
+        {
+            noise -= noiseDecaySpeed * Time.deltaTime;
+
+            // 0 이하로 떨어지지 않게 보정
+            if (noise < 0) noise = 0f;
+        }
+    }
+
+    // 애니메이션 이벤트에서 이 함수를 호출합니다.
+    public void MakeNoise(float currNoise)
+    {
+        noise = currNoise;
+        // 내 주변 radius 반경 내의 적들을 모두 찾음
+        Collider[] enemies = Physics.OverlapSphere(transform.position, currNoise, enemyLayer);
+
+        foreach (Collider enemyCol in enemies)
+        {
+            // 2. EnemyFSM 컴포넌트 찾기
+            EnemyFSM enemy = enemyCol.GetComponent<EnemyFSM>();
+
+            if (enemy != null)
+            {
+                // 3. 적에게 "내 위치"를 소음 위치로 전달
+                enemy.HeardSound(transform.position);
+            }
+        }
+    }
+
+    // 디버그용: 소음 반경 그리기
+    void OnDrawGizmos()
+    {
+        if (noise > 0)
+        {
+            Gizmos.color = new Color(1, 0, 0, 0.5f); // 붉은색 반투명
+            Gizmos.DrawSphere(transform.position, noise);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, noise);
+        }
+    }
+}

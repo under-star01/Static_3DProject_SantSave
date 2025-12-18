@@ -20,7 +20,11 @@ public class EnemyFSM : MonoBehaviour
 
     [Header("디버그")]
     public float currentGauge = 0f;    
-    private float maxGauge = 100f;      
+    private float maxGauge = 100f;
+
+    [Header("소리 관련 변수")]
+    private bool isHeard;
+    private Vector3 noisePosition;
 
     private NavMeshAgent agent;
     private Transform targetPlayer;
@@ -38,23 +42,26 @@ public class EnemyFSM : MonoBehaviour
         {
             // 1. Idle (대기)
             // 발견되지 않았을 때만 실행
-            if (!isPlayerFound) yield return StartCoroutine(IdleState());
+            if (!isPlayerFound && !isHeard) yield return StartCoroutine(IdleState());
 
             // 2. Move (이동)
             // Idle에서 발견됐다면 Move는 건너뜀
-            if (!isPlayerFound) yield return StartCoroutine(MoveState());
+            if (!isPlayerFound && !isHeard) yield return StartCoroutine(MoveState());
 
             // 3. Detect (정밀 감시 - 멈춰서 두리번거림)
             // 이동 중에 발견됐다면 Detect는 건너뜀
-            if (!isPlayerFound) yield return StartCoroutine(DetectState());
+            if (!isPlayerFound && !isHeard) yield return StartCoroutine(DetectState());
 
             // --- [발견 시 실행되는 구간] ---
+            // 4. Look (경고/주시)
+            if (isHeard && !isPlayerFound)
+            {
+                yield return StartCoroutine(LookState());
+            }
+
+            // 5. Chase (추격)
             if (isPlayerFound)
             {
-                // 4. Look (경고/주시)
-                yield return StartCoroutine(LookState());
-
-                // 5. Chase (추격)
                 yield return StartCoroutine(ChaseState());
             }
         }
@@ -115,36 +122,62 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator LookState()
     {
-        Debug.Log("State: Look (발견!)");
+        Debug.Log("State: Look (두리번/주시)");
 
         float timer = 0f;
+        Quaternion startRot = transform.rotation;
+
+        // 바라볼 목표 지점 결정
+        Vector3 targetPos;
+
+        if (isPlayerFound && targetPlayer != null)
+        {
+            targetPos = targetPlayer.position; // 발견했으면 플레이어
+        }
+        else if (isHeard)
+        {
+            targetPos = noisePosition; // 소리만 들었으면 소리 위치
+        }
+        else
+        {
+            targetPos = transform.position + transform.forward; // 그냥 앞
+        }
+
         while (timer < lookTime)
         {
-            if (targetPlayer != null)
+            // 회전 로직 (목표 지점을 향해 부드럽게 회전)
+            Vector3 dir = (targetPos - transform.position).normalized;
+            dir.y = 0; // 기울어짐 방지
+            if (dir != Vector3.zero)
             {
-                // 플레이어 방향 보정
-                Vector3 dir = (targetPlayer.position - transform.position).normalized;
-                dir.y = 0;
                 Quaternion lookRot = Quaternion.LookRotation(dir);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, Time.deltaTime * 5f);
             }
 
-            // [중요] Look 도중에 플레이어가 시야에서 사라져도, 
-            // 일단 발견했으므로 isPlayerFound를 false로 만들지 않음 (Chase에서 처리)
+            // 여기서 플레이어가 FOV에 들어오면 isPlayerFound가 true가 됨
+            if (CheckPlayerDetected())
+            {
+                // 플레이어를 찾았다! -> LookState 즉시 종료 -> FSM 루프가 ChaseState 실행
+                isHeard = false; // 소리보다 시각 발견이 우선이므로 소리 플래그 끔
+                yield break;
+            }
 
             timer += Time.deltaTime;
             yield return null;
         }
+
+        // 시간 내에 발견 못하면 소리 들음 상태 해제 (다시 순찰하러 감)
+        isHeard = false;
     }
 
     IEnumerator ChaseState()
     {
-        Debug.Log("State: Chase (추격 시작)");
+        //Debug.Log("State: Chase (추격 시작)");
 
         while (true)
         {
             // 1. 추격 종료 조건
-            // [수정] targetPlayer가 null인지 확인하고, 감지 실패 시 종료
+            // targetPlayer가 null인지 확인하고, 감지 실패 시 종료
             if (targetPlayer == null || !fov.DetectPlayer())
             {
                 Debug.Log("Chase: 놓침 -> 다시 순찰 복귀");
@@ -184,5 +217,20 @@ public class EnemyFSM : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void HeardSound(Vector3 noisePos)
+    {
+        //Chase 상태일 때는 소리감지 X
+        if (isPlayerFound) return;
+
+        //Debug.Log("소리 감지! 위치: " + noisePos);
+
+        // Noise 발생 위치(플레이어 위치) 전달
+        noisePosition = noisePos;
+        isHeard = true;
+
+        // 현재 이동 중이라면 즉시 멈추게 함 (반응 속도 향상)
+        if (agent != null) agent.ResetPath();
     }
 }
