@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private Vector3 moveDir;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSpeed = 20f;
     [SerializeField] private Camera cam;
@@ -13,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     private Animator animator;
     private Vector2 moveInput;
     private Vector2 mousePos;
+    private Vector3 moveDir;
+    private Vector3 lookDir;
 
     private void Awake()
     {
@@ -25,57 +26,19 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // 카메라 기준으로 xz 평면을 이동하도록 설정
-        Vector3 camForward = cam.transform.forward;
-        Vector3 camRight = cam.transform.right;
+        // 이동 방향 및 벽 충돌 처리
+        CalculateMoveAndWall();
 
-        camForward.y = 0f;
-        camRight.y = 0f;
-        camForward.Normalize();
-        camRight.Normalize();
+        // 회전 적용
+        CalculateRotation();
 
-        // 크기가 1인 방향 벡터에, x축으로 input.x, z축으로 input.y의 값을 적용해 기준 벡터 설정 
-        moveDir = camRight * moveInput.x + camForward * moveInput.y;
-
-        // 벽에 닿았는지 체크
-        Vector3 desired = moveDir.normalized * moveSpeed;
-
-        if (CheckWall(out Vector3 wallNormal))
-        {
-            // 벽을 향해 파고드는 이동 성분 제거 → 슬라이딩
-            desired = Vector3.ProjectOnPlane(desired, wallNormal);
-        }
-        desired.y = rb.linearVelocity.y;
-        rb.linearVelocity = desired;
-
-        // 상태에 따른 속도 적용
-        Vector3 vel;
-
-        if (moveDir.sqrMagnitude < 0.0001f) // 정지시
-        {
-            vel = rb.linearVelocity;
-            vel.x = 0f;
-            vel.z = 0f;
-            rb.linearVelocity = vel;
-        }
-        else // 이동시
-        {
-            vel = moveDir.normalized * moveSpeed;
-            vel.y = rb.linearVelocity.y;
-            rb.linearVelocity = vel;
-        }
-
-        // 애니메이션 동기화
-        float speed = vel.magnitude;
-
-        animator.SetFloat("Speed", speed);
-        animator.SetFloat("MoveX", moveInput.x);
-        animator.SetFloat("MoveY", moveInput.y);
+        // 애니메이션 적용
+        CalculateAnimation();
     }
 
     private void Update()
     {
-        // 마우스 위치로 회전
+        // 마우스 회전 방향 계산
         Ray ray = cam.ScreenPointToRay(mousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
         {
@@ -84,10 +47,85 @@ public class PlayerMove : MonoBehaviour
 
             if (dir.sqrMagnitude > 0.0001f)
             {
-                Quaternion targetRot = Quaternion.LookRotation(dir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
+                lookDir = dir.normalized;
             }
         }
+    }
+
+    private void CalculateMoveAndWall()
+    {
+        // 카메라 기준 이동 방향 설정
+        Vector3 camForward = cam.transform.forward;
+        Vector3 camRight = cam.transform.right;
+
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        moveDir = camRight * moveInput.x + camForward * moveInput.y;
+
+        // 이동 속도 계산 + 벽 슬라이딩
+        Vector3 desired = Vector3.zero;
+
+        if (moveDir.sqrMagnitude > 0.0001f)
+        {
+            desired = moveDir.normalized * moveSpeed;
+
+            if (CheckWall(out Vector3 wallNormal))
+            {
+                desired = Vector3.ProjectOnPlane(desired, wallNormal);
+            }
+        }
+        desired.y = rb.linearVelocity.y;
+        rb.linearVelocity = desired;
+    }
+
+    private void CalculateRotation()
+    {
+        // 회전 적용
+        Quaternion targetRot = Quaternion.LookRotation(lookDir);
+        Quaternion newRot = Quaternion.Slerp(rb.rotation, targetRot, turnSpeed * Time.fixedDeltaTime);
+
+        rb.MoveRotation(newRot);
+    }
+
+    private void CalculateAnimation()
+    {
+        // 애니메이션 파라미터 계산 -> 마우스 기준
+        Vector3 horizontalVel = rb.linearVelocity;
+        horizontalVel.y = 0f;
+
+        float speed = horizontalVel.magnitude;
+        animator.SetFloat("Speed", speed);
+
+        if (speed < 0.01f)
+        {
+            animator.SetFloat("MoveX", 0f);
+            animator.SetFloat("MoveY", 0f);
+            return;
+        }
+
+        Vector3 forward = transform.forward;
+        Vector3 move = horizontalVel;
+
+        forward.y = 0f;
+        move.y = 0f;
+
+        forward.Normalize();
+        move.Normalize();
+
+        float dot = Mathf.Clamp(Vector3.Dot(forward, move), -1f, 1f);
+        float crossY = Vector3.Cross(forward, move).y;
+
+        float angle = Mathf.Acos(dot);
+        if (crossY < 0f) angle = -angle;
+
+        float moveX = Mathf.Sin(angle);
+        float moveY = Mathf.Cos(angle);
+
+        animator.SetFloat("MoveX", moveX);
+        animator.SetFloat("MoveY", moveY);
     }
 
     public void SetMoveInput(Vector2 input)

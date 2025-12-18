@@ -83634,8 +83634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24fa20c34ce57784f93e7d5257ccb322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
-  moveDir: {x: 0, y: 0, z: 0}
-  moveSpeed: 5
+  moveSpeed: 2.2
   turnSpeed: 20
   cam: {fileID: 963194227}
   groundMask:
@@ -83643,7 +83642,7 @@ MonoBehaviour:
     m_Bits: 64
   wallMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!136 &6386724164939537536
 CapsuleCollider:
   m_ObjectHideFlags: 0
