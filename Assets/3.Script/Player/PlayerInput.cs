@@ -5,57 +5,69 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
+
+    public Vector2 viewingValue = Vector2.zero;
     private PlayerInputAction playerInput;
     private PlayerMove playerMove;
     private PlayerSkill playerSkill;
 
     private void Awake()
     {
+        // 컴포넌트 연결
         TryGetComponent(out playerMove);
         TryGetComponent(out playerSkill);
 
+        // InputAction 생성
         playerInput = new PlayerInputAction();
     }
 
     private void OnEnable()
     {
+        // InputAction 연결 및 활성화
         playerInput.Player.Move.performed += OnMove;
         playerInput.Player.Move.canceled += OnMove;
+        playerInput.Player.Look.performed += OnLook;
 
-        // 변신 스킬 (Q)
         playerInput.Player.TransformSkill.performed += OnTransformSkill;
-
-        // 디코이 스킬 (우클릭)
         playerInput.Player.DecoySkillStart.performed += OnDecoySkillStart;
-
-        // 디코이 투척 (좌클릭)
         playerInput.Player.DecoySkillThrow.performed += OnDecoySkillThrow;
-
         playerInput.Enable();
     }
 
     private void OnDisable()
     {
+        // InputAction 해제 및 비활성화
         playerInput.Player.Move.performed -= OnMove;
         playerInput.Player.Move.canceled -= OnMove;
-        playerInput.Player.TransformSkill.performed -= OnTransformSkill;
+        playerInput.Player.Look.performed -= OnLook;
         playerInput.Player.DecoySkillStart.performed -= OnDecoySkillStart;
         playerInput.Player.DecoySkillThrow.performed -= OnDecoySkillThrow;
-
         playerInput.Disable();
     }
 
-    private void Update()
+    // WASD 방향키 이동 메소드
+    public void OnMove(InputAction.CallbackContext context)
     {
-        if (Mouse.current != null)
-        {
-            playerMove.SetLookInput(Mouse.current.position.ReadValue());
-        }
+        Vector2 raw = context.ReadValue<Vector2>();
+
+        float dead = 0.1f;
+        float dirX = 0f;
+        float dirY = 0f;
+
+        // 1, 0, -1로 input 정리
+        if (raw.x > dead) dirX = 1f;
+        if (raw.x < -dead) dirX = -1f;
+        if (raw.y > dead) dirY = 1f;
+        if (raw.y < -dead) dirY = -1f;
+
+        Vector2 move = new Vector2(dirX, dirY);
+        playerMove.SetMoveInput(move);
     }
 
-    private void OnMove(InputAction.CallbackContext context)
+    // 화면 회전 메소드
+    private void OnLook(InputAction.CallbackContext context)
     {
-        playerMove.SetMoveInput(context.ReadValue<Vector2>());
+        playerMove.SetLookInput(context.ReadValue<Vector2>());
     }
 
     private void OnTransformSkill(InputAction.CallbackContext context)
@@ -68,7 +80,7 @@ public class PlayerInput : MonoBehaviour
 
     private void OnDecoySkillStart(InputAction.CallbackContext context)
     {
-        if (playerSkill != null)
+        if(playerSkill != null)
         {
             playerSkill.OnDecoySkillStart();
         }
