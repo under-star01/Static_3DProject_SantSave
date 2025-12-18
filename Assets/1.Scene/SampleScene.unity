@@ -15286,7 +15286,7 @@ Animator:
   m_GameObject: {fileID: 363049609302531261}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6b2a817efd8e3734486d9ef23e57ae6d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 256bd27979842ac45ab2480983a764fd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2750954a698fb714b8a254bb3a67d785, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -15310,6 +15310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234b45dd85618cc408b8db86cb604ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
+  viewingValue: {x: 0, y: 0}
 --- !u!114 &6386724164939537535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15323,12 +15324,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
   moveSpeed: 5
-  currentSpeed: 5
   turnSpeed: 20
   cam: {fileID: 963194227}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  mouseHitPos: {x: 0, y: 0, z: 0}
 --- !u!136 &6386724164939537536
 CapsuleCollider:
   m_ObjectHideFlags: 0

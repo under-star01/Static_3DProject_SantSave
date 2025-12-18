@@ -242,10 +242,7 @@ public class PlayerSkill : MonoBehaviour
     // 궤적 업데이트 (마우스 위치에 따라)
     private void UpdateTrajectory()
     {
-        if (!playerMove.HasMouseWorldPosition())
-            return;
-
-        Vector3 mouseWorldPos = playerMove.GetMouseWorldPosition();
+        Vector3 mouseWorldPos = playerMove.mouseHitPos;
         Vector3 startPosition = transform.position + Vector3.up * 1.5f;
 
         // 마우스까지의 수평 거리 계산
