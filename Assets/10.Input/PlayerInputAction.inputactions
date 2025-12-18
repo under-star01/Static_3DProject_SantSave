@@ -32,6 +32,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DecoySkillStart",
+                    "type": "Button",
+                    "id": "623fcc45-2f8b-4af2-a6d3-bbc39e6dee44",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DecoySkillThrow",
+                    "type": "Button",
+                    "id": "fccfbe87-6952-4cc4-850d-822da74b48e4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -109,6 +127,28 @@
                     "processors": "",
                     "groups": ";PC",
                     "action": "TransformSkill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c85b357-7e31-4afd-9ec2-2571b6ed3afb",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "DecoySkillStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c47124c-54ac-4e91-9e25-db03e4718c9d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "DecoySkillThrow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
