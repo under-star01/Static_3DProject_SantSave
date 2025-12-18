@@ -36,12 +36,15 @@ public class Decoy : MonoBehaviour
     {
         Collider[] enemies = Physics.OverlapSphere(transform.position, attractionRadius);
 
-        foreach (var enemy in enemies)
+        foreach (var col in enemies)
         {
-            if (enemy.CompareTag("Enemy"))
+            if (!col.CompareTag("Enemy")) continue;
+
+            EnemyFSM enemyFSM = col.GetComponent<EnemyFSM>();
+            if (enemyFSM != null)
             {
-                Debug.Log($"적 유인: {enemy.name}");
-                // 여기에 적 AI 타겟 변경 로직 추가
+                enemyFSM.HeardSound(transform.position);
+                Debug.Log($"디코이 소리 유인: {col.name}");
             }
         }
     }

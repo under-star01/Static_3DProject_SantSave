@@ -29,7 +29,11 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         // 이동 제한시 리턴
-        if (!canMove) return;
+        if (!canMove)
+        {
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+            return;
+        }
 
         // 이동 방향 및 벽 충돌 처리
         CalculateMoveAndWall();
@@ -44,7 +48,13 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         // 이동 제한시 리턴
-        if (!canMove) return;
+        if (!canMove)
+        {
+            animator.SetFloat("MoveX", 0f);
+            animator.SetFloat("MoveY", 0f);
+            animator.SetFloat("Speed", 0f);
+            return;
+        }
 
         // 마우스 회전 방향 계산
         Ray ray = cam.ScreenPointToRay(mousePos);

@@ -27,27 +27,35 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] private float decoyCooldown = 1f; // 쿨다운
     [SerializeField] private float trajectoryDistanceMultiplier = 0.9f; // 거리 게수
     [SerializeField] private LayerMask wallLayer; //벽 레이어
+    [SerializeField] private float throwAnimationDelay = 0.7f; // 던지기 타이밍
+    [SerializeField] private float throwAnimationDuration = 1f; // 애니메이션 전체 길이
 
     private Animator animator;
     private PlayerMove playerMove;
     private Renderer playerRenderer;
+    private Rigidbody rb;
 
     // 변신 스킬
     private bool isTransformed = false;
     private float lastTransformTime = -999f;
     private GameObject currentTransformObject;
+    private Quaternion currentrotation; // 회전값 저장
 
     // 디코이 스킬
     private bool isDecoyAiming = false;
+    private bool isThrowing = false; // 던지는 중
+    private bool lockPlayerRotation = false;
     private float lastDecoyTime = -999f;
     private float currentThrowAngle;
     private Vector3 targetPosition;
     private Vector3 finalLandingPosition;
+    private Quaternion lockedPlayerRotation;
 
     private void Awake()
     {
         TryGetComponent(out animator);
         TryGetComponent(out playerMove);
+        TryGetComponent(out rb);
         playerRenderer = GetComponentInChildren<Renderer>();
 
         // LineRenderer 초기화
@@ -66,7 +74,7 @@ public class PlayerSkill : MonoBehaviour
     private void Update()
     {
         // 디코이 조준 중일 때 궤적 업데이트
-        if (isDecoyAiming)
+        if (isDecoyAiming && !isThrowing)
         {
             UpdateTrajectory();
         }
@@ -74,6 +82,13 @@ public class PlayerSkill : MonoBehaviour
         if (isTransformed)
         {
             CheckMovementWhileTransformed();
+            UpdateTransformObjectPosition();
+        }
+
+        // 던지는 동안 회전 고정
+        if (lockPlayerRotation)
+        {
+            transform.rotation = lockedPlayerRotation;
         }
     }
 
@@ -115,25 +130,43 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Play();
         }
 
-        // 랜덤으로 프리팹 선택
         int randomIndex = UnityEngine.Random.Range(0, transformPrefabs.Length);
         GameObject selectedPrefab = transformPrefabs[randomIndex];
 
-        // 변신 오브젝트 생성 (플레이어의 자식으로)
-        currentTransformObject = Instantiate(selectedPrefab, transform);
-        currentTransformObject.transform.localPosition = transformOffset;
-        currentTransformObject.transform.localRotation = Quaternion.identity;
+        // 독립 오브젝트로 생성
+        Vector3 spawnPosition = transform.position + transformOffset;
+        currentTransformObject = Instantiate(selectedPrefab, spawnPosition, transform.rotation);
 
-        // 플레이어 메시 숨기기
+        // Rigidbody 설정 (날아가지 않게)
+        Rigidbody transformRb = currentTransformObject.GetComponent<Rigidbody>();
+        if (transformRb != null)
+        {
+            transformRb.isKinematic = true;
+            transformRb.useGravity = false;
+            transformRb.linearVelocity = Vector3.zero;
+            transformRb.angularVelocity = Vector3.zero;
+        }
+
+        // 플레이어와 충돌 무시
+        Collider playerCollider = GetComponent<Collider>();
+        Collider transformCollider = currentTransformObject.GetComponent<Collider>();
+        if (playerCollider != null && transformCollider != null)
+        {
+            Physics.IgnoreCollision(playerCollider, transformCollider);
+        }
+
+        // 초기 회전값 저장
+        currentrotation = transform.rotation;
+
         if (playerRenderer != null)
         {
             playerRenderer.enabled = false;
         }
 
-        // 이동 중지
+        // 이동 불가
         if (playerMove != null)
         {
-            playerMove.SetMoveInput(Vector2.zero);
+            playerMove.canMove = false;
         }
 
         isTransformed = true;
@@ -163,9 +196,26 @@ public class PlayerSkill : MonoBehaviour
             playerRenderer.enabled = true;
         }
 
+        // 이동 가능
+        if (playerMove != null)
+        {
+            playerMove.canMove = true;
+        }
+
+
         isTransformed = false;
 
         Debug.Log("변신 해제");
+    }
+
+    // 변신 오브젝트 위치만 업데이트 (회전은 고정)
+    private void UpdateTransformObjectPosition()
+    {
+        if (currentTransformObject == null)
+            return;
+
+        currentTransformObject.transform.position = transform.position + transformOffset;
+        currentTransformObject.transform.rotation = currentrotation;
     }
 
     private void CheckMovementWhileTransformed()
@@ -216,7 +266,12 @@ public class PlayerSkill : MonoBehaviour
             return;
         }
 
-        ThrowDecoy();
+        // 연속 입력 방지
+        if (isThrowing)
+        {
+            return;
+        }
+        StartThrowAnimation();
     }
 
     private void StartDecoyAim()
@@ -237,6 +292,49 @@ public class PlayerSkill : MonoBehaviour
             decoyRangeIndicator.transform.localScale = new Vector3(diameter, 0.01f, diameter);
         }
         Debug.Log("디코이 조준 시작");
+    }
+
+    // 던지기 애니메이션 시작
+    private void StartThrowAnimation()
+    {
+        isThrowing = true;
+
+        // 이동 불가
+        if (playerMove != null)
+        {
+            playerMove.canMove = false;
+        }
+
+        // 현재 바라보는 방향 저장
+        lockedPlayerRotation = transform.rotation;
+        lockPlayerRotation = true;
+
+        // 던지기 애니메이션 트리거
+        if (animator != null)
+        {
+            animator.SetTrigger("Throw");
+        }
+
+        StartCoroutine(ThrowAfterAnimation());
+    }
+
+    // 애니메이션 타이밍에 맞춰 던지기
+    private IEnumerator ThrowAfterAnimation()
+    {
+        yield return new WaitForSeconds(throwAnimationDelay);
+
+        ThrowDecoy();
+
+        yield return new WaitForSeconds(throwAnimationDuration - throwAnimationDelay);
+
+        isThrowing = false;
+        lockPlayerRotation = false;
+
+        // 이동 가능
+        if (playerMove != null)
+        {
+            playerMove.canMove = true;
+        }
     }
 
     // 궤적 업데이트 (마우스 위치에 따라)
@@ -309,21 +407,7 @@ public class PlayerSkill : MonoBehaviour
             if (Physics.Raycast(currentPosition, direction.normalized, out RaycastHit wallHit, distance, wallLayer))
             {
                 trajectoryPoints.Add(wallHit.point);
-                Vector3 wallHitPoint = wallHit.point;
-
-                Vector3 dropPosition = wallHitPoint;
-                for (int j = 0; j < 10; j++)
-                {
-                    dropPosition += Vector3.down * 0.5f;
-                    trajectoryPoints.Add(dropPosition);
-
-                    if (dropPosition.y <= 0f)
-                    {
-                        finalLandingPosition = new Vector3(wallHitPoint.x, 0f, wallHitPoint.z);
-                        trajectoryPoints.Add(finalLandingPosition);
-                        break;
-                    }
-                }
+                finalLandingPosition = new Vector3(wallHit.point.x, 0f, wallHit.point.z);
                 break;
             }
 
@@ -413,6 +497,13 @@ public class PlayerSkill : MonoBehaviour
 
     private void CancelDecoySkill()
     {
+        // 던지는 중에는 취소 불가
+        if (isThrowing)
+        {
+            return;
+        }
+
+
         EndDecoyAim();
         Debug.Log("디코이 스킬 취소");
     }
@@ -436,4 +527,5 @@ public class PlayerSkill : MonoBehaviour
 
     public bool IsDecoyAiming => isDecoyAiming;
     public bool IsTransformed => isTransformed;
+    public bool IsThrowing => isThrowing;
 }
