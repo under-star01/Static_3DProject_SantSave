@@ -1,26 +1,35 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSpeed = 20f;
-    [SerializeField] private Camera cam;
+    [SerializeField] private float zoomSpeed = 0.5f;
+    [SerializeField] private CinemachineCamera cinemachine;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private LayerMask wallMask;
 
-    public Vector3 mouseHitPos;
     public bool canMove = true;
+    public Vector3 mouseHitPos;
+    
     private Rigidbody rb;
     private Animator animator;
-    private Vector2 moveInput;
+    private PlayerNoise playerNoise;
+    private Camera cam;
+
+    private Vector2 moveInput; 
     private Vector2 mousePos;
     private Vector3 moveDir;
     private Vector3 lookDir;
+    private float zoomInput = 0;
+    private bool isRun = false;
 
     private void Awake()
     {
         TryGetComponent(out rb);
         TryGetComponent(out animator);
+        TryGetComponent(out playerNoise);
 
         if (cam == null)
             cam = Camera.main;
@@ -70,6 +79,25 @@ public class PlayerMove : MonoBehaviour
                 lookDir = dir.normalized;
             }
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (Mathf.Abs(zoomInput) < 0.01f)
+            return;
+
+        var lens = cinemachine.Lens;
+
+        // 휠 ↑ → 확대(OrthoSize 감소)
+        lens.OrthographicSize -= zoomInput * zoomSpeed;
+
+        // 1 ~ 5로 제한
+        lens.OrthographicSize = Mathf.Clamp(lens.OrthographicSize, 1f, 5f);
+
+        cinemachine.Lens = lens;
+
+        // 이번 프레임 입력 소비
+        zoomInput = 0f;
     }
 
     private void CalculateMoveAndWall()
@@ -150,6 +178,26 @@ public class PlayerMove : MonoBehaviour
 
     public void SetMoveInput(Vector2 input)
     {
+        // 정지시 -> 소리 발생 Stop
+        if (input.Equals(Vector2.zero))
+        {
+            playerNoise.StopNoiseCoroutine();
+        }
+        // 이동시 -> 소리 발생 Start
+        else
+        {
+            // Run 상태 (Shift)
+            if (isRun)
+            {
+                playerNoise.StartNoiseCoroutine(4f, 0.5f);
+            }
+            // Walk 상태 (default)
+            else
+            {
+                playerNoise.StartNoiseCoroutine(2.5f, 0.7f);
+            }
+        }
+
         moveInput = input;
     }
 
@@ -161,6 +209,28 @@ public class PlayerMove : MonoBehaviour
     public Vector2 GetMoveInput()
     {
         return moveInput;
+    }
+
+    public void RunStart()
+    {
+        isRun = true;
+        moveSpeed = 4f;
+    }
+
+    public void RunStop()
+    {
+        isRun = false;
+        moveSpeed = 2f;
+    }
+
+    public Vector3 GetMouseWorldPosition()
+    {
+        return lookDir;
+    }
+
+    public void SetCameraZoom(float value)
+    {
+        zoomInput += value;
     }
 
     // 벽 체크 메소드 (충돌 시, 떨림 및 통과 방지)
@@ -178,10 +248,5 @@ public class PlayerMove : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    public Vector3 GetMouseWorldPosition()
-    {
-        return lookDir;
     }
 }

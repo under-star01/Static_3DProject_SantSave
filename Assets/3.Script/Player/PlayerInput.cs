@@ -29,12 +29,15 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Move.performed += OnMove;
         playerInput.Player.Move.canceled += OnMove;
         playerInput.Player.Look.performed += OnLook;
+        playerInput.Player.Zoom.performed += OnSetZoom;
 
         playerInput.Player.TransformSkill.performed += OnTransformSkill;
         playerInput.Player.DecoySkillStart.performed += OnDecoySkillStart;
         playerInput.Player.DecoySkillThrow.performed += OnDecoySkillThrow;
-
+        playerInput.Player.Run.performed += OnRunStart;
+        playerInput.Player.Run.canceled += OnRunStop;
         playerInput.Player.Interact.performed += OnInteract;
+
         playerInput.Enable();
     }
 
@@ -44,9 +47,14 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Move.performed -= OnMove;
         playerInput.Player.Move.canceled -= OnMove;
         playerInput.Player.Look.performed -= OnLook;
+        playerInput.Player.Zoom.performed -= OnSetZoom;
+
         playerInput.Player.DecoySkillStart.performed -= OnDecoySkillStart;
         playerInput.Player.DecoySkillThrow.performed -= OnDecoySkillThrow;
+        playerInput.Player.Run.performed -= OnRunStart;
+        playerInput.Player.Run.canceled -= OnRunStop;
         playerInput.Player.Interact.performed -= OnInteract;
+
         playerInput.Disable();
     }
 
@@ -104,6 +112,30 @@ public class PlayerInput : MonoBehaviour
         if (playerInteract != null)
         {
             playerInteract.TryInteract();
+        }
+    }
+
+    private void OnRunStart(InputAction.CallbackContext context)
+    {
+        if (playerMove != null)
+        {
+            playerMove.RunStart();
+        }
+    }
+
+    private void OnRunStop(InputAction.CallbackContext context)
+    {
+        if (playerMove != null)
+        {
+            playerMove.RunStop();
+        }
+    }
+
+    private void OnSetZoom(InputAction.CallbackContext context)
+    {
+        if (playerMove != null)
+        {
+            playerMove.SetCameraZoom(context.ReadValue<float>());
         }
     }
 }
