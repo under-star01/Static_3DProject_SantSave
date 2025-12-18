@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask wallMask;
 
     public Vector3 mouseHitPos;
+    public bool canMove = true;
     private Rigidbody rb;
     private Animator animator;
     private Vector2 moveInput;
@@ -27,6 +28,9 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 이동 제한시 리턴
+        if (!canMove) return;
+
         // 이동 방향 및 벽 충돌 처리
         CalculateMoveAndWall();
 
@@ -39,6 +43,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        // 이동 제한시 리턴
+        if (!canMove) return;
+
         // 마우스 회전 방향 계산
         Ray ray = cam.ScreenPointToRay(mousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
