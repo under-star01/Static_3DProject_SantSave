@@ -86,10 +86,16 @@ public class TreePolaroid : MonoBehaviour
         }
 
         if (wishText != null)
+        {
             wishText.text = wish.wishText;
 
+        }
+
         if (childNameText != null)
+        {
             childNameText.text = wish.childName;
+
+        }
     }
 
     // 산타가 상호작용 시 호출
@@ -114,7 +120,9 @@ public class TreePolaroid : MonoBehaviour
 
             // UI 업데이트 (예: 회색 처리)
             if (photoImage != null)
+            {
                 photoImage.color = new Color(0.7f, 0.7f, 0.7f, 0.8f);
+            }
         }
     }
 
