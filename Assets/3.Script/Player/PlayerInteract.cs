@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    [SerializeField] private float interactRadius = 2.5f;
+    [SerializeField] private float interactRadius = 1.5f;
     [SerializeField] private LayerMask interactLayer;
 
     public void TryInteract()
