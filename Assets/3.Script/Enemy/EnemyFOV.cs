@@ -45,9 +45,14 @@ public class EnemyFOV : MonoBehaviour
         DrawFieldOfView();
     }
 
-    public bool DetectPlayer()
+    public bool DetectPlayer(bool isChasing = false)
     {
         if (player == null) return false;
+
+        if (!isChasing && player.CompareTag("Decoy"))
+        {
+            return false;
+        }
 
         // 1. 거리 체크(오브젝트와 플레이어 간 거리체크)
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
