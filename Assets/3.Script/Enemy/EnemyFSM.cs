@@ -13,6 +13,11 @@ public class EnemyFSM : MonoBehaviour
     public float idleTime = 2f;
     public float lookTime = 1.5f;
 
+    [Header("Roamer 설정")]
+    public bool isSleeping;
+
+    [Header("Observer 설정")]
+
     [Header("게임 오버 설정")]
     public float killDistance = 3.0f;
     public float gaugeFillSpeed = 30f;
@@ -68,6 +73,17 @@ public class EnemyFSM : MonoBehaviour
     }
 
     // --- [개별 상태 코루틴] ---
+    /*
+    IEnumerator SleepState()
+    {
+
+    }
+
+    IEnumerator WakeUpState()
+    {
+
+    }
+    */
 
     IEnumerator IdleState()
     {
@@ -206,6 +222,13 @@ public class EnemyFSM : MonoBehaviour
             yield return null;
         }
     }
+
+    /*
+    IEnumerator AlertState()
+    {
+
+    }
+    */
 
     // [헬퍼 함수] 중복되는 감지 로직을 하나로 묶음
     bool CheckPlayerDetected()
