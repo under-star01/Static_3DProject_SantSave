@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -82,7 +81,6 @@ public class PlayerSkill : MonoBehaviour
         if (isTransformed)
         {
             CheckMovementWhileTransformed();
-            UpdateTransformObjectPosition();
         }
 
         // 던지는 동안 회전 고정
@@ -96,6 +94,7 @@ public class PlayerSkill : MonoBehaviour
 
     public void OnTransformSkill()
     {
+        //쿨타임 체크
         if (Time.time < lastTransformTime + transformCool)
         {
             return;
@@ -129,35 +128,15 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Stop();
             transformEffect.Play();
         }
-
-        int randomIndex = UnityEngine.Random.Range(0, transformPrefabs.Length);
+        //변신오브젝트 랜덤선택 
+        int randomIndex = Random.Range(0, transformPrefabs.Length);
         GameObject selectedPrefab = transformPrefabs[randomIndex];
 
         // 독립 오브젝트로 생성
         Vector3 spawnPosition = transform.position + transformOffset;
         currentTransformObject = Instantiate(selectedPrefab, spawnPosition, transform.rotation);
 
-        // Rigidbody 설정 (날아가지 않게)
-        Rigidbody transformRb = currentTransformObject.GetComponent<Rigidbody>();
-        if (transformRb != null)
-        {
-            transformRb.isKinematic = true;
-            transformRb.useGravity = false;
-            transformRb.linearVelocity = Vector3.zero;
-            transformRb.angularVelocity = Vector3.zero;
-        }
-
-        // 플레이어와 충돌 무시
-        Collider playerCollider = GetComponent<Collider>();
-        Collider transformCollider = currentTransformObject.GetComponent<Collider>();
-        if (playerCollider != null && transformCollider != null)
-        {
-            Physics.IgnoreCollision(playerCollider, transformCollider);
-        }
-
-        // 초기 회전값 저장
-        currentrotation = transform.rotation;
-
+        //플레이어 외형 비활성화
         if (playerRenderer != null)
         {
             playerRenderer.enabled = false;
@@ -170,7 +149,6 @@ public class PlayerSkill : MonoBehaviour
         }
 
         isTransformed = true;
-
         Debug.Log($"변신 완료: {selectedPrefab.name}");
     }
 
@@ -190,7 +168,7 @@ public class PlayerSkill : MonoBehaviour
             currentTransformObject = null;
         }
 
-        // 플레이어 메시 다시 보이기
+        // 플레이어 외형 다시 보이기
         if (playerRenderer != null)
         {
             playerRenderer.enabled = true;
@@ -202,20 +180,8 @@ public class PlayerSkill : MonoBehaviour
             playerMove.canMove = true;
         }
 
-
         isTransformed = false;
-
         Debug.Log("변신 해제");
-    }
-
-    // 변신 오브젝트 위치만 업데이트 (회전은 고정)
-    private void UpdateTransformObjectPosition()
-    {
-        if (currentTransformObject == null)
-            return;
-
-        currentTransformObject.transform.position = transform.position + transformOffset;
-        currentTransformObject.transform.rotation = currentrotation;
     }
 
     private void CheckMovementWhileTransformed()

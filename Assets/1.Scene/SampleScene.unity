@@ -243,9 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7c2edbbc935b346bb3bda7d9f67c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
-  inventoryPanel: {fileID: 0}
-  giftIcon: {fileID: 0}
-  giftNameText: {fileID: 0}
+  inventoryPanel: {fileID: 601906661}
+  giftIcon: {fileID: 990125704}
+  giftNameText: {fileID: 1230393336}
 --- !u!1 &348661738
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &813297060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5800,6 +5800,7 @@ GameObject:
   - component: {fileID: 6386724164939537540}
   - component: {fileID: 6386724164939537537}
   - component: {fileID: 6386724164939537536}
+  - component: {fileID: 6386724164939537541}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -85336,6 +85337,7 @@ MonoBehaviour:
   - {fileID: 402661778081139808, guid: 147b9604a46d93543a38699e2517e593, type: 3}
   - {fileID: 8991090572871106010, guid: a9bf2c5df43e0c44a819a0ffc3d74c64, type: 3}
   transformOffset: {x: 0, y: 0, z: 0}
+  flashlight: {fileID: 903847134}
   decoyPrefab: {fileID: 13159344406582578, guid: 8957a8761325dec4c9a0f611fad622e0, type: 3}
   trajectoryLine: {fileID: 1966193072}
   decoyRangeIndicator: {fileID: 348661738}
@@ -85391,6 +85393,18 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 4194304
+--- !u!114 &6386724164939537541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363049609302531261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bce9f6595e960942959ab5f9e8a5e43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
 --- !u!4 &6386840228107640823
 Transform:
   m_ObjectHideFlags: 0
