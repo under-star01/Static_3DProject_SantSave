@@ -77,6 +77,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Polaroid_Prev",
+                    "type": "Button",
+                    "id": "dd68a7ad-c204-4c0f-b28d-52a29b01ea5d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Polaroid_Next",
+                    "type": "Button",
+                    "id": "1c391748-ea1b-4d5f-8519-739bafc3f4eb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Polaroid_Toggle",
+                    "type": "Button",
+                    "id": "2644da7f-b7a3-452a-b77c-b8a30e082255",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Polaroid_Close",
+                    "type": "Button",
+                    "id": "40b9caba-1365-4c32-8bef-35831f260970",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -209,6 +245,50 @@
                     "processors": "",
                     "groups": ";PC",
                     "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6bcd495-4464-4539-9406-35318f2f56c0",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Polaroid_Prev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03162a7e-2742-4e0b-9eca-00c06d53320a",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Polaroid_Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a8a8ace-5fb3-409f-802a-ff307784d4c0",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Polaroid_Toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13cbb315-30ad-4015-b826-0785b9131465",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Polaroid_Close",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

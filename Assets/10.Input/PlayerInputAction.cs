@@ -163,6 +163,42 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Polaroid_Prev"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd68a7ad-c204-4c0f-b28d-52a29b01ea5d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Polaroid_Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""1c391748-ea1b-4d5f-8519-739bafc3f4eb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Polaroid_Toggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""2644da7f-b7a3-452a-b77c-b8a30e082255"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Polaroid_Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""40b9caba-1365-4c32-8bef-35831f260970"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -297,6 +333,50 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6bcd495-4464-4539-9406-35318f2f56c0"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Polaroid_Prev"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03162a7e-2742-4e0b-9eca-00c06d53320a"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Polaroid_Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a8a8ace-5fb3-409f-802a-ff307784d4c0"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Polaroid_Toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13cbb315-30ad-4015-b826-0785b9131465"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Polaroid_Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -319,6 +399,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
+        m_Player_Polaroid_Prev = m_Player.FindAction("Polaroid_Prev", throwIfNotFound: true);
+        m_Player_Polaroid_Next = m_Player.FindAction("Polaroid_Next", throwIfNotFound: true);
+        m_Player_Polaroid_Toggle = m_Player.FindAction("Polaroid_Toggle", throwIfNotFound: true);
+        m_Player_Polaroid_Close = m_Player.FindAction("Polaroid_Close", throwIfNotFound: true);
     }
 
     ~@PlayerInputAction()
@@ -407,6 +491,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Zoom;
+    private readonly InputAction m_Player_Polaroid_Prev;
+    private readonly InputAction m_Player_Polaroid_Next;
+    private readonly InputAction m_Player_Polaroid_Toggle;
+    private readonly InputAction m_Player_Polaroid_Close;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -450,6 +538,22 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Zoom".
         /// </summary>
         public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Polaroid_Prev".
+        /// </summary>
+        public InputAction @Polaroid_Prev => m_Wrapper.m_Player_Polaroid_Prev;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Polaroid_Next".
+        /// </summary>
+        public InputAction @Polaroid_Next => m_Wrapper.m_Player_Polaroid_Next;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Polaroid_Toggle".
+        /// </summary>
+        public InputAction @Polaroid_Toggle => m_Wrapper.m_Player_Polaroid_Toggle;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Polaroid_Close".
+        /// </summary>
+        public InputAction @Polaroid_Close => m_Wrapper.m_Player_Polaroid_Close;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -500,6 +604,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Zoom.started += instance.OnZoom;
             @Zoom.performed += instance.OnZoom;
             @Zoom.canceled += instance.OnZoom;
+            @Polaroid_Prev.started += instance.OnPolaroid_Prev;
+            @Polaroid_Prev.performed += instance.OnPolaroid_Prev;
+            @Polaroid_Prev.canceled += instance.OnPolaroid_Prev;
+            @Polaroid_Next.started += instance.OnPolaroid_Next;
+            @Polaroid_Next.performed += instance.OnPolaroid_Next;
+            @Polaroid_Next.canceled += instance.OnPolaroid_Next;
+            @Polaroid_Toggle.started += instance.OnPolaroid_Toggle;
+            @Polaroid_Toggle.performed += instance.OnPolaroid_Toggle;
+            @Polaroid_Toggle.canceled += instance.OnPolaroid_Toggle;
+            @Polaroid_Close.started += instance.OnPolaroid_Close;
+            @Polaroid_Close.performed += instance.OnPolaroid_Close;
+            @Polaroid_Close.canceled += instance.OnPolaroid_Close;
         }
 
         /// <summary>
@@ -535,6 +651,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Zoom.started -= instance.OnZoom;
             @Zoom.performed -= instance.OnZoom;
             @Zoom.canceled -= instance.OnZoom;
+            @Polaroid_Prev.started -= instance.OnPolaroid_Prev;
+            @Polaroid_Prev.performed -= instance.OnPolaroid_Prev;
+            @Polaroid_Prev.canceled -= instance.OnPolaroid_Prev;
+            @Polaroid_Next.started -= instance.OnPolaroid_Next;
+            @Polaroid_Next.performed -= instance.OnPolaroid_Next;
+            @Polaroid_Next.canceled -= instance.OnPolaroid_Next;
+            @Polaroid_Toggle.started -= instance.OnPolaroid_Toggle;
+            @Polaroid_Toggle.performed -= instance.OnPolaroid_Toggle;
+            @Polaroid_Toggle.canceled -= instance.OnPolaroid_Toggle;
+            @Polaroid_Close.started -= instance.OnPolaroid_Close;
+            @Polaroid_Close.performed -= instance.OnPolaroid_Close;
+            @Polaroid_Close.canceled -= instance.OnPolaroid_Close;
         }
 
         /// <summary>
@@ -644,5 +772,33 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnZoom(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Polaroid_Prev" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPolaroid_Prev(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Polaroid_Next" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPolaroid_Next(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Polaroid_Toggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPolaroid_Toggle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Polaroid_Close" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPolaroid_Close(InputAction.CallbackContext context);
     }
 }
