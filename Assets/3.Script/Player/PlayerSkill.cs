@@ -130,6 +130,10 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Play();
         }
 
+        // 레이어 및 태그 변경
+        gameObject.tag = "Decoy";
+        gameObject.layer = LayerMask.NameToLayer("Decoy");
+
         int randomIndex = UnityEngine.Random.Range(0, transformPrefabs.Length);
         GameObject selectedPrefab = transformPrefabs[randomIndex];
 
@@ -182,6 +186,10 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Stop();
             transformEffect.Play();
         }
+
+        // 레이어 및 태그 복구
+        gameObject.tag = "Player";
+        gameObject.layer = LayerMask.NameToLayer("Player");
 
         // 변신 오브젝트 제거
         if (currentTransformObject != null)
