@@ -178,14 +178,14 @@ public class EnemyFSM : MonoBehaviour
         {
             // 1. 추격 종료 조건
             // targetPlayer가 null인지 확인하고, 감지 실패 시 종료
-            if (targetPlayer == null || !fov.DetectPlayer())
+            if (targetPlayer == null || !fov.DetectPlayer(true))
             {
                 Debug.Log("Chase: 놓침 -> 다시 순찰 복귀");
                 isPlayerFound = false;
                 targetPlayer = null;
                 break;
             }
-
+            
             // 2. 플레이어 따라가기
             agent.SetDestination(targetPlayer.position);
 
@@ -210,7 +210,7 @@ public class EnemyFSM : MonoBehaviour
     // [헬퍼 함수] 중복되는 감지 로직을 하나로 묶음
     bool CheckPlayerDetected()
     {
-        if (fov.DetectPlayer())
+        if (fov.DetectPlayer(false))
         {
             isPlayerFound = true;
             targetPlayer = fov.player; // FOV가 찾은 플레이어 저장
