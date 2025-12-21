@@ -20,7 +20,6 @@ public class EnemyFSM : MonoBehaviour
 
     [Header("디버그")]
     public float currentGauge = 0f;
-    private float maxGauge = 100f;
 
     [Header("소리 관련 변수")]
     private bool isHeard;

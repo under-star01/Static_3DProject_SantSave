@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15ba83dddb20a94882282b19ac9968b, type: 3}
+  m_Name: Gift_B
+  m_EditorClassIdentifier: Assembly-CSharp::GiftType_SO
+  giftId: Gift_B
+  giftName: "\uC7A5\uB09C\uAC10B"
+  giftPrefab: {fileID: 2659496527377266269, guid: 5e21564abc4242c48a4c8f40cb618d39, type: 3}

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed3e1d706a96dd4993894ad08b7860f, type: 3}
+  m_Name: Child_B
+  m_EditorClassIdentifier: Assembly-CSharp::ChildType_SO
+  childId: Child_B
+  childName: "\uBC15\uBC94\uADFC"
+  childPrefab: {fileID: 728389336569143482, guid: b662f326653f0cd44813f4ee29ccbfd8, type: 3}

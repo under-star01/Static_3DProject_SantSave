@@ -1,17 +1,11 @@
-using System;
-using System.Collections;
+using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Child", menuName = "Christmas/Child Data")]
-public class ChildData : ScriptableObject
+public class ChildData
 {
-    [Header("아이 정보")]
-    public string childName;
-    [TextArea(3, 5)]
-    public string description;
-    public Sprite portrait;
-
-    [Header("선물 정보")]
-    public GiftType desiredGift;
+    public string childName; // Child 이름
+    public List<Transform> patrolPos_List; // Child가 패트롤할 위치 리스트
+    public GameObject targetBed; // 목표 침대 오브젝트
+    public int targetGiftId; // 목표 선물 Id
 }
