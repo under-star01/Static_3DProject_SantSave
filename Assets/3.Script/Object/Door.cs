@@ -18,7 +18,7 @@ public class Door : MonoBehaviour, IInteractable
             animator = GetComponent<Animator>();
     }
 
-    public void Interact()
+    public void Interact(PlayerInteract playerInteract)
     {
         if (isBusy) return; 
 

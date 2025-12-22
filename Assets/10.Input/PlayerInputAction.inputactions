@@ -52,9 +52,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "Pick",
                     "type": "Button",
                     "id": "ec1e2628-94bb-45ea-a641-ee831c7b19ee",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Drop",
+                    "type": "Button",
+                    "id": "7b8cf235-e8f0-4836-b9d8-2357c0afd424",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -186,7 +195,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";PC",
-                    "action": "Interact",
+                    "action": "Pick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae8a3639-f7c6-4c87-8c29-9ebe59bab123",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";PC",
+                    "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

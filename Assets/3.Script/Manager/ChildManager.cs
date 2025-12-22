@@ -13,8 +13,6 @@ public class BedData
 
 public class ChildManager : MonoBehaviour
 {
-    public static ChildManager instance = null;
-
     [SerializeField] private List<ChildType_SO> childType_List_Ori;
     [SerializeField] private List<GiftType_SO> giftType_List_Ori;
     [SerializeField] private List<BedData> bedData_List_Ori;
@@ -24,18 +22,6 @@ public class ChildManager : MonoBehaviour
     [SerializeField] private List<BedData> bedData_List; // 저장할 침대 데이터 리스트
 
     private int spawnCnt = 0;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     // 제네릭을 통해 ChildType_SO, GiftType_SO 타입 Shuffle을 모두 처리
     private List<T> Shuffle<T>(List<T> list)

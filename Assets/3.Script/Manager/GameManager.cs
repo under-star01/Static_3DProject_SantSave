@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     [SerializeField] private ChildManager childManager;
+    [SerializeField] private ScoreManager scoreManager;
 
     private void Awake()
     {
@@ -22,6 +23,12 @@ public class GameManager : MonoBehaviour
         {
             // ChildManager 초기화
             childManager.InitializeData();
+        }
+
+        if (scoreManager != null)
+        {
+            // ChildManager 초기화
+            scoreManager.InitializeData();
         }
     }
 }
