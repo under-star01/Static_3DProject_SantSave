@@ -9,7 +9,6 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] private float transformCool = 0.5f;
     [SerializeField] private ParticleSystem transformEffect;
     [SerializeField] private GameObject[] transformPrefabs;
-    [SerializeField] private Vector3 transformOffset = new Vector3(0, 0.5f, 0);
 
     [Header("디코이 스킬")]
     [SerializeField] private GameObject decoyPrefab;
@@ -95,6 +94,29 @@ public class PlayerSkill : MonoBehaviour
             return;
         }
 
+        if (playerMove != null)
+        {
+            Vector2 moveInput = playerMove.GetMoveInput();
+
+            if (moveInput.sqrMagnitude > 0.01f) // 입력이 있으면
+            {
+                return;
+            }
+        }
+
+        rb.linearVelocity = Vector3.zero;
+
+        if (isThrowing)
+        {
+            return;
+        }
+
+        if (isDecoyAiming)
+        {
+            //조준중 캔슬
+            CancelDecoySkill();
+        }
+
         if (isTransformed)
         {
             // 변신 해제
@@ -106,7 +128,6 @@ public class PlayerSkill : MonoBehaviour
             Transform();
         }
 
-        lastTransformTime = Time.time;
     }
 
     private void Transform()
@@ -135,8 +156,7 @@ public class PlayerSkill : MonoBehaviour
         GameObject selectedPrefab = transformPrefabs[randomIndex];
 
         // 독립 오브젝트로 생성
-        Vector3 spawnPosition = transform.position + transformOffset;
-        currentTransformObject = Instantiate(selectedPrefab, spawnPosition, transform.rotation);
+        currentTransformObject = Instantiate(selectedPrefab, transform.position, transform.rotation);
 
         // Rigidbody 설정 (날아가지 않게)
         Rigidbody transformRb = currentTransformObject.GetComponent<Rigidbody>();
@@ -213,6 +233,7 @@ public class PlayerSkill : MonoBehaviour
 
         isTransformed = false;
 
+        lastTransformTime = Time.time;
         Debug.Log("변신 해제");
     }
 
@@ -222,7 +243,7 @@ public class PlayerSkill : MonoBehaviour
         if (currentTransformObject == null)
             return;
 
-        currentTransformObject.transform.position = transform.position + transformOffset;
+        currentTransformObject.transform.position = transform.position;
         currentTransformObject.transform.rotation = currentrotation;
     }
 
@@ -250,6 +271,11 @@ public class PlayerSkill : MonoBehaviour
 
     public void OnDecoySkillStart()
     {
+        if (isTransformed)
+        {//변신 중 사용 불가
+            return;
+        }
+
         if (isDecoyAiming)
         {
             CancelDecoySkill();
@@ -267,6 +293,11 @@ public class PlayerSkill : MonoBehaviour
 
     public void OnDecoySkillThrow()
     {
+        if (isTransformed)
+        {//변신 중 사용 불가
+            return;
+        }
+
         if (!isDecoyAiming)
         {
             return;
@@ -456,7 +487,7 @@ public class PlayerSkill : MonoBehaviour
                 Vector3 throwVelocity = CalculateSimpleThrowVelocity(startPosition, targetPosition);
                 rb.linearVelocity = throwVelocity;
 
-                Debug.Log($"디코이 투척: 힘={throwForce}, 각도={throwAngle}°");
+                Debug.Log($"디코이 투척");
             }
         }
 
