@@ -7,6 +7,13 @@ public class ChildCtrl : MonoBehaviour
     [SerializeField] private List<Transform> patrolPos_List = new List<Transform>(); // Child가 패트롤할 위치 리스트
     [SerializeField] private Transform bedPos;
 
+    private EnemyFSM enemyFSM;
+
+    private void Awake()
+    {
+        TryGetComponent(out enemyFSM);
+    }
+
     // Child 오브젝트 데이터 초기화 메소드
     public void Init(BedData bedData)
     {
@@ -15,6 +22,12 @@ public class ChildCtrl : MonoBehaviour
         {
             patrolPos_List = bedData.patrolPoints;
             bedPos = bedData.Bed.transform;
+        }
+
+        if (enemyFSM != null)
+        {
+            enemyFSM.patrolPoints = patrolPos_List;
+            enemyFSM.StartFSMLoop();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,7 +19,7 @@ public class EnemyFSM : MonoBehaviour
     public EnemyFOV fov;
 
     [Header("공통 설정")]
-    public Transform[] patrolPoints;
+    public List<Transform> patrolPoints;
     public float idleTime = 2f;
     public float lookTime = 1.5f;
 
@@ -53,7 +54,10 @@ public class EnemyFSM : MonoBehaviour
         {
             if (fov != null) fov.enabled = false;
         }
+    }
 
+    public void StartFSMLoop()
+    {
         StartCoroutine(FSM_Loop());
     }
 
@@ -141,9 +145,9 @@ public class EnemyFSM : MonoBehaviour
     {
         //Debug.Log("State: Move");
 
-        if (patrolPoints.Length > 0)
+        if (patrolPoints.Count > 0)
         {
-            int randIndex = Random.Range(0, patrolPoints.Length);
+            int randIndex = Random.Range(0, patrolPoints.Count);
             agent.SetDestination(patrolPoints[randIndex].position);
 
             // [수정] 이동 중에도 계속 감시

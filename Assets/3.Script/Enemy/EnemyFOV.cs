@@ -23,6 +23,11 @@ public class EnemyFOV : MonoBehaviour
     private MeshFilter viewMeshFilter;
     private Mesh viewMesh;
 
+    private void Awake()
+    {
+        player = FindAnyObjectByType<PlayerInput>().gameObject.transform;
+    }
+
     void Start()
     {
         //빈 메쉬 생성 및 viewMeshFilter의 메쉬에 적용
