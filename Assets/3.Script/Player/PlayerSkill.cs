@@ -27,6 +27,7 @@ public class PlayerSkill : MonoBehaviour
     private PlayerMove playerMove;
     private Renderer playerRenderer;
     private Rigidbody rb;
+    [SerializeField] private Light sight;
 
     // 변신 스킬
     private bool isTransformed = false;
@@ -123,6 +124,9 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Play();
         }
 
+        // 불끄기
+        sight.enabled = false;
+
         // 레이어 및 태그 변경
         gameObject.tag = "Decoy";
         gameObject.layer = LayerMask.NameToLayer("Decoy");
@@ -179,6 +183,9 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Stop();
             transformEffect.Play();
         }
+
+        //불켜기
+        sight.enabled = true;
 
         // 레이어 및 태그 복구
         gameObject.tag = "Player";

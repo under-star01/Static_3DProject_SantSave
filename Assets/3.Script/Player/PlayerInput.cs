@@ -37,6 +37,7 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Run.performed += OnRunStart;
         playerInput.Player.Run.canceled += OnRunStop;
         playerInput.Player.Interact.performed += OnInteract;
+        playerInput.Player.PutDown.performed += OnPutDown;
 
         playerInput.Enable();
     }
@@ -54,6 +55,7 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Run.performed -= OnRunStart;
         playerInput.Player.Run.canceled -= OnRunStop;
         playerInput.Player.Interact.performed -= OnInteract;
+        playerInput.Player.PutDown.performed -= OnPutDown;
 
         playerInput.Disable();
     }
@@ -136,6 +138,14 @@ public class PlayerInput : MonoBehaviour
         if (playerMove != null)
         {
             playerMove.SetCameraZoom(context.ReadValue<float>());
+        }
+    }
+
+    private void OnPutDown(InputAction.CallbackContext context)
+    {
+        if (PlayerInventory.Instance != null)
+        {
+            PlayerInventory.Instance.StartPutDownGift();
         }
     }
 }

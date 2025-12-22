@@ -17,6 +17,7 @@ public class GiftManager : MonoBehaviour
     [SerializeField] private Transform[] giftSpawnPoints = new Transform[3];
 
     private Dictionary<ChildData, GiftType> deliveredGifts = new Dictionary<ChildData, GiftType>();
+    private List<GameObject> spawnedGifts = new List<GameObject>();
 
     private void Awake()
     {
@@ -44,6 +45,54 @@ public class GiftManager : MonoBehaviour
             if (children[i] != null)
             {
                 Debug.Log($"{i + 1}. {children[i].childName}는 {children[i].desiredGift}를 원합니다");
+            }
+        }
+
+        // 선물 생성
+        SpawnGifts();
+    }
+
+    private void SpawnGifts()
+    {
+        if (giftSpawnPoints == null || giftSpawnPoints.Length < 3)
+        {
+            Debug.LogError("선물 스폰 포인트가 3개 필요합니다!");
+            return;
+        }
+
+        // 각 아이가 원하는 선물을 스폰
+        for (int i = 0; i < children.Length; i++)
+        {
+            if (children[i] == null) continue;
+
+            GiftType giftType = children[i].desiredGift;
+            GiftItem giftItem = GetGiftItem(giftType);
+
+            if (giftItem != null && giftItem.prefab != null)
+            {
+                // 선물 생성
+                GameObject giftObj = Instantiate(
+                    giftItem.prefab,
+                    giftSpawnPoints[i].position,
+                    giftSpawnPoints[i].rotation
+                );
+
+                // GiftPickup 컴포넌트 확인 및 추가
+                GiftPickup pickup = giftObj.GetComponent<GiftPickup>();
+                if (pickup == null)
+                {
+                    pickup = giftObj.AddComponent<GiftPickup>();
+                }
+
+                // 선물 정보 초기화
+                pickup.Initialize(giftType, giftItem.giftName);
+
+                // Layer 설정
+                giftObj.layer = LayerMask.NameToLayer("Interactable");
+
+                spawnedGifts.Add(giftObj);
+
+                Debug.Log($"선물 생성: {giftItem.giftName} at {giftSpawnPoints[i].name}");
             }
         }
     }
@@ -96,6 +145,7 @@ public class GiftManager : MonoBehaviour
         return deliveredGifts.Count;
     }
 
+    // 선물 아이템 가져오기
     public GiftItem GetGiftItem(GiftType type)
     {
         foreach (var gift in gifts)
