@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Decoy : MonoBehaviour
@@ -27,7 +28,17 @@ public class Decoy : MonoBehaviour
                 Instantiate(landingEffect, transform.position, Quaternion.identity);
             }
 
-            // 적 유인
+            // 적 유인 코루틴
+            StartCoroutine(Repeat_co());
+        }
+    }
+
+    private IEnumerator Repeat_co()
+    {
+        AttractEnemies();
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
             AttractEnemies();
         }
     }
