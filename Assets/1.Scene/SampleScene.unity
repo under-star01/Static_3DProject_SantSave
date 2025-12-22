@@ -22031,22 +22031,16 @@ MonoBehaviour:
   decoyPrefab: {fileID: 13159344406582578, guid: 8957a8761325dec4c9a0f611fad622e0, type: 3}
   trajectoryLine: {fileID: 1966193072}
   decoyRangeIndicator: {fileID: 348661738}
-  decoyAttractionRadius: 4
-  rangeIndicatorHeight: 0.5
-  maxThrowDistance: 5
-  minThrowForce: 0.1
-  maxThrowForce: 8
-  minThrowAngle: 30
-  maxThrowAngle: 65
-  minTrajectoryPoints: 3
-  maxTrajectoryPoints: 16
+  throwForce: 8
+  throwAngle: 45
+  trajectoryPoints: 20
   decoyCooldown: 1
-  trajectoryDistanceMultiplier: 0.95
   wallLayer:
     serializedVersion: 2
     m_Bits: 4195328
   throwAnimationDelay: 0.7
   throwAnimationDuration: 1.4
+  sight: {fileID: 903847134}
 --- !u!114 &6386724164939537539
 MonoBehaviour:
   m_ObjectHideFlags: 0

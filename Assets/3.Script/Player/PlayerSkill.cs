@@ -15,17 +15,10 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] private GameObject decoyPrefab;
     [SerializeField] private LineRenderer trajectoryLine; // 궤적 표시
     [SerializeField] private GameObject decoyRangeIndicator; // 디코이 범위 표시
-    [SerializeField] private float decoyAttractionRadius = 5f; //디코이 유인 범위
-    [SerializeField] private float rangeIndicatorHeight = 0.5f; //범위 표시 높이
-    [SerializeField] private float maxThrowDistance = 5f; // 최대 투척 거리
-    [SerializeField] private float minThrowForce = 0.1f; // 최소 던지는 힘
-    [SerializeField] private float maxThrowForce = 8f; // 최대 던지는 힘
-    [SerializeField] private float minThrowAngle = 30f; //최소 각도
-    [SerializeField] private float maxThrowAngle = 65f; //최대 각도
-    [SerializeField] private int minTrajectoryPoints = 3; // 가까울 때 점 개수
-    [SerializeField] private int maxTrajectoryPoints = 16; // 멀 때 점 개수
+    [SerializeField] private float throwForce = 8f;
+    [SerializeField] private float throwAngle = 45f;
+    [SerializeField] private int trajectoryPoints = 20;
     [SerializeField] private float decoyCooldown = 1f; // 쿨다운
-    [SerializeField] private float trajectoryDistanceMultiplier = 0.9f; // 거리 게수
     [SerializeField] private LayerMask wallLayer; //벽 레이어
     [SerializeField] private float throwAnimationDelay = 0.7f; // 던지기 타이밍
     [SerializeField] private float throwAnimationDuration = 1f; // 애니메이션 전체 길이
@@ -34,6 +27,7 @@ public class PlayerSkill : MonoBehaviour
     private PlayerMove playerMove;
     private Renderer playerRenderer;
     private Rigidbody rb;
+    [SerializeField] private Light sight;
 
     // 변신 스킬
     private bool isTransformed = false;
@@ -130,6 +124,9 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Play();
         }
 
+        // 불끄기
+        sight.enabled = false;
+
         // 레이어 및 태그 변경
         gameObject.tag = "Decoy";
         gameObject.layer = LayerMask.NameToLayer("Decoy");
@@ -186,6 +183,9 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Stop();
             transformEffect.Play();
         }
+
+        //불켜기
+        sight.enabled = true;
 
         // 레이어 및 태그 복구
         gameObject.tag = "Player";
@@ -248,7 +248,6 @@ public class PlayerSkill : MonoBehaviour
 
     #region 디코이 스킬
 
-    // 디코이 스킬 시작/취소 (우클릭)
     public void OnDecoySkillStart()
     {
         if (isDecoyAiming)
@@ -266,7 +265,6 @@ public class PlayerSkill : MonoBehaviour
         StartDecoyAim();
     }
 
-    // 디코이 투척 (좌클릭)
     public void OnDecoySkillThrow()
     {
         if (!isDecoyAiming)
@@ -274,11 +272,11 @@ public class PlayerSkill : MonoBehaviour
             return;
         }
 
-        // 연속 입력 방지
         if (isThrowing)
         {
             return;
         }
+
         StartThrowAnimation();
     }
 
@@ -295,29 +293,25 @@ public class PlayerSkill : MonoBehaviour
         {
             decoyRangeIndicator.SetActive(true);
 
-            // 범위 크기 설정
-            float diameter = decoyAttractionRadius * 2f;
+            float diameter = 8f;//유인표시범위
             decoyRangeIndicator.transform.localScale = new Vector3(diameter, 0.01f, diameter);
         }
+
         Debug.Log("디코이 조준 시작");
     }
 
-    // 던지기 애니메이션 시작
     private void StartThrowAnimation()
     {
         isThrowing = true;
 
-        // 이동 불가
         if (playerMove != null)
         {
             playerMove.canMove = false;
         }
 
-        // 현재 바라보는 방향 저장
         lockedPlayerRotation = transform.rotation;
         lockPlayerRotation = true;
 
-        // 던지기 애니메이션 트리거
         if (animator != null)
         {
             animator.SetTrigger("Throw");
@@ -326,7 +320,6 @@ public class PlayerSkill : MonoBehaviour
         StartCoroutine(ThrowAfterAnimation());
     }
 
-    // 애니메이션 타이밍에 맞춰 던지기
     private IEnumerator ThrowAfterAnimation()
     {
         yield return new WaitForSeconds(throwAnimationDelay);
@@ -338,132 +331,117 @@ public class PlayerSkill : MonoBehaviour
         isThrowing = false;
         lockPlayerRotation = false;
 
-        // 이동 가능
         if (playerMove != null)
         {
             playerMove.canMove = true;
         }
     }
 
-    // 궤적 업데이트 (마우스 위치에 따라)
+    // 단순화된 궤적 업데이트
     private void UpdateTrajectory()
     {
         Vector3 mouseWorldPos = playerMove.mouseHitPos;
         Vector3 startPosition = transform.position + Vector3.up * 1.5f;
 
-        // 마우스까지의 수평 거리 계산
-        Vector3 directionToMouse = mouseWorldPos - startPosition;
-        directionToMouse.y = 0f;
-        float distanceToMouse = directionToMouse.magnitude;
+        // 마우스 방향으로 목표 설정
+        targetPosition = mouseWorldPos;
 
-        // 최대 거리 제한
-        if (distanceToMouse > maxThrowDistance)
-        {
-            distanceToMouse = maxThrowDistance;
-            directionToMouse = directionToMouse.normalized * maxThrowDistance;
-        }
+        // 단순한 던지기 속도 계산
+        Vector3 throwVelocity = CalculateSimpleThrowVelocity(startPosition, targetPosition);
 
-        // 목표 위치 계산
-        targetPosition = startPosition + directionToMouse;
-        targetPosition.y = mouseWorldPos.y;
-
-        // 정규화된 거리 (0~1)
-        float normalizedDistance = distanceToMouse / maxThrowDistance;
-
-        // 거리에 따른 힘 계산
-        float throwForce = Mathf.Lerp(minThrowForce, maxThrowForce, normalizedDistance);
-
-        // 거리에 따른 각도 계산
-        currentThrowAngle = Mathf.Lerp(minThrowAngle, maxThrowAngle, normalizedDistance);
-
-        // 거리에 따른 궤적 점 개수 계산
-        int trajectoryPoints = Mathf.RoundToInt(Mathf.Lerp(minTrajectoryPoints, maxTrajectoryPoints, normalizedDistance));
-
-        // 던지기 속도 계산
-        Vector3 throwVelocity = CalculateThrowVelocity(startPosition, targetPosition, throwForce, currentThrowAngle);
-
-        // 궤적 그리기
-        DrawTrajectoryWithWallCheck(startPosition, throwVelocity * trajectoryDistanceMultiplier, trajectoryPoints);
+        // 궤적 그리기 (벽 체크 포함)
+        DrawTrajectoryWithWallCheck(startPosition, throwVelocity);
 
         UpdateRangeIndicator();
     }
 
-    // 벽 충돌 체크하며 궤적 그리기
-    private void DrawTrajectoryWithWallCheck(Vector3 startPos, Vector3 initialVelocity, int pointCount)
+    // 단순화된 속도 계산 (고정 각도 사용)
+    private Vector3 CalculateSimpleThrowVelocity(Vector3 start, Vector3 target)
     {
-        if (trajectoryLine == null)
-            return;
+        Vector3 direction = target - start;
+        Vector3 horizontalDir = new Vector3(direction.x, 0, direction.z);
 
-        List<Vector3> trajectoryPoints = new List<Vector3>();
+        float angleRad = throwAngle * Mathf.Deg2Rad;
 
-        Vector3 currentPosition = startPos;
-        Vector3 currentVelocity = initialVelocity;
-        float timeStep = Time.fixedDeltaTime; // 0.1f → Time.fixedDeltaTime (더 정확)
-
-        for (int i = 0; i < 200; i++)
-        {
-            trajectoryPoints.Add(currentPosition);
-
-            // 중력 적용
-            Vector3 gravity = Physics.gravity;
-            Vector3 nextVelocity = currentVelocity + gravity * timeStep;
-            Vector3 nextPosition = currentPosition + currentVelocity * timeStep;
-
-            Vector3 direction = nextPosition - currentPosition;
-            float distance = direction.magnitude;
-
-            if (Physics.Raycast(currentPosition, direction.normalized, out RaycastHit wallHit, distance, wallLayer))
-            {
-                trajectoryPoints.Add(wallHit.point);
-                finalLandingPosition = new Vector3(wallHit.point.x, 0f, wallHit.point.z);
-                break;
-            }
-
-            currentVelocity = nextVelocity;
-            currentPosition = nextPosition;
-
-            if (currentPosition.y <= 0f)
-            {
-                finalLandingPosition = new Vector3(currentPosition.x, 0f, currentPosition.z);
-                trajectoryPoints.Add(finalLandingPosition);
-                break;
-            }
-        }
-
-        trajectoryLine.positionCount = trajectoryPoints.Count;
-        for (int i = 0; i < trajectoryPoints.Count; i++)
-        {
-            trajectoryLine.SetPosition(i, trajectoryPoints[i]);
-        }
-    }
-
-    // 디코이 범위 표시 위치 업데이트
-    private void UpdateRangeIndicator()
-    {
-        if (decoyRangeIndicator == null) return;
-
-        // 궤적의 마지막 지점 (착지 지점) 계산
-        Vector3 landingPosition = finalLandingPosition;
-        landingPosition.y = rangeIndicatorHeight;
-
-        decoyRangeIndicator.transform.position = landingPosition;
-    }
-
-    // 던지기 속도 계산
-    private Vector3 CalculateThrowVelocity(Vector3 startPos, Vector3 targetPos, float force, float angle)
-    {
-        Vector3 direction = targetPos - startPos;
-        Vector3 horizontalDirection = new Vector3(direction.x, 0, direction.z);
-
-        float angleRad = angle * Mathf.Deg2Rad;
-
-        Vector3 velocity = horizontalDirection.normalized * force * Mathf.Cos(angleRad);
-        velocity.y = force * Mathf.Sin(angleRad);
+        Vector3 velocity = horizontalDir.normalized * throwForce * Mathf.Cos(angleRad);
+        velocity.y = throwForce * Mathf.Sin(angleRad);
 
         return velocity;
     }
 
-    // 디코이 던지기
+    // 벽 체크 포함된 궤적 그리기
+    private void DrawTrajectoryWithWallCheck(Vector3 startPos, Vector3 initialVelocity)
+    {
+        if (trajectoryLine == null)
+            return;
+
+        List<Vector3> points = new List<Vector3>();
+        Vector3 currentPos = startPos;
+        Vector3 currentVel = initialVelocity;
+        Vector3 previousPos = startPos;
+
+        for (int i = 0; i < trajectoryPoints; i++)
+        {
+            points.Add(currentPos);
+
+            // 간단한 중력 적용
+            currentVel += Physics.gravity * 0.1f;
+            Vector3 nextPos = currentPos + currentVel * 0.1f;
+
+            // 현재 위치에서 다음 위치로 가는 방향
+            Vector3 direction = nextPos - currentPos;
+            float distance = direction.magnitude;
+
+            // 벽 체크
+            if (Physics.Raycast(currentPos, direction.normalized, out RaycastHit hit, distance, wallLayer))
+            {
+                // 벽에 닿은 지점
+                points.Add(hit.point);
+                finalLandingPosition = new Vector3(hit.point.x, 0f, hit.point.z);
+
+                trajectoryLine.positionCount = points.Count;
+                trajectoryLine.SetPositions(points.ToArray());
+                return;
+            }
+
+            previousPos = currentPos;
+            currentPos = nextPos;
+
+            // 땅에 닿으면 종료
+            if (currentPos.y <= 0f)
+            {
+                Vector3 groundPos = new Vector3(currentPos.x, 0f, currentPos.z);
+                points.Add(groundPos);
+                finalLandingPosition = groundPos;
+
+                trajectoryLine.positionCount = points.Count;
+                trajectoryLine.SetPositions(points.ToArray());
+                return;
+            }
+        }
+
+        trajectoryLine.positionCount = points.Count;
+        trajectoryLine.SetPositions(points.ToArray());
+
+        // 최대 거리까지 갔을 때의 착지 지점
+        if (points.Count > 0)
+        {
+            Vector3 lastPoint = points[points.Count - 1];
+            finalLandingPosition = new Vector3(lastPoint.x, 0f, lastPoint.z);
+        }
+    }
+
+    private void UpdateRangeIndicator()
+    {
+        if (decoyRangeIndicator == null) return;
+
+        // 최종 착지 지점에 범위 표시
+        Vector3 indicatorPos = finalLandingPosition;
+        indicatorPos.y = 0.5f;
+        decoyRangeIndicator.transform.position = indicatorPos;
+    }
+
+    // 단순화된 디코이 던지기
     private void ThrowDecoy()
     {
         if (decoyPrefab != null)
@@ -474,28 +452,11 @@ public class PlayerSkill : MonoBehaviour
             Rigidbody rb = decoy.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                // 거리 계산
-                Vector3 directionToTarget = targetPosition - startPosition;
-                directionToTarget.y = 0f;
-                float distance = directionToTarget.magnitude;
-
-                // 거리 제한
-                if (distance > maxThrowDistance)
-                {
-                    distance = maxThrowDistance;
-                }
-
-                float normalizedDistance = distance / maxThrowDistance;
-
-                // 힘과 각도 계산
-                float throwForce = Mathf.Lerp(minThrowForce, maxThrowForce, normalizedDistance);
-                float throwAngle = Mathf.Lerp(minThrowAngle, maxThrowAngle, normalizedDistance);
-
-                // 속도 적용
-                Vector3 throwVelocity = CalculateThrowVelocity(startPosition, targetPosition, throwForce, throwAngle);
+                // 고정된 힘과 각도로 던지기
+                Vector3 throwVelocity = CalculateSimpleThrowVelocity(startPosition, targetPosition);
                 rb.linearVelocity = throwVelocity;
 
-                Debug.Log($"디코이 투척: 거리={distance:F2}m, 힘={throwForce:F2}, 각도={throwAngle:F1}°");
+                Debug.Log($"디코이 투척: 힘={throwForce}, 각도={throwAngle}°");
             }
         }
 
@@ -505,12 +466,10 @@ public class PlayerSkill : MonoBehaviour
 
     private void CancelDecoySkill()
     {
-        // 던지는 중에는 취소 불가
         if (isThrowing)
         {
             return;
         }
-
 
         EndDecoyAim();
         Debug.Log("디코이 스킬 취소");
@@ -524,7 +483,7 @@ public class PlayerSkill : MonoBehaviour
         {
             trajectoryLine.enabled = false;
         }
-        // 범위 표시 비활성화
+
         if (decoyRangeIndicator != null)
         {
             decoyRangeIndicator.SetActive(false);
