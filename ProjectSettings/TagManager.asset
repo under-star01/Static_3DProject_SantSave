@@ -16,7 +16,7 @@ TagManager:
   - UI
   - MouseDetect
   - 
-  - 
+  - Floor
   - Enemy
   - Wall
   - Player

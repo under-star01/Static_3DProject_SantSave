@@ -2,16 +2,31 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyType
+{
+    Roamer,
+    Obsever
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyFSM : MonoBehaviour
 {
+    [Header("타입 설정")]
+    public EnemyType enemyType;
+
     [Header("참조 스크립트")]
     public EnemyFOV fov;
 
-    [Header("설정")]
+    [Header("공통 설정")]
     public Transform[] patrolPoints;
     public float idleTime = 2f;
     public float lookTime = 1.5f;
+
+    [Header("Roamer 설정")]
+    public bool isSleeping;
+
+    [Header("Observer 설정")]
+    public float alertAmount = 20f;
 
     [Header("게임 오버 설정")]
     public float killDistance = 3.0f;
@@ -33,6 +48,12 @@ public class EnemyFSM : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        if (enemyType == EnemyType.Roamer && isSleeping)
+        {
+            if (fov != null) fov.enabled = false;
+        }
+
         StartCoroutine(FSM_Loop());
     }
 
@@ -40,34 +61,66 @@ public class EnemyFSM : MonoBehaviour
     {
         while (true)
         {
-            // 1. Idle (대기)
-            // 발견되지 않았을 때만 실행
-            if (!isPlayerFound && !isHeard) yield return StartCoroutine(IdleState());
+            // 1. Sleep (수면)
+            if (isSleeping) yield return StartCoroutine(SleepState());
 
-            // 2. Move (이동)
-            // Idle에서 발견됐다면 Move는 건너뜀
-            if (!isPlayerFound && !isHeard) yield return StartCoroutine(MoveState());
+            // 2. WakeUp (기상)
+            // 수면 중 플레이어의 소리를 감지했을 때 실행
+            if (isSleeping && isHeard) yield return StartCoroutine(WakeUpState());
 
-            // 3. Detect (정밀 감시 - 멈춰서 두리번거림)
-            // 이동 중에 발견됐다면 Detect는 건너뜀
-            if (!isPlayerFound && !isHeard) yield return StartCoroutine(DetectState());
 
-            // --- [발견 시 실행되는 구간] ---
-            // 4. Look (경고/주시)
-            if (isHeard && !isPlayerFound)
+            if (!isSleeping)
             {
-                yield return StartCoroutine(LookState());
+                // 1. Idle (대기)
+                // 발견되지 않았을 때만 실행
+                if (!isPlayerFound && !isHeard) yield return StartCoroutine(IdleState());
+
+                // 2. Move (이동)
+                // Idle에서 발견됐다면 Move는 건너뜀
+                if (!isPlayerFound && !isHeard) yield return StartCoroutine(MoveState());
+
+                // 3. Detect (정밀 감시 - 멈춰서 두리번거림)
+                // 이동 중에 발견됐다면 Detect는 건너뜀
+                if (!isPlayerFound && !isHeard) yield return StartCoroutine(DetectState());
+
+                // --- [발견 시 실행되는 구간] ---
+                // 4. Look (경고/주시)
+                if (isHeard && !isPlayerFound)
+                {
+                    yield return StartCoroutine(LookState());
+                }
+
+                // 5. Chase (추격)
+                if (isPlayerFound)
+                {
+                    if (enemyType == EnemyType.Roamer) yield return StartCoroutine(ChaseState());
+
+                    if (enemyType == EnemyType.Obsever) yield return StartCoroutine(AlertState());
+                }
             }
 
-            // 5. Chase (추격)
-            if (isPlayerFound)
-            {
-                yield return StartCoroutine(ChaseState());
-            }
         }
     }
 
     // --- [개별 상태 코루틴] ---
+
+    IEnumerator SleepState()
+    {
+        agent.isStopped = true; // 이동 불가능 상태로 전환
+        yield return null;
+    }
+
+    IEnumerator WakeUpState()
+    {
+        isSleeping = false;
+        isHeard = false;    // 자는동안 들었던 소리는 일어나는 동안 잊음
+        agent.isStopped = false; // 이동 가능 상태로 전환
+
+        if (fov != null) fov.enabled = true;    // 시야 켜주기
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
 
     IEnumerator IdleState()
     {
@@ -185,7 +238,7 @@ public class EnemyFSM : MonoBehaviour
                 targetPlayer = null;
                 break;
             }
-            
+
             // 2. 플레이어 따라가기
             agent.SetDestination(targetPlayer.position);
 
@@ -206,6 +259,13 @@ public class EnemyFSM : MonoBehaviour
             yield return null;
         }
     }
+
+
+    IEnumerator AlertState()
+    {
+        yield return null;
+    }
+
 
     // [헬퍼 함수] 중복되는 감지 로직을 하나로 묶음
     bool CheckPlayerDetected()
