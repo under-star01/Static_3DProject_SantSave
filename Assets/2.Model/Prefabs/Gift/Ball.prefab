@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9144544947262272502
+--- !u!1 &1180092760588478716
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8479191237077330252}
-  - component: {fileID: 4756918396796692201}
-  - component: {fileID: 7342854612921520675}
-  - component: {fileID: 8225432176999796389}
-  - component: {fileID: -225701176542718177}
+  - component: {fileID: 1417311961958665354}
+  - component: {fileID: 5206450862032397189}
+  - component: {fileID: 1331064167626435607}
+  - component: {fileID: 2640592838691664296}
+  - component: {fileID: 1665149477175915776}
   m_Layer: 22
   m_Name: Ball
   m_TagString: Untagged
@@ -20,36 +20,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8479191237077330252
+--- !u!4 &1417311961958665354
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9144544947262272502}
+  m_GameObject: {fileID: 1180092760588478716}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4756918396796692201
+--- !u!33 &5206450862032397189
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9144544947262272502}
+  m_GameObject: {fileID: 1180092760588478716}
   m_Mesh: {fileID: 5776253881650650674, guid: 7af44053535ae604d94e6bf46b30608a, type: 3}
---- !u!23 &7342854612921520675
+--- !u!23 &1331064167626435607
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9144544947262272502}
+  m_GameObject: {fileID: 1180092760588478716}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 293fedf4ae72d0f42a326f700888b9f9, type: 2}
+  - {fileID: 2100000, guid: a6e53dbd4156a6f479ae5449ea539029, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,13 +91,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8225432176999796389
-CapsuleCollider:
+--- !u!114 &2640592838691664296
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9144544947262272502}
+  m_GameObject: {fileID: 1180092760588478716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fadb7cbeee1a230489d1c7dfe04a5828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gift
+  currentGift: {fileID: 11400000, guid: ddc2614294e46454584631324282eb1f, type: 2}
+  isPicked: 0
+--- !u!64 &1665149477175915776
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180092760588478716}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -109,22 +123,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.22385055
-  m_Height: 0.4477011
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-225701176542718177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9144544947262272502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fadb7cbeee1a230489d1c7dfe04a5828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gift
-  currentGift: {fileID: 11400000, guid: ddc2614294e46454584631324282eb1f, type: 2}
-  isPicked: 0
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5776253881650650674, guid: 7af44053535ae604d94e6bf46b30608a, type: 3}
