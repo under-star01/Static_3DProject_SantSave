@@ -14,14 +14,13 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private float totalTime = 60f;
 
     private float currentTime;
-    private Color nightColor;
-    private Color sunriseColor = new Color(1f, 0.5f, 0.3f);
+    private Color nightColor = new Color(0.2f, 0.2f, 0.5f);
+    private Color sunriseColor = new Color(0.3f, 0.2f, 0.2f);
 
 
     private void Start()
     {
         currentTime = totalTime;
-        nightColor = all.color;
         all.intensity = 0.1f;
     }
 
@@ -58,7 +57,7 @@ public class TimeManager : MonoBehaviour
         all.color = Color.Lerp(nightColor, sunriseColor, t);
 
         // ¹à±â Áõ°¡
-        all.intensity = Mathf.Lerp(0.1f, 0.4f, t);
+        all.intensity = Mathf.Lerp(0.1f, 0.5f, t);
 
         // ´ÞºûÀº ¼­¼­È÷ ¾àÇØÁü
         moon.intensity = Mathf.Lerp(moon.intensity, 0f, t);
