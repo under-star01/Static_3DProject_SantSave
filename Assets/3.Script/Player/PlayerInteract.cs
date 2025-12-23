@@ -13,8 +13,17 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private Transform giftAttachPoint; // 픽업시 선물 위치
     [SerializeField] private Animator animator;
 
+    private PlayerMove playerMove;
+
     public Gift carriedGift;
     public bool hasGift => carriedGift != null; // 선물 보유 여부에 따라 상태 변경
+    private bool ispickuping= false;
+
+    private void Awake()
+    {
+        TryGetComponent(out playerMove);
+    }
+
 
     // 상호작용 시도 메소드
     public void TryInteract()
@@ -59,6 +68,8 @@ public class PlayerInteract : MonoBehaviour
     // 선물 pick up 메소드
     private void PickGift(Gift gift)
     {
+        StartCoroutine(PickupAniDelay_co());
+
         carriedGift = gift;
 
         // 선물 충돌 해제
@@ -67,7 +78,7 @@ public class PlayerInteract : MonoBehaviour
         // 플레이어 손 위치에 붙이기
         Transform t = carriedGift.transform;
         t.SetParent(giftAttachPoint);
-        t.localPosition = Vector3.zero;
+        t.localPosition = new Vector3(0f,-0.0017f,0.003f);
         t.localRotation = Quaternion.identity;
 
         // 애니메이션 반영
@@ -75,11 +86,29 @@ public class PlayerInteract : MonoBehaviour
             animator.SetBool("IsCarrying", true);
     }
 
+    private IEnumerator PickupAniDelay_co()
+    {
+        animator.SetTrigger("Pickup");
+        ispickuping = true;
+        if (playerMove != null)
+        {
+            playerMove.canMove = false;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        if (playerMove != null)
+        {
+            playerMove.canMove = true;
+        }
+        ispickuping = false;
+    }
 
     // 현재 선물 drop 메소드
     public void DropCarriedGift()
     {
         if (!hasGift) return;
+        if (ispickuping) return;
 
         Gift dropped = carriedGift;
 
