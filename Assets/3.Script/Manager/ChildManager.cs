@@ -13,6 +13,8 @@ public class BedData
 
 public class ChildManager : MonoBehaviour
 {
+    public List<GameObject> spawnChild_List = new(); // 생성된 아이들 리스트
+
     [SerializeField] private List<ChildType_SO> childType_List_Ori;
     [SerializeField] private List<GiftType_SO> giftType_List_Ori;
     [SerializeField] private List<BedData> bedData_List_Ori;
@@ -57,6 +59,9 @@ public class ChildManager : MonoBehaviour
             // Child 오브젝트 생성 및 Init 메소드 호출
             GameObject childObj 
                 = Instantiate(childData.childPrefab, bedData_List[i].Bed.transform.position, bedData_List[i].Bed.transform.rotation);
+            
+            // 생성 Child 리스트에 추가
+            spawnChild_List.Add(childObj);
 
             // Child 오브젝트 초기화 실행
             ChildCtrl childCtrl = childObj.GetComponent<ChildCtrl>();
