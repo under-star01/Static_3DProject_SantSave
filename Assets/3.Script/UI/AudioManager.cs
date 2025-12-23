@@ -44,6 +44,7 @@ public class AudioManager : MonoBehaviour
         // volume의 값이 0에 수렴한다고 볼 수 있는 0.0001f보다 작을 경우 -80dB(최대 볼륨의 약 1억분의 1)로 설정함
         // why? Log10(0)은 음의 무한대 값이 되어 오류가 발생하기 때문에 최대치에 제한을 둠.
 
+        Debug.Log("Setting MusicVolume to " + dB);
         audioMixer.SetFloat(MUSIC_VOLUME, dB); // 오디오 믹서의 특정 값에 변환된 데시벨을 실제로 적용
 
         PlayerPrefs.SetFloat(MUSIC_VOLUME, volume); //변환한 볼륨 슬라이더의 값을 저장(껐다 켜도 볼륨 설정 유지)
@@ -54,6 +55,7 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
+        Debug.Log("Setting SFXVolume to " + dB);
         audioMixer.SetFloat(SFX_VOLUME, dB);
         PlayerPrefs.SetFloat(SFX_VOLUME, volume);
         PlayerPrefs.Save();
@@ -62,6 +64,7 @@ public class AudioManager : MonoBehaviour
     public void SetSystemVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
+        Debug.Log("Setting SystemVolume to " + dB);
         audioMixer.SetFloat(SYSTEM_VOLUME, dB);
         PlayerPrefs.SetFloat(SYSTEM_VOLUME, volume);
         PlayerPrefs.Save();
@@ -70,16 +73,19 @@ public class AudioManager : MonoBehaviour
     // 이하는 모두 현재 설정되어 있던 볼륨 가져오기
     public float GetMusicVolume()
     {
+        Debug.Log("Setting MusicVolume to ");
         return PlayerPrefs.GetFloat(MUSIC_VOLUME, 0.8f);
     }
 
     public float GetSFXVolume()
     {
+        Debug.Log("Setting SFXVolume to ");
         return PlayerPrefs.GetFloat(SFX_VOLUME, 0.8f);
     }
 
     public float GetSystemVolume()
     {
+        Debug.Log("Setting SystemVolume to ");
         return PlayerPrefs.GetFloat(SYSTEM_VOLUME, 0.8f);
     }
 
