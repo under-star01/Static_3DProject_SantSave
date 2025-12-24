@@ -195,6 +195,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6005704648856341423, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+      propertyPath: noDataText
+      value: 
+      objectReference: {fileID: 925961432}
+    - target: {fileID: 6005704648856341423, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+      propertyPath: scrollRect
+      value: 
+      objectReference: {fileID: 1140548909}
+    - target: {fileID: 6005704648856341423, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+      propertyPath: contentParent
+      value: 
+      objectReference: {fileID: 972183686}
+    - target: {fileID: 6005704648856341423, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+      propertyPath: rankingUIRoot
+      value: 
+      objectReference: {fileID: 1223294526}
+    - target: {fileID: 6005704648856341423, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+      propertyPath: nameInputField
+      value: 
+      objectReference: {fileID: 1172317760}
+    - target: {fileID: 6005704648856341423, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+      propertyPath: nameInputPanel
+      value: 
+      objectReference: {fileID: 991425305}
+    - target: {fileID: 6005704648856341423, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+      propertyPath: useDefaultJsonInTitle
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6739020475688050536, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 38.5451
@@ -244,6 +272,135 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed46611586e7d13438a9aba50d55d8ed, type: 3}
+--- !u!1 &475934809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 475934811}
+  - component: {fileID: 475934810}
+  m_Layer: 0
+  m_Name: BackgroundMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &475934810
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475934809}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3402144950306644854, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 2b22d4b1939db944e9189b6174fda787, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &475934811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475934809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 907.7562, y: 408.04565, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &580390824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -558,11 +715,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872f08364f78335469b59947a7c918b4, type: 3}
+--- !u!114 &925961432 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7955968883615274062, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!224 &972183686 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1969680252336910008, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &991425305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 177442834223859716, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1140548909 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2805289022424799180, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ScrollRect
+--- !u!114 &1172317760 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8541796752649800696, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!1 &1223294526 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 60689384447629915, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1494233976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1068,3 +1277,4 @@ SceneRoots:
   - {fileID: 627766074}
   - {fileID: 406324891}
   - {fileID: 1494233976}
+  - {fileID: 475934811}
