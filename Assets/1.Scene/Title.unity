@@ -176,6 +176,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcd2003ce20665c4297b2532b45980e2, type: 3}
+--- !u!114 &326169014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5331825045034636981, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &406324891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -644,11 +655,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Video Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2691898650013913366, guid: b017564d34d8144478be7892f827f20a, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 80b412e4cfb759e42b891940f2e72250, type: 3}
+    - target: {fileID: 2691898650013913366, guid: b017564d34d8144478be7892f827f20a, type: 3}
+      propertyPath: m_RenderMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b017564d34d8144478be7892f827f20a, type: 3}
+--- !u!114 &1984861363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 649390653260518423, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &2015027447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8489261172194715775, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+  m_PrefabInstance: {fileID: 2060245438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &2060150906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -657,6 +698,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4509797732353340847, guid: bd242c05c647d20469beb7486e1a1e6c, type: 3}
+      propertyPath: exitButton
+      value: 
+      objectReference: {fileID: 326169014}
+    - target: {fileID: 4509797732353340847, guid: bd242c05c647d20469beb7486e1a1e6c, type: 3}
+      propertyPath: startButton
+      value: 
+      objectReference: {fileID: 1984861363}
+    - target: {fileID: 4509797732353340847, guid: bd242c05c647d20469beb7486e1a1e6c, type: 3}
+      propertyPath: optionButton
+      value: 
+      objectReference: {fileID: 2015027447}
     - target: {fileID: 5183492239375043211, guid: bd242c05c647d20469beb7486e1a1e6c, type: 3}
       propertyPath: m_Name
       value: MenuManager
@@ -802,6 +855,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4651385367207224758, guid: 871a5c33af489d244936b845a24162b6, type: 3}
+      propertyPath: m_text
+      value: No Data
+      objectReference: {fileID: 0}
     - target: {fileID: 4651385367207224758, guid: 871a5c33af489d244936b845a24162b6, type: 3}
       propertyPath: m_fontAsset
       value: 
