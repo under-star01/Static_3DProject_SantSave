@@ -7,21 +7,26 @@ public class TimeManager : MonoBehaviour
 {
     //[SerializeField] private Light sun;
     [SerializeField] private Light moon;
-    [SerializeField] private Transform moonLook;
     [SerializeField] private Light all;
+    [SerializeField] private Light sun;
+    [SerializeField] private Transform window;
 
 
-    [SerializeField] private float totalTime = 60f;
+    [SerializeField] private float totalTime = 300f; //전체 시간
 
-    private float currentTime;
+    public float currentTime;// 현재시간 0이되면 게임오버
+
     private Color nightColor = new Color(0.2f, 0.2f, 0.5f);
-    private Color sunriseColor = new Color(0.3f, 0.2f, 0.2f);
+    private Color sunriseColor = new Color(0.5f, 0.5f, 0.4f);
 
 
     private void Start()
     {
         currentTime = totalTime;
         all.intensity = 0.1f;
+        all.color = nightColor;
+        sun.intensity = 0f;
+        sun.enabled = false;
     }
 
 
@@ -29,37 +34,44 @@ public class TimeManager : MonoBehaviour
     {
         currentTime -= Time.deltaTime;
 
-        float normalizedTime = 1f - (currentTime / totalTime);
+        float normalizedTime = 1f - (currentTime / totalTime); //전체시간을 0~1로 변환한 시간
 
-        if (normalizedTime < 0.6f)
+        if (normalizedTime < 0.6f) //시간이 60퍼가 지나기전
         {
             MoonMove();
         }
-        else
+        else //60퍼가 지나면
         {
-            Sunrise((normalizedTime - 0.6f) / 0.4f);
+            Sunrise((normalizedTime - 0.6f) / 0.4f); // 남은시간을 0~1로 변환
         }
     }
 
     private void MoonMove()
     {
-        moon.transform.LookAt(moonLook);
-        moon.transform.position += Vector3.right * 1f * Time.deltaTime;
+        moon.transform.LookAt(window);
+        moon.transform.position += Vector3.right * 0.3f * Time.deltaTime;
     }
 
-    private void Sunrise(float t)
+    private void Sunrise(float time)
     {
-        Debug.Log("일출한다");
-        
-        t = Mathf.Clamp01(t);
+        Debug.Log("일출");
 
-        // 색 변화
-        all.color = Color.Lerp(nightColor, sunriseColor, t);
+        time = Mathf.Clamp01(time);
 
-        // 밝기 증가
-        all.intensity = Mathf.Lerp(0.1f, 0.5f, t);
+        // 전체빛 색 변화
+        all.color = Color.Lerp(nightColor, sunriseColor, time);
 
-        // 달빛은 서서히 약해짐
-        moon.intensity = Mathf.Lerp(moon.intensity, 0f, t);
+        // 전체빛 밝기 증가
+        all.intensity = Mathf.Lerp(0.1f, 1f, time);
+
+
+        // 달빛은 서서히 끔
+        moon.intensity = Mathf.Lerp(moon.intensity, 0f, Time.deltaTime);
+
+        // 햇빛 온
+        sun.enabled = true;
+        sun.transform.LookAt(window);
+        sun.intensity = Mathf.Lerp(sun.intensity, 50f, time);
+        sun.transform.position += Vector3.up * 0.3f * Time.deltaTime;
     }
 }
