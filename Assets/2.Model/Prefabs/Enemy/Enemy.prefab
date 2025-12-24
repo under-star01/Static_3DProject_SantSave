@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2472600878245978436}
   - component: {fileID: 6768614187595302151}
   - component: {fileID: 5778990316085621713}
-  - component: {fileID: 576780519628176750}
   - component: {fileID: 6693981410354072454}
   - component: {fileID: 2957305001492574705}
   - component: {fileID: 8033639362002860993}
@@ -116,33 +115,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &576780519628176750
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4681810710975651357}
-  serializedVersion: 5
-  m_Mass: 3
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 84
-  m_CollisionDetection: 0
 --- !u!195 &6693981410354072454
 NavMeshAgent:
   m_ObjectHideFlags: 0
