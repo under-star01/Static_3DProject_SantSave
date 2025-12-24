@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 6693981410354072454}
   - component: {fileID: 2957305001492574705}
   - component: {fileID: 8033639362002860993}
+  - component: {fileID: 310793968275861872}
+  - component: {fileID: -5340596686428625892}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -205,6 +207,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChildCtrl
   patrolPos_List: []
   bedPos: {fileID: 0}
+--- !u!114 &310793968275861872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681810710975651357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795843d61a58b914782f1ee368ef8cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TalkBubbleController
+  headHeight: 1.8
+  bubbleOffsetUp: 0
+  stateBubbles:
+  - stateName: Idle
+    bubblePrefab: {fileID: 6376615890838172920, guid: bf573b59d32cd184cae7984e7cf5e08a, type: 3}
+  - stateName: Move
+    bubblePrefab: {fileID: 8612794860949875944, guid: 900101dee10c03c499247395ed33e5d1, type: 3}
+--- !u!114 &-5340596686428625892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681810710975651357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a366a2d086e1943a89776d366b387a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestBubbleTester
+  bubbleController: {fileID: 310793968275861872}
+  intervalBetweenStates: 2
 --- !u!1 &6599022259762454962
 GameObject:
   m_ObjectHideFlags: 0

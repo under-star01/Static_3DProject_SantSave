@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class TalkBubbleController : MonoBehaviour
 {
     [Header("고정된 말풍선 높이 (NPC 중심에서 위로)")]
-    public float headHeight = 1.8f;
+    public float headHeight = 1f;
 
     [Header("머리 위 말풍선의 높이 오프셋")]
     public float bubbleOffsetUp = 0.0f;
