@@ -8,6 +8,8 @@ public class CaughtManager : MonoBehaviour
 {
     public static CaughtManager instance;
 
+    public RankingManager rankingManager;
+
     [Header("UI ¼³Á¤")]
     public Slider CaughtSilder;
 
@@ -27,6 +29,8 @@ public class CaughtManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        rankingManager = GetComponent<RankingManager>();
     }
 
     private void Update()
@@ -58,6 +62,7 @@ public class CaughtManager : MonoBehaviour
     {
         Debug.Log("Game Over!");
         Time.timeScale = 0;
+        rankingManager.ProcessNewScore(500);
     }
 
 }

@@ -12,7 +12,7 @@ public class RankingItemController : MonoBehaviour
     {
         if (rankText != null) rankText.text = rank.ToString();
         if (nameText != null) nameText.text = entry.name;
-        if (scoreText != null) scoreText.text = entry.score.ToString();
+        if (scoreText != null) scoreText.text = entry.score.ToString("NO");
         if (dateText != null) dateText.text = entry.date;
     }
 }

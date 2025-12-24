@@ -13,7 +13,7 @@ public class TitleMenuManager : MonoBehaviour
     private void Start()
     {
         // Canvas에서 OptionPanelController 찾기
-        optionPanelController = FindObjectOfType<OptionPanelController>();
+        optionPanelController = FindAnyObjectByType<OptionPanelController>();
 
         // 각 버튼에 공통 컨트롤러 초기화
         // 스타트

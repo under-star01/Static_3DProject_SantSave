@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.IO;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -56,6 +58,11 @@ public class RankingManager : MonoBehaviour
         {
             rankingUIRoot.SetActive(false);
         }
+    }
+
+    private void Start()
+    {
+        LoadRanking();
     }
 
     // RankingButton에서 이 함수를 OnClick으로 호출.
@@ -277,15 +284,109 @@ public class RankingManager : MonoBehaviour
 
         rankingList[pendingNameIndex].name = inputName;
 
-        if (nameInputPanel != null)
+        SaveRanking();  // 이름 확정 후 즉시 저장
+        pendingNameIndex = -1;
+        if (nameInputPanel != null) nameInputPanel.SetActive(false);
+        RefreshUI();
+    }
+
+    // Order By Linq (SQL 문법 중 하나인 Order By 쿼리문을 VS에서 사용할 수 있음)
+    public void SortRanking()
+    {
+        // 랭킹 리스트의 값을 내림차순(Descending)으로 설정. 점수가 같다면 날짜 순으로 정렬
+        rankingList = rankingList.OrderByDescending(e => e.score).ThenByDescending(e => e.date).ToList();
+    }
+
+    public void SaveRanking()
+    {
+        // root배열인 json 파일을 파싱하기 위한 wrapper을 선언
+        RankingListWrapper wrapper = new RankingListWrapper();
+
+        // jsonUtility 사용을 위해 파싱 할 데이터를 배열에 저장
+        wrapper.entries = rankingList.ToArray();
+        
+        // Json 문자열로 변환하여 넣어줌
+        string json = JsonUtility.ToJson(wrapper, true);
+
+        // 3. 저장할 파일 경로 설정
+        string path = Path.Combine(Application.persistentDataPath, "ranking.json");
+
+        // Unity의 대표적인 저장방식 dataPath와 persistentDataPath 중 persistentDataPath 사용
+        // 위 방법을 사용하면 Application.persistentDataPath 경로로 사용중인 OS의 쓰기 권한이 있는 안전한 폴더로 연결해줌
+        // 데이터 저장 흐름 : 데이터 리스트 -> Wrapper 클래스 -> Json 문자열 변환(파싱) -> 파일 저장 (직렬화 및 쓰기)
+        File.WriteAllText(path, json);
+    }
+
+    public void LoadRanking()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "ranking.json");
+
+        // 파일이 존재하는지 확인
+        if (File.Exists(path))
         {
-            nameInputPanel.SetActive(false);
+            // 랭킹 데이터 파일에서 Json 문자열을 읽어 들여옴
+            string json = File.ReadAllText(path);
+
+            // 텍스트 형태의 Json 데이터를 다시 C# 객체(object)로 변환 (역직렬화)
+            RankingListWrapper wrapper = JsonUtility.FromJson<RankingListWrapper>(json);
+
+            // 변환한 데이터를 리스트에 담음
+            // rankingList 변수를 통해 랭킹 파일에 저장된 데이터에 접근 할 수 있음
+            rankingList = new List<RankingEntry>(wrapper.entries);
+
+            Debug.Log("[Ranking] 로컬 파일로부터 데이터 로드 완료.");
+        }
+        else
+        {
+            Debug.Log("[Ranking] 저장된 파일이 없습니다. 기본 데이터를 로드합니다.");
+            LoadFromDefaultJson(); // 파일이 없으면 에디터에서 설정한 기본값 로드
+        }
+    }
+
+    public void ProcessNewScore(int newScore)
+    {
+        // 1. 임시 이름으로 새로운 데이터 생성 (날짜는 현재 시간)
+        string currentDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+        RankingEntry newEntry = new RankingEntry("TEMP_PLAYER", newScore, currentDate);
+
+        // 2. 리스트에 추가
+        rankingList.Add(newEntry);
+
+        // 3. 정렬 (점수 내림차순, 점수 같으면 날짜 내림차순)
+        SortRanking();
+
+        // 4. 최대 랭킹 개수 유지 (예: 10등까지만 보관)
+        if (rankingList.Count > 10)
+        {
+            rankingList.RemoveRange(10, rankingList.Count - 10);
         }
 
-        pendingNameIndex = -1;
+        // 5. 새 점수가 몇 위인지 확인
+        int rankIndex = rankingList.IndexOf(newEntry);
 
+        // 6. 만약 Top 10 진입했다면 이름 입력창 띄우기
+        if (rankIndex >= 0 && rankIndex < 10)
+        {
+            OpenNameInputForIndex(rankIndex);
+        }
+        else
+        {
+            // Top 10이 아니면 바로 저장
+            SaveRanking();
+            RefreshUI();
+        }
+    }
+
+    [ContextMenu("DEBUG/Clear Ranking Data")]
+    public void ClearRankingData()
+    {
+        rankingList.Clear();
+        string path = Path.Combine(Application.persistentDataPath, "ranking.json");
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
         RefreshUI();
-
-        // TODO: SaveRanking() 연결
+        Debug.Log("모든 랭킹 데이터가 삭제되었습니다.");
     }
 }

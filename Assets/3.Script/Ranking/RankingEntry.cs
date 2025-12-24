@@ -6,8 +6,10 @@ public class RankingEntry
     public int score;
     public string date; // "yyyy-MM-dd HH:mm:ss"
 
-    public string GetDisplayDate()
+    public RankingEntry(string name, int score, string date)
     {
-        return date;
+        this.name = name;
+        this.score = score;
+        this.date = date;
     }
 }
