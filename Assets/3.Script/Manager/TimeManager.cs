@@ -74,4 +74,9 @@ public class TimeManager : MonoBehaviour
         sun.intensity = Mathf.Lerp(sun.intensity, 50f, time);
         sun.transform.position += Vector3.up * 0.3f * Time.deltaTime;
     }
+
+    public float GetTotalTime()
+    {
+        return totalTime;
+    }
 }
