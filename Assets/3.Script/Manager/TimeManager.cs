@@ -16,14 +16,14 @@ public class TimeManager : MonoBehaviour
 
     public float currentTime;// 현재시간 0이되면 게임오버
 
-    private Color nightColor = new Color(0.2f, 0.2f, 0.5f);
+    private Color nightColor = new Color(0.1f, 0.1f, 0.4f);
     private Color sunriseColor = new Color(0.5f, 0.5f, 0.4f);
 
 
     private void Start()
     {
         currentTime = totalTime;
-        all.intensity = 0.1f;
+        all.intensity = 5f;
         all.color = nightColor;
         sun.intensity = 0f;
         sun.enabled = false;
@@ -49,7 +49,7 @@ public class TimeManager : MonoBehaviour
     private void MoonMove()
     {
         moon.transform.LookAt(window);
-        moon.transform.position += Vector3.right * 0.3f * Time.deltaTime;
+        moon.transform.position += Vector3.right * 0.1f * Time.deltaTime;
     }
 
     private void Sunrise(float time)
@@ -60,10 +60,6 @@ public class TimeManager : MonoBehaviour
 
         // 전체빛 색 변화
         all.color = Color.Lerp(nightColor, sunriseColor, time);
-
-        // 전체빛 밝기 증가
-        all.intensity = Mathf.Lerp(0.1f, 1f, time);
-
 
         // 달빛은 서서히 끔
         moon.intensity = Mathf.Lerp(moon.intensity, 0f, Time.deltaTime);
