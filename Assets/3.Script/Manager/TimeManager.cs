@@ -16,9 +16,12 @@ public class TimeManager : MonoBehaviour
 
     public float currentTime;// 현재시간 0이되면 게임오버
 
+    // 시간 종료 이벤트
+    public event Action OnTimeEnd;
+
     private Color nightColor = new Color(0.1f, 0.1f, 0.4f);
     private Color sunriseColor = new Color(0.5f, 0.5f, 0.4f);
-
+    private bool isTimeEnd = false; // 이벤트 중복 방지
 
     private void Start()
     {
@@ -27,12 +30,22 @@ public class TimeManager : MonoBehaviour
         all.color = nightColor;
         sun.intensity = 0f;
         sun.enabled = false;
+        isTimeEnd = false;
     }
 
 
     private void Update()
     {
         currentTime -= Time.deltaTime;
+
+        if (currentTime <= 0f && !isTimeEnd)
+        {
+            currentTime = 0f;
+            isTimeEnd = true;
+            OnTimeEnd?.Invoke(); // 이벤트 발생
+            Debug.Log("시간 종료!");
+            return;
+        }
 
         float normalizedTime = 1f - (currentTime / totalTime); //전체시간을 0~1로 변환한 시간
 
