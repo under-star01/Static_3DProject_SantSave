@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Child_E
   m_EditorClassIdentifier: Assembly-CSharp::ChildType_SO
   childId: Child_E
-  childName: "\uBC15\uC6D0\uADDC"
+  childName: RTX5090
   childPrefab: {fileID: 4681810710975651357, guid: d5f9ed98c14b69c478e9ba30f58ccbd8, type: 3}

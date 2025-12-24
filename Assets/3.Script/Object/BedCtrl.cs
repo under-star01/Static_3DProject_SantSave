@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BedCtrl : MonoBehaviour, IInteractable
@@ -6,6 +7,7 @@ public class BedCtrl : MonoBehaviour, IInteractable
     [SerializeField] private ChildType_SO childData; // Child 관련 데이터
     [SerializeField] private GiftType_SO giftData; // Gift 관련 데이터
     [SerializeField] private Transform summitPos; // 선물을 놓을 위치
+    [SerializeField] private TextMeshProUGUI childName; // 표시할 이름 오브젝트
 
     private bool isBusy = false; // 현재 실행중인지 여부
     
@@ -63,5 +65,22 @@ public class BedCtrl : MonoBehaviour, IInteractable
 
         // 점수 전달 내용 이후에 추가
         isBusy = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (childName != null)
+        {
+            childName.text = childData.childName;
+            childName.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (childName != null)
+        {
+            childName.gameObject.SetActive(false);
+        }
     }
 }
