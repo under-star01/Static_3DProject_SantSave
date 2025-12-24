@@ -25,18 +25,22 @@ public class EnemyFSM : MonoBehaviour
 
     [Header("Roamer 설정")]
     public bool isSleeping;
+    private float lostTimer = 0f;
+    public float loseThreshold = 1.5f; // 1.5초 동안 안 보이면 포기
 
     [Header("Observer 설정")]
     public float alertAmount = 20f;
 
-    [Header("게임 오버 설정")]
+    [Header("Caught 설정")]
     public float killDistance = 3.0f;
-    public float gaugeFillSpeed = 30f;
-    public float gaugeDrainSpeed = 10f;
+    public float caughtFillSpeed = 30f;
 
-    [Header("디버그")]
+    [Header("WakeUp 설정")]
+    public float alertFillSpeed = 30f;
+    public float turnSpeed = 5.0f;
+
+    [Header("디버그용")]
     public float currentGauge = 0f;
-    private float maxGauge = 100f;
 
     [Header("소리 관련 변수")]
     private bool isHeard;
@@ -53,6 +57,11 @@ public class EnemyFSM : MonoBehaviour
         if (enemyType == EnemyType.Roamer && isSleeping)
         {
             if (fov != null) fov.enabled = false;
+        }
+
+        if (enemyType == EnemyType.Obsever)
+        {
+            StartCoroutine(FSM_Loop());
         }
     }
 
@@ -98,11 +107,9 @@ public class EnemyFSM : MonoBehaviour
                 if (isPlayerFound)
                 {
                     if (enemyType == EnemyType.Roamer) yield return StartCoroutine(ChaseState());
-
-                    if (enemyType == EnemyType.Obsever) yield return StartCoroutine(AlertState());
+                    else if (enemyType == EnemyType.Obsever) yield return StartCoroutine(AlertState());
                 }
             }
-
         }
     }
 
@@ -122,7 +129,7 @@ public class EnemyFSM : MonoBehaviour
 
         if (fov != null) fov.enabled = true;    // 시야 켜주기
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2.5f);
     }
 
 
@@ -168,7 +175,7 @@ public class EnemyFSM : MonoBehaviour
         //Debug.Log("State: Detect");
         agent.ResetPath();
 
-        // 기존 로직 유지 (멈춰서 확실하게 한 번 더 체크)
+        // 멈춰서 확실하게 한 번 더 체크
         if (CheckPlayerDetected())
         {
             yield break;
@@ -231,33 +238,46 @@ public class EnemyFSM : MonoBehaviour
     {
         //Debug.Log("State: Chase (추격 시작)");
 
+        lostTimer = 0f;
         while (true)
         {
-            // 1. 추격 종료 조건
-            // targetPlayer가 null인지 확인하고, 감지 실패 시 종료
-            if (targetPlayer == null || !fov.DetectPlayer(true))
+            if (targetPlayer == null) break;
+
+            bool isVisible = fov.DetectPlayer(true);
+            float dist = Vector3.Distance(transform.position, targetPlayer.position);
+
+            // 아주 가까우면 무조건 보임 처리
+            if (!isVisible && dist < 2.0f) isVisible = true;
+
+            if (isVisible)
             {
-                Debug.Log("Chase: 놓침 -> 다시 순찰 복귀");
-                isPlayerFound = false;
-                targetPlayer = null;
-                break;
+                lostTimer = 0f; // 보이면 타이머 리셋
+                agent.SetDestination(targetPlayer.position);
+            }
+            else
+            {
+                lostTimer += Time.deltaTime; // 안 보이면 타이머 증가
+                                             // 놓쳤더라도 마지막 확인된 위치까지는 계속 이동
+                agent.SetDestination(targetPlayer.position);
             }
 
-            // 2. 플레이어 따라가기
-            agent.SetDestination(targetPlayer.position);
-
             // 3. 게이지 로직 (거리 체크)
-            float dist = Vector3.Distance(transform.position, targetPlayer.position);
-            if (dist <= killDistance)
+            if (isVisible && dist <= killDistance)
             {
                 // 게이지 증가 로직...
                 // Time.deltaTime * 속도 -> 이만큼 채워달라고 요청
-                // * 2.0f는 여러 마리가 붙었을 때 가중치 (선택 사항)
-                float fearAmount = Time.deltaTime * gaugeFillSpeed;
+                float fearAmount = Time.deltaTime * caughtFillSpeed;
 
                 // FearManager의 감소 속도보다 더 많이 더해야 게이지가 참
                 // 예: 감소가 10인데 여기서 30을 더하면 실제로는 20씩 참
                 CaughtManager.instance.AddCaught(fearAmount + (CaughtManager.instance.drainSpeed * Time.deltaTime));
+            }
+
+            if (lostTimer >= loseThreshold)
+            {
+                isPlayerFound = false;
+                targetPlayer = null;
+                break;
             }
 
             yield return null;
@@ -267,7 +287,46 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator AlertState()
     {
-        yield return null;
+        while (true)
+        {
+            // 1. 추격 종료 조건
+            // targetPlayer가 null인지 확인하고, 감지 실패 시 종료
+            if (targetPlayer == null || !fov.DetectPlayer(true))
+            {
+                Debug.Log("Chase: 놓침 -> 다시 순찰 복귀");
+                isPlayerFound = false;
+                targetPlayer = null;
+                agent.isStopped = false;
+                break;
+            }
+
+            // 2. 멈춘 상태에서 플레이어를 바라보기
+            // 네비게이션 이동 멈춤 (제자리 고정)
+            agent.isStopped = true;
+
+            // 플레이어 방향 벡터 계산
+            Vector3 direction = targetPlayer.position - transform.position;
+
+            // Y축(높이) 차이 제거 (기울어지는 것 방지)
+            direction.y = 0;
+
+            // 회전 로직 (방향이 0이 아닐 때만 실행)
+            if (direction != Vector3.zero)
+            {
+                // 목표 회전값 계산 (플레이어를 바라보는 회전값)
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                // 부드럽게 회전 (Time.deltaTime * 회전속도)
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f);
+            }
+
+            // 3. WakeUp Gauge 증가
+            float AlertAmount = Time.deltaTime * alertFillSpeed;
+
+            WakeUpManager.instance.AddAlertness(AlertAmount + (CaughtManager.instance.drainSpeed * Time.deltaTime));
+
+            yield return null;
+        }
     }
 
 
