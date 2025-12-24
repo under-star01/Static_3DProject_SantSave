@@ -41,9 +41,9 @@ public class ScoreManager : MonoBehaviour
         // 점수 계산
         score += value;
         score = Mathf.Clamp(score, 0, 1000);
-        
-        // 점수 변경 이벤트 발생
-        OnScoreChanged?.Invoke(score);
+
+        // 변경 점수 UI 적용
+        UIManager.instance.SetScore(score);
     }
 
     // 정답 선물 제출시 메소드
