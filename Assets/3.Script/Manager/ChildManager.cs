@@ -22,6 +22,7 @@ public class ChildManager : MonoBehaviour
     [SerializeField] private List<BedData> bedData_List; // 저장할 침대 데이터 리스트
 
     private int spawnCnt = 0;
+    private int spawnIndex = 0; 
 
     // 제네릭을 통해 ChildType_SO, GiftType_SO 타입 Shuffle을 모두 처리
     private List<T> Shuffle<T>(List<T> list)
@@ -54,11 +55,10 @@ public class ChildManager : MonoBehaviour
             GiftType_SO giftData = giftType_List[i];
             BedData bedData = bedData_List[i];
 
-            // Child 오브젝트 생성 및 Init 메소드 호출
+            // Child 오브젝트 초기화 실행
             GameObject childObj 
                 = Instantiate(childData.childPrefab, bedData_List[i].Bed.transform.position, bedData_List[i].Bed.transform.rotation);
 
-            // Child 오브젝트 초기화 실행
             ChildCtrl childCtrl = childObj.GetComponent<ChildCtrl>();
 
             if (childCtrl != null)
@@ -74,12 +74,19 @@ public class ChildManager : MonoBehaviour
             BedCtrl bedCtrl = bedData.Bed.GetComponent<BedCtrl>();
             if (bedCtrl != null)
             {
+                bedCtrl.spawnIndex = spawnIndex;
                 bedCtrl.Init(childData, giftData, bedData.summitPos);
             }
             else
             {
                 Debug.Log($"{childData.name} : 해당 오브젝트에 대한 bedCtrl 스크립트가 없습니다.");
             }
+
+            // 선물 목록 UI 초기화
+            UIManager.instance.Init(childData, giftData);
+
+            // 생성 순서 갱신
+            spawnIndex++;
         }
     }
 }

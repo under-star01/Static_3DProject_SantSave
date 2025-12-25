@@ -16,8 +16,6 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int caughtedScore; // 발각시 차감 점수
     [SerializeField] private int wakeScore; // 아이를 기상시 차감 점수
 
-    private event Action<int> OnScoreChanged;
-
     private void Awake()
     {
         if (instance == null)
@@ -43,7 +41,7 @@ public class ScoreManager : MonoBehaviour
         score = Mathf.Clamp(score, 0, 1000);
 
         // 변경 점수 UI 적용
-        UIManager.instance.SetScore(score);
+        UIManager.instance.SetScore(score, value);
     }
 
     // 정답 선물 제출시 메소드

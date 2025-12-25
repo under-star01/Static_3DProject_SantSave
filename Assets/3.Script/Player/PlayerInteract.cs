@@ -21,6 +21,7 @@ public class PlayerInteract : MonoBehaviour
 
     private bool ispickuping= false;
     private bool isputingdown= false;
+    private bool isCheckSheet= false;
 
 
     private void Awake()
@@ -132,7 +133,6 @@ public class PlayerInteract : MonoBehaviour
         }
 
         StartCoroutine(DropAniDelay_co());
-
     }
 
     private IEnumerator DropAniDelay_co()
@@ -220,5 +220,21 @@ public class PlayerInteract : MonoBehaviour
 
         rb.constraints |= RigidbodyConstraints.FreezeRotation;
         isputingdown = false;
+    }
+
+    public void CheckSheet()
+    {
+        isCheckSheet = !isCheckSheet;
+
+        if (isCheckSheet)
+        {
+            // UIManager에서 호출
+            Debug.LogWarning("산타가 수첩을 펼칩니다.");
+        }
+        else
+        {
+            // UIManager에서 호출
+            Debug.LogWarning("산타가 수첩을 주머니에 넣습니다.");
+        }
     }
 }

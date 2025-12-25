@@ -38,6 +38,7 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Run.canceled += OnRunStop;
         playerInput.Player.Pick.performed += OnInteract;
         playerInput.Player.Drop.performed += OnDropGift;
+        playerInput.Player.CheckSheet.performed += OnCheckSheet;
 
         playerInput.Enable();
     }
@@ -55,6 +56,7 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Run.performed -= OnRunStart;
         playerInput.Player.Run.canceled -= OnRunStop;
         playerInput.Player.Drop.performed -= OnDropGift;
+        playerInput.Player.CheckSheet.performed -= OnCheckSheet;
 
         playerInput.Disable();
     }
@@ -133,6 +135,14 @@ public class PlayerInput : MonoBehaviour
         if (playerInteract != null)
         {
             playerInteract.DropCarriedGift();
+        }
+    }
+
+    private void OnCheckSheet(InputAction.CallbackContext context)
+    {
+        if (playerInteract != null)
+        {
+            playerInteract.CheckSheet();
         }
     }
 
