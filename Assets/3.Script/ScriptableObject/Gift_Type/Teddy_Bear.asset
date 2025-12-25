@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15ba83dddb20a94882282b19ac9968b, type: 3}
   m_Name: Teddy_Bear
   m_EditorClassIdentifier: Assembly-CSharp::GiftType_SO
-  giftId: Gift_C
-  giftName: "\uC7A5\uB09C\uAC10C"
+  giftName: "\uACF0\uC778\uD615"
+  coment: 
   giftPrefab: {fileID: 5944679067526282071, guid: a473f1e77faeb3b428acfcf32664b36e, type: 3}

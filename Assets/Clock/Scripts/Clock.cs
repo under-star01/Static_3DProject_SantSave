@@ -20,7 +20,7 @@ public class Clock : MonoBehaviour
     void Start()
     {
         // TimeManager Ã£±â
-        timeManager = FindObjectOfType<TimeManager>();
+        timeManager = FindAnyObjectByType<TimeManager>();
 
         if (timeManager == null)
         {

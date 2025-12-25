@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BedCtrl : MonoBehaviour, IInteractable
 {
+    public int spawnIndex; // 생성된 순서
+    
     [SerializeField] private ChildType_SO childData; // Child 관련 데이터
     [SerializeField] private GiftType_SO giftData; // Gift 관련 데이터
     [SerializeField] private Transform summitPos; // 선물을 놓을 위치
@@ -69,7 +71,7 @@ public class BedCtrl : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (childName != null)
+        if (other.gameObject.CompareTag("Player") &&  childName != null)
         {
             childName.text = childData.childName;
             childName.gameObject.SetActive(true);
@@ -78,7 +80,7 @@ public class BedCtrl : MonoBehaviour, IInteractable
 
     private void OnTriggerExit(Collider other)
     {
-        if (childName != null)
+        if (other.gameObject.CompareTag("Player") && childName != null)
         {
             childName.gameObject.SetActive(false);
         }

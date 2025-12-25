@@ -21,7 +21,7 @@ public class PlayerMove : MonoBehaviour
     private Vector2 moveInput; 
     private Vector2 mousePos;
     private Vector3 moveDir;
-    private Vector3 lookDir;
+    private Vector3 lookDir = Vector3.right;
     private float zoomInput = 0;
     private bool isRun = false;
 
@@ -189,7 +189,7 @@ public class PlayerMove : MonoBehaviour
             // Run 상태 (Shift)
             if (isRun)
             {
-                playerNoise.StartNoiseCoroutine(4f, 0.5f);
+                playerNoise.StartNoiseCoroutine(5f, 0.5f);
             }
             // Walk 상태 (default)
             else

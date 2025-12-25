@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15ba83dddb20a94882282b19ac9968b, type: 3}
   m_Name: Ball
   m_EditorClassIdentifier: Assembly-CSharp::GiftType_SO
-  giftId: Gift_A
-  giftName: "\uC7A5\uB09C\uAC10A"
-  giftPrefab: {fileID: 9144544947262272502, guid: 43efd73e049c74a448bbbfd1a89adfbb, type: 3}
+  giftName: "\uCD95\uAD6C\uACF5"
+  coment: "\uC0B0\uD0C0\uD560\uC544\uBC84\uC9C0! \uC0C8\uB85C\uC6B4 "
+  giftPrefab: {fileID: 1180092760588478716, guid: f8444d72cedc63e4097ec11d7653ea4b, type: 3}

@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Skill
+{
+    Transform,
+    Decoy
+}
+
 public class PlayerSkill : MonoBehaviour
 {
     [Header("변신 스킬")]
@@ -192,6 +198,7 @@ public class PlayerSkill : MonoBehaviour
 
         isTransformed = true;
 
+        UIManager.instance.ChangeSkillColor(Skill.Transform, true);
         Debug.Log($"변신 완료: {selectedPrefab.name}");
     }
 
@@ -230,10 +237,13 @@ public class PlayerSkill : MonoBehaviour
             playerMove.canMove = true;
         }
 
-
         isTransformed = false;
-
         lastTransformTime = Time.time;
+
+        // 쿨타임 UI 실행
+        UIManager.instance.ChangeSkillColor(Skill.Transform, false);
+        UIManager.instance.CoolTimeStart(Skill.Transform, transformCool);
+     
         Debug.Log("변신 해제");
     }
 
@@ -327,6 +337,9 @@ public class PlayerSkill : MonoBehaviour
             float diameter = 8f;//유인표시범위
             decoyRangeIndicator.transform.localScale = new Vector3(diameter, 0.01f, diameter);
         }
+
+        // 스킬 UI 색상 변경
+        UIManager.instance.ChangeSkillColor(Skill.Decoy, true);
 
         Debug.Log("디코이 조준 시작");
     }
@@ -493,6 +506,9 @@ public class PlayerSkill : MonoBehaviour
 
         EndDecoyAim();
         lastDecoyTime = Time.time;
+
+        // 스킬 UI 쿨타임 적용
+        UIManager.instance.CoolTimeStart(Skill.Decoy, decoyCooldown);
     }
 
     private void CancelDecoySkill()
@@ -519,6 +535,9 @@ public class PlayerSkill : MonoBehaviour
         {
             decoyRangeIndicator.SetActive(false);
         }
+
+        // 색상 복구
+        UIManager.instance.ChangeSkillColor(Skill.Decoy, false);
     }
 
     #endregion
