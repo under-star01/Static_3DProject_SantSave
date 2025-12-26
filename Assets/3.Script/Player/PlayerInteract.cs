@@ -222,19 +222,11 @@ public class PlayerInteract : MonoBehaviour
         isputingdown = false;
     }
 
+    // 선물 목록 UI 활성화 메소드 
     public void CheckSheet()
     {
         isCheckSheet = !isCheckSheet;
 
-        if (isCheckSheet)
-        {
-            // UIManager에서 호출
-            Debug.LogWarning("산타가 수첩을 펼칩니다.");
-        }
-        else
-        {
-            // UIManager에서 호출
-            Debug.LogWarning("산타가 수첩을 주머니에 넣습니다.");
-        }
+        UIManager.instance.ShowCheckList(isCheckSheet);
     }
 }

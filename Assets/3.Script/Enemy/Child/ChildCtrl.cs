@@ -27,6 +27,7 @@ public class ChildCtrl : MonoBehaviour
         if (enemyFSM != null)
         {
             enemyFSM.patrolPoints = patrolPos_List;
+            enemyFSM.isSleeping = bedData.isSleeping;
             enemyFSM.StartFSMLoop();
         }
     }
