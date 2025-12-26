@@ -24059,7 +24059,7 @@ Transform:
   m_GameObject: {fileID: 3578950417940964873}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.26, y: 0, z: 3.68}
+  m_LocalPosition: {x: -7.57, y: 1.17, z: -10.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24406,7 +24406,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 2048
-  player: {fileID: 0}
+  player: {fileID: 1027417881603868167}
   meshResolution: 1
   edgeResolveIterations: 4
   edgeDstThreshold: 0.5
@@ -29167,7 +29167,7 @@ Transform:
   m_GameObject: {fileID: 8130111619516875347}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.39738, y: 0, z: 3.75502}
+  m_LocalPosition: {x: 7.48, y: 0, z: 8.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -38856,7 +38856,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 2048
-  player: {fileID: 0}
+  player: {fileID: 1027417881603868167}
   meshResolution: 1
   edgeResolveIterations: 4
   edgeDstThreshold: 0.5
