@@ -46,14 +46,19 @@ public class EnemyFSM : MonoBehaviour
     private bool isHeard;
     private Vector3 noisePosition;
 
+    private TalkBubbleController bubbleCtrl;
     private NavMeshAgent agent;
     private Transform targetPlayer;
     private bool isPlayerFound;
 
-    void Start()
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        bubbleCtrl = GetComponent<TalkBubbleController>();
+    }
 
+    void Start()
+    {
         if (enemyType == EnemyType.Roamer && isSleeping)
         {
             if (fov != null) fov.enabled = false;
@@ -117,12 +122,14 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator SleepState()
     {
+        bubbleCtrl.OnStateChanged("SleepState");
         agent.isStopped = true; // 이동 불가능 상태로 전환
         yield return null;
     }
 
     IEnumerator WakeUpState()
     {
+        bubbleCtrl.OnStateChanged("WakeUpState");
         isSleeping = false;
         isHeard = false;    // 자는동안 들었던 소리는 일어나는 동안 잊음
         agent.isStopped = false; // 이동 가능 상태로 전환
@@ -135,7 +142,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator IdleState()
     {
-        //Debug.Log("State: Idle");
+        bubbleCtrl.OnStateChanged("IdleState");
         float timer = 0f;
 
         while (timer < idleTime)
@@ -150,7 +157,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator MoveState()
     {
-        //Debug.Log("State: Move");
+        bubbleCtrl.OnStateChanged("MoveState");
 
         if (patrolPoints.Count > 0)
         {
@@ -172,7 +179,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator DetectState()
     {
-        //Debug.Log("State: Detect");
+        bubbleCtrl.OnStateChanged("DetectState");
         agent.ResetPath();
 
         // 멈춰서 확실하게 한 번 더 체크
@@ -186,7 +193,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator LookState()
     {
-        Debug.Log("State: Look (두리번/주시)");
+        bubbleCtrl.OnStateChanged("LookState");
 
         float timer = 0f;
         Quaternion startRot = transform.rotation;
@@ -236,7 +243,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator ChaseState()
     {
-        //Debug.Log("State: Chase (추격 시작)");
+        bubbleCtrl.OnStateChanged("ChaseState");
 
         lostTimer = 0f;
         while (true)
@@ -287,6 +294,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator AlertState()
     {
+        bubbleCtrl.OnStateChanged("AlertState");
         while (true)
         {
             // 1. 추격 종료 조건

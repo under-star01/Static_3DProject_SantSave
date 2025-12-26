@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6693981410354072454}
   - component: {fileID: 2957305001492574705}
   - component: {fileID: 8033639362002860993}
+  - component: {fileID: 4296271738913292847}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -158,10 +159,12 @@ MonoBehaviour:
   idleTime: 2
   lookTime: 1.5
   isSleeping: 0
+  loseThreshold: 1.5
   alertAmount: 20
   killDistance: 3
-  gaugeFillSpeed: 30
-  gaugeDrainSpeed: 10
+  caughtFillSpeed: 30
+  alertFillSpeed: 30
+  turnSpeed: 5
   currentGauge: 0
 --- !u!114 &8033639362002860993
 MonoBehaviour:
@@ -177,6 +180,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChildCtrl
   patrolPos_List: []
   bedPos: {fileID: 0}
+--- !u!114 &4296271738913292847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681810710975651357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e12ffe0d5dbf54d98060eee1aa972a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TalkBubbleController
+  headHeight: 1.8
+  bubbleOffsetUp: 0
+  stateBubbles:
+  - stateName: SleepState
+    bubblePrefab: {fileID: 2182465478854006863, guid: 5695bbfc4ba113643a0046b526055bd4, type: 3}
+  - stateName: MoveState
+    bubblePrefab: {fileID: 1611004477444424433, guid: 2e964ae732277444682196529cdbb90a, type: 3}
+  - stateName: LookState
+    bubblePrefab: {fileID: 9158279858624135656, guid: 059c316812152e64bb5a52c9116d3b0f, type: 3}
+  - stateName: DetectState
+    bubblePrefab: {fileID: 846681471932215951, guid: 73cac0d6cbe44484a885dedf533855a5, type: 3}
+  - stateName: AlertState
+    bubblePrefab: {fileID: 84512204741868557, guid: bf573b59d32cd184cae7984e7cf5e08a, type: 3}
+  - stateName: IdleState
+    bubblePrefab: {fileID: 6367975673683465670, guid: 8d3666752e9ef2a4c8bfe176dc64f8d9, type: 3}
+  - stateName: WakeUpState
+    bubblePrefab: {fileID: 7760115479953883814, guid: 67123edad8458b442915fa60423a2f6c, type: 3}
+  - stateName: ChaseState
+    bubblePrefab: {fileID: 4496897116506493725, guid: ec353f95e6ddb88448f77c08017ff6d5, type: 3}
 --- !u!1 &6599022259762454962
 GameObject:
   m_ObjectHideFlags: 0
