@@ -50,10 +50,13 @@ public class EnemyFSM : MonoBehaviour
     private Transform targetPlayer;
     private bool isPlayerFound;
 
-    void Start()
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+    }
 
+    void Start()
+    {
         if (enemyType == EnemyType.Roamer && isSleeping)
         {
             if (fov != null) fov.enabled = false;

@@ -2010,18 +2010,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 91abb5972ed278c48926055339eca0af, type: 2}
   bedData_List_Ori:
   - Bed: {fileID: 4150769205344793296}
+    isSleeping: 1
     summitPos: {fileID: 756101057627638958}
     patrolPoints:
     - {fileID: 1896327367}
     - {fileID: 341516178}
     - {fileID: 674853265}
   - Bed: {fileID: 5971678474334038017}
+    isSleeping: 1
     summitPos: {fileID: 7982245674862104324}
     patrolPoints:
     - {fileID: 877002791}
     - {fileID: 1952101449}
     - {fileID: 1384866053}
   - Bed: {fileID: 2124381235741893815}
+    isSleeping: 0
     summitPos: {fileID: 5989858402191821912}
     patrolPoints:
     - {fileID: 1426711838}
