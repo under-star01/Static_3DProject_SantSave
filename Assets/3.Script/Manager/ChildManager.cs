@@ -28,10 +28,10 @@ public class ChildManager : MonoBehaviour
     // 제네릭을 통해 ChildType_SO, GiftType_SO 타입 Shuffle을 모두 처리
     private List<T> Shuffle<T>(List<T> list)
     {
-        for(int i=0; i<spawnCnt; i++)
+        for(int i=0; i<list.Count; i++)
         {
             // 현재 값과 랜덤으로 선택한 값의 위치를 순차적으로 변경 (이미 변경한 위치는 고정!)
-            int randomIndex = Random.Range(i, spawnCnt);
+            int randomIndex = Random.Range(i, list.Count);
             (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
         }
 
