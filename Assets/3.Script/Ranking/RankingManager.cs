@@ -294,7 +294,12 @@ public class RankingManager : MonoBehaviour
     public void SortRanking()
     {
         // 랭킹 리스트의 값을 내림차순(Descending)으로 설정. 점수가 같다면 날짜 순으로 정렬
-        rankingList = rankingList.OrderByDescending(e => e.score).ThenByDescending(e => e.date).ToList();
+        rankingList = rankingList.OrderByDescending(e => e.score).ThenByDescending(e => {
+            // 문자열을 실제 DateTime 객체로 변환하여 비교 (포맷이 바뀌어도 안전함)
+            if (DateTime.TryParse(e.date, out DateTime parsedDate))
+                return parsedDate;
+            return DateTime.MinValue;
+        }).ToList();
     }
 
     public void SaveRanking()
@@ -388,5 +393,15 @@ public class RankingManager : MonoBehaviour
         }
         RefreshUI();
         Debug.Log("모든 랭킹 데이터가 삭제되었습니다.");
+    }
+
+    [ContextMenu("DEBUG/Add Dummy Data")]
+    public void AddDummyData()
+    {
+        rankingList.Add(new RankingEntry("ALICE", 1500, "2025-12-25 10:00"));
+        rankingList.Add(new RankingEntry("BOB", 3000, "2025-12-26 11:30"));
+        SortRanking();
+        SaveRanking();
+        RefreshUI();
     }
 }
