@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed3e1d706a96dd4993894ad08b7860f, type: 3}
   m_Name: Child_B
   m_EditorClassIdentifier: Assembly-CSharp::ChildType_SO
-  childId: Child_B
   childName: Dongwon
+  childImage: {fileID: 0}
   childPrefab: {fileID: 4681810710975651357, guid: d5f9ed98c14b69c478e9ba30f58ccbd8, type: 3}
