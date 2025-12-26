@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Teddy_Bear
   m_EditorClassIdentifier: Assembly-CSharp::GiftType_SO
   giftName: "\uACF0\uC778\uD615"
-  coment: 
+  coment: "\uBC24\uC5D0 \uD63C\uC790 \uC790\uB294 \uAC8C \uC870\uAE08 \uBB34\uC11C\uC6CC\uC694.\\n\uC548\uACE0
+    \uC798 \uACF0\uC778\uD615\uC774 \uC788\uC73C\uBA74 \uC88B\uACA0\uC5B4\uC694."
   giftPrefab: {fileID: 5944679067526282071, guid: a473f1e77faeb3b428acfcf32664b36e, type: 3}
