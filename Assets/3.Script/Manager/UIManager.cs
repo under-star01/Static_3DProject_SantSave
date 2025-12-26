@@ -90,11 +90,11 @@ public class UIManager : MonoBehaviour
         if(polaroid_List[spawnCnt] != null)
         {
             polaroid_List[spawnCnt].SetActive(true);
-            Texture2D childImage = polaroid_List[spawnCnt].transform.GetChild(0).GetComponent<Texture2D>();
+            Image childImage = polaroid_List[spawnCnt].transform.GetChild(0).GetComponent<Image>();
             TextMeshProUGUI childIName = polaroid_List[spawnCnt].transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI childIWish = polaroid_List[spawnCnt].transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-            childImage = childData.childImage;
+            childImage.sprite = childData.childImage;
             childIName.text = childData.childName;
             childIWish.text = giftData.coment;
 

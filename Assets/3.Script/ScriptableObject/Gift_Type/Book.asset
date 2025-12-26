@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Book
   m_EditorClassIdentifier: Assembly-CSharp::GiftType_SO
   giftName: "\uCC45"
-  coment: 
+  coment: "\uC790\uAE30 \uC804\uC5D0 \uC77D\uC744 \uCC45\uC774 \uD544\uC694\uD574\uC694.\\n\uC77D\uB2E4
+    \uBCF4\uBA74 \uC7A0\uB3C4 \uB354 \uC798 \uC640\uC694."
   giftPrefab: {fileID: 2659496527377266269, guid: 5e21564abc4242c48a4c8f40cb618d39, type: 3}
