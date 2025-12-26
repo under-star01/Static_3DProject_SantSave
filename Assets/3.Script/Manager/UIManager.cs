@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance = null;
 
+    [SerializeField] private GameObject checkList;          // 선물 목록 UI
     [SerializeField] private List<GameObject> polaroid_List = new(); // 폴라로이드 UI 리스트
     [SerializeField] private List<Slider> skillUI_List = new();      // 스킬 Slider 리스트
     [SerializeField] private TextMeshProUGUI scoreUI;                // 점수 Text UI 
@@ -89,6 +90,13 @@ public class UIManager : MonoBehaviour
         if(polaroid_List[spawnCnt] != null)
         {
             polaroid_List[spawnCnt].SetActive(true);
+            Texture2D childImage = polaroid_List[spawnCnt].transform.GetChild(0).GetComponent<Texture2D>();
+            TextMeshProUGUI childIName = polaroid_List[spawnCnt].transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI childIWish = polaroid_List[spawnCnt].transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+            childImage = childData.childImage;
+            childIName.text = childData.childName;
+            childIWish.text = giftData.coment;
 
             // 해당 데이터에서 필요한 부분 연결하면 돼.
             // 밑에 Canvas 구조를 정리해서 자식 순서로 요소를 연결하자.
@@ -138,4 +146,12 @@ public class UIManager : MonoBehaviour
         // 색상 적용
         img.color = isChange ? changeUIColor : Color.white;
     }
+    
+    // 선물 CheckLIst 활성화 메소드
+    public void ShowCheckList(bool isActive)
+    {
+        checkList.SetActive(isActive);
+    }
+
+
 }
