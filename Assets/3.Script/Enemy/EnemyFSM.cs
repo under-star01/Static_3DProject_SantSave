@@ -10,6 +10,7 @@ public enum EnemyType
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
 public class EnemyFSM : MonoBehaviour
 {
     [Header("타입 설정")]
@@ -47,16 +48,19 @@ public class EnemyFSM : MonoBehaviour
     private Vector3 noisePosition;
 
     private NavMeshAgent agent;
+    private Animator animator;
     private Transform targetPlayer;
     private bool isPlayerFound;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         if (enemyType == EnemyType.Roamer && isSleeping)
         {
             if (fov != null) fov.enabled = false;
+            SetAnimation("Sleep");
         }
 
         if (enemyType == EnemyType.Obsever)
@@ -113,16 +117,53 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
+    //애니메이션 제어(범근추가)
+    void SetAnimation(string stateName)
+    {
+        // 모든 Bool 파라미터 초기화
+        animator.SetBool("isSleeping", false);
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isDetecting", false);
+        animator.SetBool("isChasing", false);
+        animator.SetBool("isAlert", false);
+
+        // 해당 상태만 활성화
+        switch (stateName)
+        {
+            case "Sleep":
+                animator.SetBool("isSleeping", true);
+                break;
+            case "Idle":
+                // Idle은 모든 Bool이 false인 기본 상태
+                break;
+            case "Walk":
+                animator.SetBool("isWalking", true);
+                break;
+            case "Detect":
+                animator.SetBool("isDetecting", true);
+                break;
+            case "Chase":
+                animator.SetBool("isChasing", true);
+                break;
+            case "Alert":
+                animator.SetBool("isAlert", true);
+                break;
+        }
+    }
+
     // --- [개별 상태 코루틴] ---
 
     IEnumerator SleepState()
     {
+        SetAnimation("Sleep");
         agent.isStopped = true; // 이동 불가능 상태로 전환
         yield return null;
     }
 
     IEnumerator WakeUpState()
     {
+        animator.SetTrigger("WakeUp");
+
         isSleeping = false;
         isHeard = false;    // 자는동안 들었던 소리는 일어나는 동안 잊음
         agent.isStopped = false; // 이동 가능 상태로 전환
@@ -135,6 +176,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator IdleState()
     {
+        SetAnimation("Idle");
         //Debug.Log("State: Idle");
         float timer = 0f;
 
@@ -150,6 +192,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator MoveState()
     {
+        SetAnimation("Walk");
         //Debug.Log("State: Move");
 
         if (patrolPoints.Count > 0)
@@ -172,6 +215,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator DetectState()
     {
+        SetAnimation("Detect");
         //Debug.Log("State: Detect");
         agent.ResetPath();
 
@@ -186,6 +230,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator LookState()
     {
+        SetAnimation("Detect");
         Debug.Log("State: Look (두리번/주시)");
 
         float timer = 0f;
@@ -236,6 +281,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator ChaseState()
     {
+        SetAnimation("Chase");
         //Debug.Log("State: Chase (추격 시작)");
 
         lostTimer = 0f;
@@ -287,6 +333,8 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator AlertState()
     {
+        SetAnimation("Alert");
+
         while (true)
         {
             // 1. 추격 종료 조건
