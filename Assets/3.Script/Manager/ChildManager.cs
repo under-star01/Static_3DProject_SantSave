@@ -19,11 +19,14 @@ public class ChildManager : MonoBehaviour
     [SerializeField] private List<ChildType_SO> childType_List_Ori;
     [SerializeField] private List<GiftType_SO> giftType_List_Ori;
     [SerializeField] private List<BedData> bedData_List_Ori;
+    [SerializeField] private List<Transform> giftPos_List_Ori;
+    [SerializeField] private List<GameObject> giftPref_List;
 
     [SerializeField] private List<ChildType_SO> childType_List; // 저장할 아이 타입 리스트
     [SerializeField] private List<GiftType_SO> giftType_List; // 저장할 목표 선물 타입 리스트
     [SerializeField] private List<BedData> bedData_List; // 저장할 침대 데이터 리스트
-    
+    [SerializeField] private List<Transform> giftPos_List; // 선물을 둘 위치 리스트
+
     public List<GameObject> spawnChild_List; // 생성된 Child 리스트
 
     private int spawnCnt = 0;
@@ -51,8 +54,7 @@ public class ChildManager : MonoBehaviour
             (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
         }
 
-        // 생성되는 침대 개수만큼만 반환!
-        return list.GetRange(0, spawnCnt);
+        return list;
     } 
 
     // 데이터 초기화 및 생성 메소드
@@ -64,6 +66,7 @@ public class ChildManager : MonoBehaviour
         childType_List = Shuffle(childType_List_Ori);
         giftType_List = Shuffle(giftType_List_Ori);
         bedData_List = Shuffle(bedData_List_Ori);
+        giftPos_List = Shuffle(giftPos_List_Ori);
 
         // 저장 데이터에 내용 저장 및 생성
         for (int i = 0; i < spawnCnt; i++)
@@ -111,6 +114,12 @@ public class ChildManager : MonoBehaviour
         if( spawnChild_List.Count > 0)
         {
             spawnChild_List[0].GetComponent<EnemyFSM>().isSleeping = false;
+        }
+
+        // 선물 위치 설정
+        for(int i = 0; i < giftPref_List.Count; i++)
+        {
+            Instantiate(giftPref_List[i], giftPos_List[i].transform.position, Quaternion.identity);
         }
     }
 

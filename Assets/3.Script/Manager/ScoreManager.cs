@@ -58,7 +58,7 @@ public class ScoreManager : MonoBehaviour
         Debug.Log("정답을 맞췄어용");
     
         // 전부 다 맞췄을 경우, GameManager에 알림
-        if(correctCnt > ChildManager.instance.spawnChild_List.Count)
+        if(correctCnt >= ChildManager.instance.spawnChild_List.Count)
         {
             GameManager.instance.isAllCorrect = true;
         }

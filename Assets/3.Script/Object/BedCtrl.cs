@@ -51,8 +51,9 @@ public class BedCtrl : MonoBehaviour, IInteractable
             return;
         }
 
-        // 선물 배치
+        // 선물 제출 상태 갱신 및 배치
         isSubmit = true;
+        GameManager.instance.submitCnt++;
         Gift gift = playerInteract.PlaceCarriedGift(submitPos);
 
         // 정답 비교
