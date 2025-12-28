@@ -59,6 +59,9 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.CheckSheet.performed -= OnCheckSheet;
 
         playerInput.Disable();
+
+        // 입력제한시, 움직임 멈춤
+        playerMove.SetMoveInput(Vector3.zero);
     }
 
     // WASD 방향키 이동 메소드

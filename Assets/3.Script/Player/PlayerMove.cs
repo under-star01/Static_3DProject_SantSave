@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float turnSpeed = 20f;
     [SerializeField] private float zoomSpeed = 0.5f;
     [SerializeField] private CinemachineCamera cinemachine;
@@ -214,13 +214,13 @@ public class PlayerMove : MonoBehaviour
     public void RunStart()
     {
         isRun = true;
-        moveSpeed = 4f;
+        moveSpeed = 4.5f;
     }
 
     public void RunStop()
     {
         isRun = false;
-        moveSpeed = 2f;
+        moveSpeed = 3f;
     }
 
     public Vector3 GetMouseWorldPosition()

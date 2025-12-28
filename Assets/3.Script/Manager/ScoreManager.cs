@@ -16,6 +16,13 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int caughtedScore; // 발각시 차감 점수
     [SerializeField] private int wakeScore; // 아이를 기상시 차감 점수
 
+
+    [Header("차감 요소 횟수")]
+    public int correctCnt = 0; // 정답 횟수
+    [SerializeField] private int wrongCnt = 0; // 오답 횟수
+    [SerializeField] private int caughtedCnt = 0; // 발각 횟수
+    [SerializeField] private int wakeCnt = 0; // 아이를 기상시킨 횟수
+
     private void Awake()
     {
         if (instance == null)
@@ -47,24 +54,34 @@ public class ScoreManager : MonoBehaviour
     // 정답 선물 제출시 메소드
     public void OnCorrectSubmit()
     {
+        correctCnt++;
         Debug.Log("정답을 맞췄어용");
+    
+        // 전부 다 맞췄을 경우, GameManager에 알림
+        if(correctCnt > ChildManager.instance.spawnChild_List.Count)
+        {
+            GameManager.instance.isAllCorrect = true;
+        }
     }
 
     // 오답 선물 제출시 점수 차감 메소드
     public void OnWrongSubmit()
     {
+        wrongCnt++;
         ApplyScore(-wrongScore);
     }
 
     // NPC에게 발견되었을 때 점수 차감 메소드
     public void OnCaughted()
     {
+        caughtedCnt++;
         ApplyScore(-caughtedScore);
     }
 
     // 아이를 깨웠을 때 점수 차감 메소드
     public void OnWakeChild()
     {
+        wakeCnt++;
         ApplyScore(-wakeScore);
     }
 }

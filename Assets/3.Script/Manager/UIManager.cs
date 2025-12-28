@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<Slider> skillUI_List = new();      // 스킬 Slider 리스트
     [SerializeField] private TextMeshProUGUI scoreUI;                // 점수 Text UI 
     [SerializeField] private TextMeshProUGUI addScoreUI;             // 추가 점수 Text UI 
+    [SerializeField] private Image blackOutUI;                       // 암전 효과 UI
     [SerializeField] private Color changeUIColor;                    // 변경시 UI 색상
     
     private Dictionary<Skill, Image> skillFillImages = new(); // 색상을 변경 Skill Image 딕셔너리
@@ -107,13 +108,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // 완료 CheckList 비활성화 메소드
-    public void DeActivatePolarroid(int index)
-    {
-        // 이건 임시로만 해둔거야. 색깔을 흐리게 하면 좋을 것 같아.
-        polaroid_List[index].SetActive(false);
-    }
-
     // 변신 스킬 쿨타임 UI 적용 메소드
     public void CoolTimeStart(Skill index, float duration)
     {
@@ -153,5 +147,38 @@ public class UIManager : MonoBehaviour
         checkList.SetActive(isActive);
     }
 
+    // 완료 CheckList 비활성화 메소드
+    public void DeActivatePolarroid(int index)
+    {
+        Image polaroid = polaroid_List[index].GetComponent<Image>();
 
+        if(polaroid != null)
+        {
+            polaroid.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+        }
+    }
+
+    // 암전 효과 코루틴
+    public IEnumerator ActiveBlackOut_co(bool toBlack, float duration)
+    {
+        // 시작, 목표값 설정
+        Color color = blackOutUI.color;  
+        float startAlpha = toBlack ? 0 : 1;
+        float targetAlpha = toBlack ? 1 : 0;
+        color.a = startAlpha;
+
+        // 알파값 변경
+        float elapsed = 0f;
+        while(elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            color.a = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+            blackOutUI.color = color;
+            yield return null;
+        }
+
+        // 최종값으로 정리
+        color.a = targetAlpha;
+        blackOutUI.color = color;
+    }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    public static TimeManager instance = null;
+
     //[SerializeField] private Light sun;
     [SerializeField] private Light moon;
     [SerializeField] private Light all;
@@ -15,6 +17,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private float totalTime = 300f; //전체 시간
 
     public float currentTime;// 현재시간 0이되면 게임오버
+    public bool isTimer = true; // 타이머가 작동 중인지 여부
 
     // 시간 종료 이벤트
     public event Action OnTimeEnd;
@@ -23,7 +26,19 @@ public class TimeManager : MonoBehaviour
     private Color sunriseColor = new Color(0.5f, 0.5f, 0.4f);
     private bool isTimeEnd = false; // 이벤트 중복 방지
 
-    private void Start()
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnEnable()
     {
         currentTime = totalTime;
         all.intensity = 5f;
@@ -33,20 +48,21 @@ public class TimeManager : MonoBehaviour
         isTimeEnd = false;
     }
 
-
     private void Update()
     {
+        // 타이머가 작동 중일 때만 실행
+        if (!isTimer) return;
+
+        // 시간 누적 및 GameOver 판정
         currentTime -= Time.deltaTime;
 
         if (currentTime <= 0f && !isTimeEnd)
         {
-            currentTime = 0f;
-            isTimeEnd = true;
-            OnTimeEnd?.Invoke(); // 이벤트 발생
-            Debug.Log("시간 종료!");
+            IsTimeOver();
             return;
         }
 
+        // 햇빛, 달빛 Light 조정
         float normalizedTime = 1f - (currentTime / totalTime); //전체시간을 0~1로 변환한 시간
 
         if (normalizedTime < 0.6f) //시간이 60퍼가 지나기전
@@ -87,5 +103,16 @@ public class TimeManager : MonoBehaviour
     public float GetTotalTime()
     {
         return totalTime;
+    }
+
+    // 시간 오버로 인한 게임 종료 메소드
+    private void IsTimeOver()
+    {
+        currentTime = 0f;
+        isTimeEnd = true;
+        Debug.Log("시간 종료!");
+        isTimer = false;
+        GameManager.instance.isTimeOver = true; // 시간 오버로 인한 게임종료
+        GameManager.instance.gameOver?.Invoke() ; // 게임 오버 이벤트 발생
     }
 }
