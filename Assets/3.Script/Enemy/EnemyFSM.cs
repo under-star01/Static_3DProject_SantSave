@@ -51,6 +51,7 @@ public class EnemyFSM : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private Transform targetPlayer;
+    private Coroutine fsmRoutine;
     private bool isPlayerFound;
 
     private void Awake()
@@ -70,13 +71,28 @@ public class EnemyFSM : MonoBehaviour
 
         if (enemyType == EnemyType.Obsever)
         {
-            StartCoroutine(FSM_Loop());
+            StopFSMLoop();
+            fsmRoutine = StartCoroutine(FSM_Loop());
         }
+    }
+
+    private void OnEnable()
+    {
+        GameManager.instance.gameOver += StopFSMLoop;
     }
 
     public void StartFSMLoop()
     {
-        StartCoroutine(FSM_Loop());
+        StopFSMLoop();
+        fsmRoutine = StartCoroutine(FSM_Loop());
+    }
+
+    private void StopFSMLoop()
+    {
+        if (fsmRoutine != null)
+        {
+            StopCoroutine(fsmRoutine);
+        }
     }
 
     IEnumerator FSM_Loop()
@@ -202,6 +218,7 @@ public class EnemyFSM : MonoBehaviour
     {
         SetAnimation("Walk");
         bubbleCtrl.OnStateChanged("MoveState");
+        agent.isStopped = false;
 
         if (patrolPoints.Count > 0)
         {
@@ -209,7 +226,7 @@ public class EnemyFSM : MonoBehaviour
             agent.SetDestination(patrolPoints[randIndex].position);
 
             // [수정] 이동 중에도 계속 감시
-            while (agent.pathPending || agent.remainingDistance > 0.5f)
+            while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             {
                 if (CheckPlayerDetected())
                 {

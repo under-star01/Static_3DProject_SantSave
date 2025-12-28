@@ -82,7 +82,7 @@ public class EnemyFOV : MonoBehaviour
                 else
                 {
                     // 탐지 실패 시 무엇에 맞았는지 로그 출력
-                    Debug.Log($"시야가 막힘! 방해물: {hit.collider.gameObject.name} (Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)})");
+                    //Debug.Log($"시야가 막힘! 방해물: {hit.collider.gameObject.name} (Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)})");
 
                     // 디버그 라인 그려서 눈으로 확인 (Scene 뷰에서 빨간선이 어디서 끊기는지 보세요)
                     Debug.DrawLine(transform.position, hit.point, Color.red, 0.1f);
