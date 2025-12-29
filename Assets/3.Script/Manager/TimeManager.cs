@@ -17,10 +17,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private float totalTime = 300f; //전체 시간
 
     public float currentTime;// 현재시간 0이되면 게임오버
-    public bool isTimer = true; // 타이머가 작동 중인지 여부
-
-    // 시간 종료 이벤트
-    public event Action OnTimeEnd;
+    public bool isTimer = false; // 타이머가 작동 중인지 여부
 
     [SerializeField] private Color nightColor = new Color(0.1f, 0.1f, 0.4f);
     [SerializeField] private Color sunriseColor = new Color(0.5f, 0.5f, 0.4f);
@@ -48,6 +45,16 @@ public class TimeManager : MonoBehaviour
         isTimeEnd = false;
     }
 
+    private void OnDisable()
+    {
+        GameManager.instance.gameStart -= ActivateTimer;
+    }
+
+    private void Start()
+    {
+        GameManager.instance.gameStart += ActivateTimer;
+    }
+
     private void Update()
     {
         // 타이머가 작동 중일 때만 실행
@@ -73,6 +80,11 @@ public class TimeManager : MonoBehaviour
         {
             Sunrise((normalizedTime - 0.6f) / 0.4f); // 남은시간을 0~1로 변환
         }
+    }
+
+    private void ActivateTimer()
+    {
+        isTimer = true;
     }
 
     private void MoonMove()

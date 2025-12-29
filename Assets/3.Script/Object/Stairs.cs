@@ -27,7 +27,7 @@ public class Stairs : MonoBehaviour, IInteractable
 
         PlayerInput playerInput;
         player.TryGetComponent(out playerInput);
-        playerInput.enabled = false;
+        playerInput.DeActivateInput();
         TimeManager.instance.isTimer = false;
 
         yield return UIManager.instance.ActiveBlackOut_co(true, 1f);
@@ -41,7 +41,7 @@ public class Stairs : MonoBehaviour, IInteractable
         // 입력 복귀 및 암전 효과 해제
         yield return UIManager.instance.ActiveBlackOut_co(false, 1f);
 
-        playerInput.enabled = true;
+        playerInput.ActivateInput();
         TimeManager.instance.isTimer = true;
         isInteract = false;
     }

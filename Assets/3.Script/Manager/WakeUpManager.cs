@@ -66,14 +66,11 @@ public class WakeUpManager : MonoBehaviour
         }
     }
 
-    void WakeUp()
+    public void WakeUp()
     {   
         // 일어난 아이 수 및 UI 갱신
         wakeUpCnt++;
         WakeUpCnt.text = $"*{wakeUpCnt}";
-
-        // IsSleeping 상태인 아이중, 한 명을 깨우는 메소드
-        ChildManager.instance.WakeChild();
 
         // 최대 아이수에 도달했을 경우 게이지 증가 중단
         if (wakeUpCnt >= wakeUpMaxCnt)
