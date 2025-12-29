@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CaughtManager caughtManager;
     [SerializeField] private ChildManager childManager;
     [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private RankingManager rankingManager;
 
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private Canvas canvas;
@@ -126,7 +127,10 @@ public class GameManager : MonoBehaviour
         }
 
         // Ranking UI 표시
-        // 점수 저장 -> 내용 적용
         UIManager.instance.ShowRankingUI(true);
+        if (rankingManager != null)
+        {
+            // 점수 저장 -> 내용 적용 메소드 실행
+        }
     }
 }
