@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -36,14 +36,14 @@ public class GameManager : MonoBehaviour
         }
 
         // Manager 일괄 초기화
-        
-        if(caughtManager != null)
+
+        if (caughtManager != null)
         {
             // CaughtManager 초기화
             caughtManager.InitializeData();
         }
-        
-        if(childManager != null)
+
+        if (childManager != null)
         {
             // ChildManager 초기화
             childManager.InitializeData();
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverUI(VideoClip clip)
     {
         // 암전 효과 On
-        yield return  UIManager.instance.ActiveBlackOut_co(true, 1f);
+        yield return UIManager.instance.ActiveBlackOut_co(true, 1f);
 
         // 영상 재생
         videoPlayer.gameObject.SetActive(true);
@@ -112,9 +112,12 @@ public class GameManager : MonoBehaviour
         videoPlayer.clip = clip;
         videoPlayer.Play();
         yield return new WaitForSeconds(0.25f);
-        
-        // Canvas 비활성화
-        canvas.gameObject.SetActive(false);
+
+        // UI 비활성화;
+        foreach (Transform child in canvas.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
 
         // 재생이 끝날때까지 대기
         while (videoPlayer.isPlaying)
@@ -122,9 +125,8 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        // 데이터 저장 내용 여기에 넣으면 될 것 같아!
-
         // Ranking UI 표시
-        //rankingUI.SetActive(true);
+        // 점수 저장 -> 내용 적용
+        UIManager.instance.ShowRankingUI(true);
     }
 }
