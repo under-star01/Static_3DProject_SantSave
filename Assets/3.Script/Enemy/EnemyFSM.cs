@@ -48,8 +48,8 @@ public class EnemyFSM : MonoBehaviour
     private Vector3 noisePosition;
 
     [Header("이동 속도 설정")]
-    public float normalSpeed = 2.0f;  // 일반 순찰 속도
-    public float chaseSpeed = 1.0f;   // 추격 속도
+    public float normalSpeed = 1.5f;  // 일반 순찰 속도
+    public float chaseSpeed = 2.0f;   // 추격 속도
 
     private TalkBubbleController bubbleCtrl;
     private NavMeshAgent agent;
@@ -229,6 +229,7 @@ public class EnemyFSM : MonoBehaviour
         bubbleCtrl.OnStateChanged("MoveState");
         agent.isStopped = false;
         agent.speed = normalSpeed;
+        animator.speed = 1.0f;
 
         if (patrolPoints.Count > 0)
         {
@@ -319,6 +320,7 @@ public class EnemyFSM : MonoBehaviour
         SetAnimation("Chase");
         bubbleCtrl.OnStateChanged("ChaseState");
 
+        animator.speed = 0.7f;
         agent.speed = chaseSpeed;
 
         lostTimer = 0f;
@@ -362,6 +364,7 @@ public class EnemyFSM : MonoBehaviour
                 targetPlayer = null;
 
                 agent.speed = normalSpeed;
+                animator.speed = 1.0f;
                 break;
             }
 
@@ -369,6 +372,7 @@ public class EnemyFSM : MonoBehaviour
         }
 
         agent.speed = normalSpeed;
+        animator.speed = 1.0f;
     }
 
 
