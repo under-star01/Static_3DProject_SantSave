@@ -377,13 +377,27 @@ public class EnemyFSM : MonoBehaviour
         SetAnimation("Alert");
         bubbleCtrl.OnStateChanged("AlertState");
 
+        float alertLostTimer = 0f; // 추가: 놓친 시간 측정용
+        float alertLoseThreshold = 1.0f; // 추가: 1초 정도는 안 보여도 유지
+
         while (true)
         {
+            bool isVisible = fov.DetectPlayer(true);
+
+            if (isVisible)
+            {
+                alertLostTimer = 0f; // 보이면 타이머 초기화
+            }
+            else
+            {
+                alertLostTimer += Time.deltaTime; // 안 보이면 타이머 증가
+            }
+
             // 1. 추격 종료 조건
             // targetPlayer가 null인지 확인하고, 감지 실패 시 종료
-            if (targetPlayer == null || !fov.DetectPlayer(true))
+            if (targetPlayer == null || alertLostTimer >= alertLoseThreshold)
             {
-                Debug.Log("Chase: 놓침 -> 다시 순찰 복귀");
+                //Debug.Log("Chase: 놓침 -> 다시 순찰 복귀");
                 isPlayerFound = false;
                 targetPlayer = null;
                 agent.isStopped = false;
