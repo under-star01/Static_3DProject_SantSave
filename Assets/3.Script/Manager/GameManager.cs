@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 public class GameManager : MonoBehaviour
@@ -130,7 +131,29 @@ public class GameManager : MonoBehaviour
         UIManager.instance.ShowRankingUI(true);
         if (rankingManager != null)
         {
-            // 점수 저장 -> 내용 적용 메소드 실행
+            // 점수 적용 및 UI 표시
+            rankingManager.ProcessNewScore(ScoreManager.instance.score);
         }
+    }
+
+    // Retry 버튼 호출 메소드
+    public void RetryGame()
+    {
+        // 현재 씬 이름으로 다시 로드
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    // Exit 버튼 호출 메소드
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        // 에디터에서 실행 중일 때
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        // 빌드된 게임에서 실행 중일 때
+        Application.Quit();
+#endif
+
     }
 }

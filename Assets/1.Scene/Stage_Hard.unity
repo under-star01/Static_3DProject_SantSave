@@ -826,7 +826,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 148174035}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8088592677909522227}
+        m_TargetAssemblyTypeName: RankingManager, Assembly-CSharp
+        m_MethodName: OnConfirmNameInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &148174035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2333,7 +2345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3280,9 +3292,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChildManager
   childType_List_Ori:
-  - {fileID: 11400000, guid: dad9b7157b496fa4ab8675edf294e97b, type: 2}
-  - {fileID: 11400000, guid: feeeb44705fda214dbe33ba5bf5f557c, type: 2}
-  - {fileID: 11400000, guid: 73d0cd593184e064fbeca2b50acc0822, type: 2}
+  - {fileID: 11400000, guid: bbd7b478dd48a2743a0ac259a0fe8143, type: 2}
+  - {fileID: 11400000, guid: 73b9a6ceafbfc0a4fa1c1331597273e4, type: 2}
+  - {fileID: 11400000, guid: 5c2279e5c87c680498048f1ff7187557, type: 2}
   - {fileID: 11400000, guid: cdb739f3347d31d4d9d9739eb58c87e7, type: 2}
   giftType_List_Ori:
   - {fileID: 11400000, guid: ddc2614294e46454584631324282eb1f, type: 2}
@@ -4550,7 +4562,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: ab2a53043c7ae854a90673350fc0b786, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 655bb9525644bba47aa009de342aa61f, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &525556216
 Transform:
@@ -12359,7 +12371,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 50}
+  m_SizeDelta: {x: 780, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1378601701
 MonoBehaviour:
@@ -14957,8 +14969,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: -40, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1705658943
 MonoBehaviour:
@@ -15282,7 +15294,7 @@ MonoBehaviour:
   caughtManager: {fileID: 2135858246}
   childManager: {fileID: 361564999}
   scoreManager: {fileID: 1248076654}
-  rankingManager: {fileID: 0}
+  rankingManager: {fileID: 8088592677909522227}
   videoPlayer: {fileID: 627249454}
   canvas: {fileID: 6882336013783123941}
   videoClips:
@@ -16067,7 +16079,7 @@ Transform:
   m_GameObject: {fileID: 1878995970}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.41, y: 0, z: -0.49}
+  m_LocalPosition: {x: 1.41, y: 0.119, z: -0.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16963,15 +16975,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -18349,7 +18361,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 50}
+  m_SizeDelta: {x: 80, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061182595
 MonoBehaviour:
