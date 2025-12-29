@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     [Header("현재 점수")]
     // 플레이어 점수
-    [SerializeField] private int score = 1000; 
+    public int score = 1000; 
 
     [Header("차감 점수 목록")]
     [SerializeField] private int wrongScore; // 오답시 차감 점수

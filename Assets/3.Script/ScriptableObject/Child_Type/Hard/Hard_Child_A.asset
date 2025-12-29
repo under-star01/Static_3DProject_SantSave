@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed3e1d706a96dd4993894ad08b7860f, type: 3}
+  m_Name: Hard_Child_A
+  m_EditorClassIdentifier: Assembly-CSharp::ChildType_SO
+  childName: Leo
+  childImage: {fileID: 21300000, guid: 5b074a238ebcd6244b29d542f7dd570d, type: 3}
+  childPrefab: {fileID: 1437613027263113047, guid: e5202371ffd4c8940bf06f27559b274b, type: 3}

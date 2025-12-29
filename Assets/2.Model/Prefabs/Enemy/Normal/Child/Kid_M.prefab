@@ -567,8 +567,6 @@ MonoBehaviour:
   alertFillSpeed: 30
   turnSpeed: 5
   currentGauge: 0
-  normalSpeed: 1.5
-  chaseSpeed: 2
 --- !u!114 &6335865637992695264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,7 +764,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e7b0ff4391786a94c8d3f142f3fa4f23, type: 2}
+  - {fileID: 2100000, guid: cec26cfa0f1ccad4590727238e353657, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

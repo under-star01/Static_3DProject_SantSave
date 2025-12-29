@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 public class GameManager : MonoBehaviour
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CaughtManager caughtManager;
     [SerializeField] private ChildManager childManager;
     [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private RankingManager rankingManager;
 
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private Canvas canvas;
@@ -114,6 +116,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         // UI 비활성화;
+        caughtManager.gameObject.SetActive(false);
+
         foreach (Transform child in canvas.transform)
         {
             child.gameObject.SetActive(false);
@@ -126,7 +130,31 @@ public class GameManager : MonoBehaviour
         }
 
         // Ranking UI 표시
-        // 점수 저장 -> 내용 적용
         UIManager.instance.ShowRankingUI(true);
+        if (rankingManager != null)
+        {
+            // 점수 적용 및 UI 표시
+            rankingManager.ProcessNewScore(ScoreManager.instance.score);
+        }
+    }
+
+    // Retry 버튼 호출 메소드
+    public void RetryGame()
+    {
+        // 현재 씬 이름으로 다시 로드
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    // Exit 버튼 호출 메소드
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        // 에디터에서 실행 중일 때
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        // 빌드된 게임에서 실행 중일 때
+        Application.Quit();
+#endif
     }
 }

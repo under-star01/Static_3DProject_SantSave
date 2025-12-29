@@ -44,12 +44,8 @@ public class EnemyFSM : MonoBehaviour
     public float currentGauge = 0f;
 
     [Header("소리 관련 변수")]
-    private bool isHeard;
+    public bool isHeard;
     private Vector3 noisePosition;
-
-    [Header("이동 속도 설정")]
-    public float normalSpeed = 1.5f;  // 일반 순찰 속도
-    public float chaseSpeed = 2.0f;   // 추격 속도
 
     private TalkBubbleController bubbleCtrl;
     private NavMeshAgent agent;
@@ -109,7 +105,6 @@ public class EnemyFSM : MonoBehaviour
             // 2. WakeUp (기상)
             // 수면 중 플레이어의 소리를 감지했을 때 실행
             if (isSleeping && isHeard) yield return StartCoroutine(WakeUpState());
-
 
             if (!isSleeping)
             {
@@ -228,7 +223,6 @@ public class EnemyFSM : MonoBehaviour
         SetAnimation("Walk");
         bubbleCtrl.OnStateChanged("MoveState");
         agent.isStopped = false;
-        agent.speed = normalSpeed;
         animator.speed = 1.0f;
 
         if (patrolPoints.Count > 0)
@@ -323,7 +317,6 @@ public class EnemyFSM : MonoBehaviour
         AudioManager.Instance.PlayAlertSFX();
 
         animator.speed = 0.7f;
-        agent.speed = chaseSpeed;
 
         lostTimer = 0f;
         while (true)
@@ -365,15 +358,12 @@ public class EnemyFSM : MonoBehaviour
                 isPlayerFound = false;
                 targetPlayer = null;
 
-                agent.speed = normalSpeed;
                 animator.speed = 1.0f;
                 break;
             }
 
             yield return null;
         }
-
-        agent.speed = normalSpeed;
         animator.speed = 1.0f;
     }
 

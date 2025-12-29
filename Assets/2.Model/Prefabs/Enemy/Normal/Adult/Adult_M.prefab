@@ -481,7 +481,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e7b0ff4391786a94c8d3f142f3fa4f23, type: 2}
+  - {fileID: 2100000, guid: cec26cfa0f1ccad4590727238e353657, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -516,8 +516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61958b974ad13fb4e864d4a94fa2582a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFOV
-  viewRadius: 6
-  viewAngle: 60
+  viewRadius: 10
+  viewAngle: 45
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4195328

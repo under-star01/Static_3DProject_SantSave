@@ -133,7 +133,7 @@ public class ChildManager : MonoBehaviour
 
             if (fsm != null && fsm.isSleeping)
             {
-                fsm.isSleeping = false;
+                fsm.isHeard = true;
                 return;
             }
         }
