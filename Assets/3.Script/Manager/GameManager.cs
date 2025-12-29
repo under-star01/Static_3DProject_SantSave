@@ -116,6 +116,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         // UI 비활성화;
+        caughtManager.gameObject.SetActive(false);
+
         foreach (Transform child in canvas.transform)
         {
             child.gameObject.SetActive(false);
@@ -154,6 +156,5 @@ public class GameManager : MonoBehaviour
         // 빌드된 게임에서 실행 중일 때
         Application.Quit();
 #endif
-
     }
 }

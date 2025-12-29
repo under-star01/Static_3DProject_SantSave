@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ed3e1d706a96dd4993894ad08b7860f, type: 3}
-  m_Name: Hard_Child_C
+  m_Name: Hard_Child_B
   m_EditorClassIdentifier: Assembly-CSharp::ChildType_SO
-  childName: Theo
-  childImage: {fileID: 21300000, guid: 030161ddb66a8eb499abe0cf91699f7e, type: 3}
-  childPrefab: {fileID: 4813712074220569462, guid: 70576af5775df414cace8fe8c02e3f63, type: 3}
+  childName: Dongwon
+  childImage: {fileID: 21300000, guid: ec7fceb1a151b6646a81705dfeca47e4, type: 3}
+  childPrefab: {fileID: 3904755302642721680, guid: c0334d7a2a2d0ef40bb06ca4e8f5c29c, type: 3}

@@ -99,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e7b0ff4391786a94c8d3f142f3fa4f23, type: 2}
+  - {fileID: 2100000, guid: cec26cfa0f1ccad4590727238e353657, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -723,7 +723,7 @@ GameObject:
   - component: {fileID: 1077686789424536033}
   - component: {fileID: 7593516796958434272}
   m_Layer: 0
-  m_Name: Dororong
+  m_Name: Hard_Teen_F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

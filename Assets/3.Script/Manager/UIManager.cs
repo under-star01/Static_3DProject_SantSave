@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<Slider> skillUI_List = new();      // 스킬 Slider 리스트
     [SerializeField] private TextMeshProUGUI scoreUI;                // 점수 Text UI 
     [SerializeField] private TextMeshProUGUI addScoreUI;             // 추가 점수 Text UI 
+    [SerializeField] private GameObject resultImageUI;               // 결과 배경 UI 
     [SerializeField] private GameObject rankingUI;                   // 랭킹 UI 
     [SerializeField] private Image blackOutUI;                       // 암전 효과 UI
     [SerializeField] private Color changeUIColor;                    // 변경시 UI 색상
@@ -151,6 +152,7 @@ public class UIManager : MonoBehaviour
     // 랭킹 UI 활성화 메소드
     public void ShowRankingUI(bool isActive)
     {
+        resultImageUI.SetActive(isActive);
         rankingUI.SetActive(isActive);
     }
 
