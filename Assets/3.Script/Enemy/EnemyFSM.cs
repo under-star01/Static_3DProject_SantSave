@@ -314,6 +314,8 @@ public class EnemyFSM : MonoBehaviour
         SetAnimation("Chase");
         bubbleCtrl.OnStateChanged("ChaseState");
 
+        AudioManager.Instance.PlayAlertSFX();
+
         animator.speed = 0.7f;
 
         lostTimer = 0f;
@@ -370,6 +372,8 @@ public class EnemyFSM : MonoBehaviour
     {
         SetAnimation("Alert");
         bubbleCtrl.OnStateChanged("AlertState");
+
+        AudioManager.Instance.PlayAlertSFX();
 
         float alertLostTimer = 0f; // 추가: 놓친 시간 측정용
         float alertLoseThreshold = 1.0f; // 추가: 1초 정도는 안 보여도 유지

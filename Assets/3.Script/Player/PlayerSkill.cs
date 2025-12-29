@@ -151,6 +151,8 @@ public class PlayerSkill : MonoBehaviour
             transformEffect.Play();
         }
 
+        AudioManager.Instance.PlayTransformSFX();
+
         // 불끄기
         sight.enabled = false;
 
@@ -325,6 +327,8 @@ public class PlayerSkill : MonoBehaviour
     {
         isDecoyAiming = true;
 
+        AudioManager.Instance.PlayClickSFX();
+
         if (trajectoryLine != null)
         {
             trajectoryLine.enabled = true;
@@ -485,9 +489,11 @@ public class PlayerSkill : MonoBehaviour
         decoyRangeIndicator.transform.position = indicatorPos;
     }
 
-    // 단순화된 디코이 던지기
+    // 디코이 던지기
     private void ThrowDecoy()
     {
+        AudioManager.Instance.PlayThrowSFX();
+
         if (decoyPrefab != null)
         {
             Vector3 startPosition = transform.position + Vector3.up * 1.5f;
@@ -517,6 +523,8 @@ public class PlayerSkill : MonoBehaviour
         {
             return;
         }
+
+        AudioManager.Instance.PlayClickSFX();
 
         EndDecoyAim();
         Debug.Log("디코이 스킬 취소");

@@ -22,6 +22,8 @@ public class Decoy : MonoBehaviour
         {
             hasLanded = true;
 
+            AudioManager.Instance.PlayBellSFX();
+
             // ÂøÁö ÀÌÆåÆ®
             if (landingEffect != null)
             {

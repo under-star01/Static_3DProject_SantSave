@@ -103,6 +103,8 @@ public class PlayerInteract : MonoBehaviour
 
         yield return new WaitForSeconds(0.7f);
 
+        AudioManager.Instance.PlayPickupSFX();
+
         // 플레이어 손 위치에 붙이기
         Transform t = carriedGift.transform;
         t.SetParent(giftAttachPoint);

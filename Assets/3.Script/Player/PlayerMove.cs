@@ -249,4 +249,9 @@ public class PlayerMove : MonoBehaviour
         }
         return false;
     }
+
+    private void Footstep()
+    {
+        AudioManager.Instance.PlayFootstepSFX();
+    }
 }
