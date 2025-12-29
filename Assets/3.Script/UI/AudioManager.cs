@@ -87,7 +87,7 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        audioMixer.SetFloat(MUSIC_VOLUME, dB);
+        //audioMixer.SetFloat(MUSIC_VOLUME, dB);
         PlayerPrefs.SetFloat(MUSIC_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -95,7 +95,7 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        audioMixer.SetFloat(SFX_VOLUME, dB);
+        //audioMixer.SetFloat(SFX_VOLUME, dB);
         PlayerPrefs.SetFloat(SFX_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -103,7 +103,7 @@ public class AudioManager : MonoBehaviour
     public void SetSystemVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        audioMixer.SetFloat(SYSTEM_VOLUME, dB);
+        //audioMixer.SetFloat(SYSTEM_VOLUME, dB);
         PlayerPrefs.SetFloat(SYSTEM_VOLUME, volume);
         PlayerPrefs.Save();
     }
