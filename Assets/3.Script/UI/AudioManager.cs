@@ -31,6 +31,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip EnterSFX;
     [SerializeField] private AudioClip ClickSFX;
     [SerializeField] private AudioClip AlertSFX;
+    [SerializeField] private AudioClip WakeupSFX;
+    [SerializeField] private AudioClip DropSFX;
 
 
     [Header("UI 소리")]
@@ -192,6 +194,8 @@ public class AudioManager : MonoBehaviour
     public void PlayEnterSFX() => PlaySFX(EnterSFX);
     public void PlayClickSFX() => PlaySFX(ClickSFX);
     public void PlayAlertSFX() => PlaySFX(AlertSFX);
+    public void PlayWakeupSFX() => PlaySFX(WakeupSFX);
+    public void PlayDropSFX() => PlaySFX(DropSFX);
 
 
     // UI 효과음 바로가기

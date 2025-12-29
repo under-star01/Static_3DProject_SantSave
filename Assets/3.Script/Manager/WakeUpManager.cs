@@ -61,6 +61,7 @@ public class WakeUpManager : MonoBehaviour
         if (currentGauge >= maxGauge)
         {
             currentGauge = maxGauge;
+            
             WakeUp();
         }
     }

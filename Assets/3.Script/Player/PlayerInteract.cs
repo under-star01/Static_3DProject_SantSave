@@ -151,6 +151,8 @@ public class PlayerInteract : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
+        AudioManager.Instance.PlayDropSFX();
+
         Gift dropped = carriedGift;
 
         // 부모 해제
@@ -212,6 +214,8 @@ public class PlayerInteract : MonoBehaviour
         {
             playerMove.canMove = false;
         }
+
+        AudioManager.Instance.PlayDropSFX();
 
         yield return new WaitForSeconds(1f);
 

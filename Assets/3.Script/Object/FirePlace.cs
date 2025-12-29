@@ -10,6 +10,7 @@ public class FirePlace : MonoBehaviour,IInteractable
         {
             // 게임 종료 이벤트 호출
             GameManager.instance.gameOver?.Invoke();
+            AudioManager.Instance.PlayEnterSFX();
         }
         else
         {

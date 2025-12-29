@@ -189,6 +189,7 @@ public class EnemyFSM : MonoBehaviour
     {
         animator.SetTrigger("WakeUp");
         bubbleCtrl.OnStateChanged("WakeUpState");
+        AudioManager.Instance.PlayWakeupSFX();
         isSleeping = false;
         isHeard = false;    // 자는동안 들었던 소리는 일어나는 동안 잊음
         agent.isStopped = false; // 이동 가능 상태로 전환
