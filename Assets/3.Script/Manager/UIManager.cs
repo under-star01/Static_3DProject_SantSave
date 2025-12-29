@@ -14,9 +14,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<Slider> skillUI_List = new();      // 스킬 Slider 리스트
     [SerializeField] private TextMeshProUGUI scoreUI;                // 점수 Text UI 
     [SerializeField] private TextMeshProUGUI addScoreUI;             // 추가 점수 Text UI 
+    [SerializeField] private GameObject rankingUI;                   // 랭킹 UI 
     [SerializeField] private Image blackOutUI;                       // 암전 효과 UI
     [SerializeField] private Color changeUIColor;                    // 변경시 UI 색상
-    
+
     private Dictionary<Skill, Image> skillFillImages = new(); // 색상을 변경 Skill Image 딕셔너리
     private int spawnCnt = 0; // 활성화 폴라로이드 UI 개수 
 
@@ -42,7 +43,7 @@ public class UIManager : MonoBehaviour
 
     public void SetScore(int score, int addScore)
     {
-        if(scoreUI != null && addScoreUI != null)
+        if (scoreUI != null && addScoreUI != null)
         {
             // 점수 적용
             scoreUI.text = $"Score : {score}";
@@ -88,7 +89,7 @@ public class UIManager : MonoBehaviour
         // 폴라로이드 UI 리스트가 비어있으면 리턴
         if (polaroid_List.Count == 0) return;
 
-        if(polaroid_List[spawnCnt] != null)
+        if (polaroid_List[spawnCnt] != null)
         {
             polaroid_List[spawnCnt].SetActive(true);
             Image childImage = polaroid_List[spawnCnt].transform.GetChild(0).GetComponent<Image>();
@@ -123,7 +124,7 @@ public class UIManager : MonoBehaviour
         Slider skillUI = skillUI_List[(int)index];
         float elapsed = 0f;
 
-        while(elapsed < duration)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             skillUI.value = elapsed / duration;
@@ -136,15 +137,21 @@ public class UIManager : MonoBehaviour
     {
         // 연결된 Image가 없다면 리턴
         if (!skillFillImages.TryGetValue(index, out var img)) return;
-        
+
         // 색상 적용
         img.color = isChange ? changeUIColor : Color.white;
     }
-    
+
     // 선물 CheckLIst 활성화 메소드
     public void ShowCheckList(bool isActive)
     {
         checkList.SetActive(isActive);
+    }
+
+    // 랭킹 UI 활성화 메소드
+    public void ShowRankingUI(bool isActive)
+    {
+        rankingUI.SetActive(isActive);
     }
 
     // 완료 CheckList 비활성화 메소드
@@ -152,7 +159,7 @@ public class UIManager : MonoBehaviour
     {
         Image polaroid = polaroid_List[index].GetComponent<Image>();
 
-        if(polaroid != null)
+        if (polaroid != null)
         {
             polaroid.color = new Color(0.5f, 0.5f, 0.5f, 1f);
         }
@@ -162,14 +169,14 @@ public class UIManager : MonoBehaviour
     public IEnumerator ActiveBlackOut_co(bool toBlack, float duration)
     {
         // 시작, 목표값 설정
-        Color color = blackOutUI.color;  
+        Color color = blackOutUI.color;
         float startAlpha = toBlack ? 0 : 1;
         float targetAlpha = toBlack ? 1 : 0;
         color.a = startAlpha;
 
         // 알파값 변경
         float elapsed = 0f;
-        while(elapsed < duration)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             color.a = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
