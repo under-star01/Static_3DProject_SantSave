@@ -22,6 +22,7 @@ public class CaughtManager : MonoBehaviour
     [SerializeField] private float caughtTime; // 발각시 증가될 시간
     private PlayerInput playerInput;
     private bool isCaught = false; // 잡힌 상태 여부
+    private Coroutine returnRoutine; // 복귀 코루틴
 
     private void Awake()
     {
@@ -34,6 +35,14 @@ public class CaughtManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (returnRoutine != null)
+        {
+            StopCoroutine(returnRoutine);
         }
     }
 
@@ -68,7 +77,12 @@ public class CaughtManager : MonoBehaviour
             isCaught = true;
 
             currentGauge = maxGauge;
-            StartCoroutine(ReturnToTree());
+
+            if(returnRoutine != null)
+            {
+                StopCoroutine(returnRoutine);
+            }
+            returnRoutine = StartCoroutine(ReturnToTree());
         }
     }
 
