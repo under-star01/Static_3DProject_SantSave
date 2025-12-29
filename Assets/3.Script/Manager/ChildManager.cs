@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 public class BedData
 {
     public GameObject Bed; // 연결할 침대 오브젝트
+    public Transform spawnPoint; // 생성 위치
     public Transform summitPos; // 선물을 놓을 위치
     public List<Transform> patrolPoints; // 패트롤할 위치 리스트
     public int spawnIndex; // 생성 순서
@@ -77,7 +78,7 @@ public class ChildManager : MonoBehaviour
 
             // Child 오브젝트 초기화 실행
             GameObject childObj 
-                = Instantiate(childData.childPrefab, bedData_List[i].Bed.transform.position + Vector3.up, bedData_List[i].Bed.transform.rotation);
+                = Instantiate(childData.childPrefab, bedData_List[i].spawnPoint.transform.position, bedData_List[i].spawnPoint.transform.rotation);
 
             ChildCtrl childCtrl = childObj.GetComponent<ChildCtrl>();
 

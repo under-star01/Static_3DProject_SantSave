@@ -47,6 +47,10 @@ public class EnemyFSM : MonoBehaviour
     private bool isHeard;
     private Vector3 noisePosition;
 
+    [Header("이동 속도 설정")]
+    public float normalSpeed = 2.0f;  // 일반 순찰 속도
+    public float chaseSpeed = 1.0f;   // 추격 속도
+
     private TalkBubbleController bubbleCtrl;
     private NavMeshAgent agent;
     private Animator animator;
@@ -147,6 +151,7 @@ public class EnemyFSM : MonoBehaviour
         animator.SetBool("isDetecting", false);
         animator.SetBool("isChasing", false);
         animator.SetBool("isAlert", false);
+        animator.SetBool("Look", false);
 
         // 해당 상태만 활성화
         switch (stateName)
@@ -168,6 +173,9 @@ public class EnemyFSM : MonoBehaviour
                 break;
             case "Alert":
                 animator.SetBool("isAlert", true);
+                break;
+            case "Look":
+                animator.SetBool("Look", true);
                 break;
         }
     }
@@ -202,6 +210,7 @@ public class EnemyFSM : MonoBehaviour
         Debug.Log(bubbleCtrl);
 
         bubbleCtrl.OnStateChanged("IdleState");
+        agent.isStopped = true;
         float timer = 0f;
 
         while (timer < idleTime)
@@ -219,6 +228,7 @@ public class EnemyFSM : MonoBehaviour
         SetAnimation("Walk");
         bubbleCtrl.OnStateChanged("MoveState");
         agent.isStopped = false;
+        agent.speed = normalSpeed;
 
         if (patrolPoints.Count > 0)
         {
@@ -255,7 +265,7 @@ public class EnemyFSM : MonoBehaviour
 
     IEnumerator LookState()
     {
-        SetAnimation("Detect");
+        SetAnimation("Look");
         bubbleCtrl.OnStateChanged("LookState");
 
         float timer = 0f;
@@ -309,6 +319,8 @@ public class EnemyFSM : MonoBehaviour
         SetAnimation("Chase");
         bubbleCtrl.OnStateChanged("ChaseState");
 
+        agent.speed = chaseSpeed;
+
         lostTimer = 0f;
         while (true)
         {
@@ -348,11 +360,15 @@ public class EnemyFSM : MonoBehaviour
             {
                 isPlayerFound = false;
                 targetPlayer = null;
+
+                agent.speed = normalSpeed;
                 break;
             }
 
             yield return null;
         }
+
+        agent.speed = normalSpeed;
     }
 
 

@@ -83,7 +83,7 @@ public class TimeManager : MonoBehaviour
 
     private void Sunrise(float time)
     {
-        Debug.Log("일출");
+        //Debug.Log("일출");
 
         time = Mathf.Clamp01(time);
 
