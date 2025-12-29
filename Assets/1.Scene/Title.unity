@@ -1162,6 +1162,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
+      propertyPath: ThrowSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 9e7757eb29772a649b924b15004b57ba, type: 3}
+    - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
       propertyPath: audioMixer
       value: 
       objectReference: {fileID: 24100000, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}

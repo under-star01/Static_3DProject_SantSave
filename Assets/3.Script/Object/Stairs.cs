@@ -22,6 +22,9 @@ public class Stairs : MonoBehaviour, IInteractable
     private IEnumerator MoveFloor(GameObject player)
     {
         // 입력 제한 및 암전 효과 실행
+
+        AudioManager.Instance.PlayEnterSFX();
+
         PlayerInput playerInput;
         player.TryGetComponent(out playerInput);
         playerInput.enabled = false;
