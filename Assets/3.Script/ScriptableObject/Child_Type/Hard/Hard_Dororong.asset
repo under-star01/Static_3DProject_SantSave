@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChildType_SO
   childName: Dororong
   childImage: {fileID: 21300000, guid: 66ef668c7f69371418aefa6fe88da007, type: 3}
-  childPrefab: {fileID: 4813712074220569462, guid: 36d73882395b04a40849ef36f718f78f, type: 3}
+  childPrefab: {fileID: 4257161510527647781, guid: a4638747555b86e4e9561a69cbae96ee, type: 3}
