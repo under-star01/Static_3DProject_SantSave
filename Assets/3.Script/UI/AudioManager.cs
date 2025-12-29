@@ -11,33 +11,35 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Mixer")]
     [SerializeField] private AudioMixer audioMixer;
+    #region 오디오소스
+    //[Header("오디오소스")]
+    //[SerializeField] private AudioSource bgmSource;      // BGM 전용
+    //[SerializeField] private AudioSource sfxSource;      // 효과음 전용
+    //[SerializeField] private AudioSource loopSfxSource;  // 루프 효과음 전용
 
-    [Header("오디오소스")]
-    [SerializeField] private AudioSource bgmSource;      // BGM 전용
-    [SerializeField] private AudioSource sfxSource;      // 효과음 전용
-    [SerializeField] private AudioSource loopSfxSource;  // 루프 효과음 전용
+    //[Header("BGM")]
+    //[SerializeField] private AudioClip titleBGM;
+    //[SerializeField] private AudioClip SelectBGM;
+    //[SerializeField] private AudioClip stageBGM;
 
-    [Header("BGM")]
-    [SerializeField] private AudioClip titleBGM;
-    [SerializeField] private AudioClip SelectBGM;
-    [SerializeField] private AudioClip stageBGM;
-
-    [Header("효과음")]
-    [SerializeField] private AudioClip ThrowSFX;
-    [SerializeField] private AudioClip BellSFX;
-    [SerializeField] private AudioClip FootstepSFX;
-    [SerializeField] private AudioClip TransformSFX;
-    [SerializeField] private AudioClip PickupSFX;
-    [SerializeField] private AudioClip EnterSFX;
-    [SerializeField] private AudioClip ClickSFX;
-    [SerializeField] private AudioClip AlertSFX;
-    [SerializeField] private AudioClip WakeupSFX;
-    [SerializeField] private AudioClip DropSFX;
+    //[Header("효과음")]
+    //[SerializeField] private AudioClip ThrowSFX;
+    //[SerializeField] private AudioClip BellSFX;
+    //[SerializeField] private AudioClip FootstepSFX;
+    //[SerializeField] private AudioClip TransformSFX;
+    //[SerializeField] private AudioClip PickupSFX;
+    //[SerializeField] private AudioClip EnterSFX;
+    //[SerializeField] private AudioClip ClickSFX;
+    //[SerializeField] private AudioClip AlertSFX;
+    //[SerializeField] private AudioClip WakeupSFX;
+    //[SerializeField] private AudioClip DropSFX;
 
 
-    [Header("UI 소리")]
-    [SerializeField] private AudioClip menuSelectSFX;
-    [SerializeField] private AudioClip ButtonSFX;
+    //[Header("UI 소리")]
+    //[SerializeField] private AudioClip menuSelectSFX;
+    //[SerializeField] private AudioClip ButtonSFX;
+    #endregion 
+    [SerializeField] private AudioClip interactSound;
 
     // Mixer Group 이름
     private const string MUSIC_VOLUME = "MusicVolume";
@@ -57,22 +59,23 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        #region 소스 초기화?
+        //// AudioSource 초기화
+        //if (bgmSource != null)
+        //{
+        //    bgmSource.loop = true;
+        //}
 
-        // AudioSource 초기화
-        if (bgmSource != null)
-        {
-            bgmSource.loop = true;
-        }
+        //if (sfxSource != null)
+        //{
+        //    sfxSource.loop = false;
+        //}
 
-        if (sfxSource != null)
-        {
-            sfxSource.loop = false;
-        }
-
-        if (loopSfxSource != null)
-        {
-            loopSfxSource.loop = true;
-        }
+        //if (loopSfxSource != null)
+        //{
+        //    loopSfxSource.loop = true;
+        //}
+        #endregion
     }
 
     private void Start()
@@ -87,7 +90,7 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        //audioMixer.SetFloat(MUSIC_VOLUME, dB);
+        audioMixer.SetFloat(MUSIC_VOLUME, dB);
         PlayerPrefs.SetFloat(MUSIC_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -95,7 +98,7 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        //audioMixer.SetFloat(SFX_VOLUME, dB);
+        audioMixer.SetFloat(SFX_VOLUME, dB);
         PlayerPrefs.SetFloat(SFX_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -103,7 +106,7 @@ public class AudioManager : MonoBehaviour
     public void SetSystemVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        //audioMixer.SetFloat(SYSTEM_VOLUME, dB);
+        audioMixer.SetFloat(SYSTEM_VOLUME, dB);
         PlayerPrefs.SetFloat(SYSTEM_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -134,105 +137,124 @@ public class AudioManager : MonoBehaviour
 
     #region BGM 제어
 
-    // BGM 재생
-    public void PlayBGM(AudioClip clip)
-    {
-        if (bgmSource == null || clip == null) return;
+    //// BGM 재생
+    //public void PlayBGM(AudioClip clip)
+    //{
+    //    if (bgmSource == null || clip == null) return;
 
-        bgmSource.clip = clip;
-        bgmSource.Play();
-    }
+    //    bgmSource.clip = clip;
+    //    bgmSource.Play();
+    //}
 
-    // BGM 정지
-    public void StopBGM()
-    {
-        if (bgmSource == null) return;
-        bgmSource.Stop();
-    }
+    //// BGM 정지
+    //public void StopBGM()
+    //{
+    //    if (bgmSource == null) return;
+    //    bgmSource.Stop();
+    //}
 
-    // BGM 일시정지
-    public void PauseBGM()
-    {
-        if (bgmSource != null) bgmSource.Pause();
-    }
+    //// BGM 일시정지
+    //public void PauseBGM()
+    //{
+    //    if (bgmSource != null) bgmSource.Pause();
+    //}
 
-    // BGM 재개
-    public void ResumeBGM()
-    {
-        if (bgmSource != null) bgmSource.UnPause();
-    }
+    //// BGM 재개
+    //public void ResumeBGM()
+    //{
+    //    if (bgmSource != null) bgmSource.UnPause();
+    //}
 
-    // BGM 바로가기
-    public void PlayTitleBGM() => PlayBGM(titleBGM);
-    public void PlaySelectBGM() => PlayBGM(SelectBGM);
-    public void PlayStageBGM() => PlayBGM(stageBGM);
+    //// BGM 바로가기
+    //public void PlayTitleBGM() => PlayBGM(titleBGM);
+    //public void PlaySelectBGM() => PlayBGM(SelectBGM);
+    //public void PlayStageBGM() => PlayBGM(stageBGM);
+
+    //#endregion
+
+    //#region 효과음 제어
+
+    //// 효과음 재생 (기본)
+    //public void PlaySFX(AudioClip clip)
+    //{
+    //    if (sfxSource == null || clip == null) return;
+    //    sfxSource.PlayOneShot(clip);
+    //}
+
+    //// 효과음 재생 (볼륨 조절)
+    //public void PlaySFX(AudioClip clip, float volumeScale)
+    //{
+    //    if (sfxSource == null || clip == null) return;
+    //    sfxSource.PlayOneShot(clip, volumeScale);
+    //}
+
+    //// 효과음 바로가기
+    //public void PlayThrowSFX() => PlaySFX(ThrowSFX);
+    //public void PlayBellSFX() => PlaySFX(BellSFX);
+    //public void PlayFootstepSFX() => PlaySFX(FootstepSFX);
+    //public void PlayTransformSFX() => PlaySFX(TransformSFX);
+    //public void PlayPickupSFX() => PlaySFX(PickupSFX);
+    //public void PlayEnterSFX() => PlaySFX(EnterSFX);
+    //public void PlayClickSFX() => PlaySFX(ClickSFX);
+    //public void PlayAlertSFX() => PlaySFX(AlertSFX);
+    //public void PlayWakeupSFX() => PlaySFX(WakeupSFX);
+    //public void PlayDropSFX() => PlaySFX(DropSFX);
+
+
+    //// UI 효과음 바로가기
+    //public void PlayMenuSelectSFX() => PlaySFX(menuSelectSFX);
+    //public void PlayButtonSFX() => PlaySFX(ButtonSFX);
+
+    //#endregion
+
+    //#region 루프 효과음 제어
+
+    //// 루프 효과음 재생 시작
+    //public void PlayLoopSFX(AudioClip clip)
+    //{
+    //    if (loopSfxSource == null || clip == null) return;
+
+    //    loopSfxSource.clip = clip;
+    //    loopSfxSource.Play();
+    //}
+
+    //// 루프 효과음 정지
+    //public void StopLoopSFX()
+    //{
+    //    if (loopSfxSource == null) return;
+    //    loopSfxSource.Stop();
+    //}
+
+    //#endregion
+
+    //#region 유틸리티
+
+    //// 모든 소리 정지
+    //public void StopAll()
+    //{
+    //    if (bgmSource != null) bgmSource.Stop();
+    //    if (sfxSource != null) sfxSource.Stop();
+    //    if (loopSfxSource != null) loopSfxSource.Stop();
+    //}
 
     #endregion
-
-    #region 효과음 제어
-
-    // 효과음 재생 (기본)
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(AudioClip clip, float volumeScale = 1.0f)
     {
-        if (sfxSource == null || clip == null) return;
-        sfxSource.PlayOneShot(clip);
+        if (clip == null)
+        {
+            return;
+        }
+
+        AudioSource.PlayClipAtPoint(clip, Vector3.zero, volumeScale);
     }
 
-    // 효과음 재생 (볼륨 조절)
-    public void PlaySFX(AudioClip clip, float volumeScale)
+    public void PlaySFX(AudioClip clip, Vector3 position, float volumeScale = 1.0f)
     {
-        if (sfxSource == null || clip == null) return;
-        sfxSource.PlayOneShot(clip, volumeScale);
+        if (clip == null) 
+        { 
+            return; 
+        }
+
+        AudioSource.PlayClipAtPoint(clip, position, volumeScale);
     }
-
-    // 효과음 바로가기
-    public void PlayThrowSFX() => PlaySFX(ThrowSFX);
-    public void PlayBellSFX() => PlaySFX(BellSFX);
-    public void PlayFootstepSFX() => PlaySFX(FootstepSFX);
-    public void PlayTransformSFX() => PlaySFX(TransformSFX);
-    public void PlayPickupSFX() => PlaySFX(PickupSFX);
-    public void PlayEnterSFX() => PlaySFX(EnterSFX);
-    public void PlayClickSFX() => PlaySFX(ClickSFX);
-    public void PlayAlertSFX() => PlaySFX(AlertSFX);
-    public void PlayWakeupSFX() => PlaySFX(WakeupSFX);
-    public void PlayDropSFX() => PlaySFX(DropSFX);
-
-
-    // UI 효과음 바로가기
-    public void PlayMenuSelectSFX() => PlaySFX(menuSelectSFX);
-    public void PlayButtonSFX() => PlaySFX(ButtonSFX);
-
-    #endregion
-
-    #region 루프 효과음 제어
-
-    // 루프 효과음 재생 시작
-    public void PlayLoopSFX(AudioClip clip)
-    {
-        if (loopSfxSource == null || clip == null) return;
-
-        loopSfxSource.clip = clip;
-        loopSfxSource.Play();
-    }
-
-    // 루프 효과음 정지
-    public void StopLoopSFX()
-    {
-        if (loopSfxSource == null) return;
-        loopSfxSource.Stop();
-    }
-
-    #endregion
-
-    #region 유틸리티
-
-    // 모든 소리 정지
-    public void StopAll()
-    {
-        if (bgmSource != null) bgmSource.Stop();
-        if (sfxSource != null) sfxSource.Stop();
-        if (loopSfxSource != null) loopSfxSource.Stop();
-    }
-
-    #endregion
 }

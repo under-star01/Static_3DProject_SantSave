@@ -14068,11 +14068,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55184f48a16db64483272f3b3527ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   bgmSource: {fileID: 1518233744}
   sfxSource: {fileID: 1518233743}
   loopSfxSource: {fileID: 1518233742}
-  titleBGM: {fileID: 0}
+  titleBGM: {fileID: 8300000, guid: 2b22d4b1939db944e9189b6174fda787, type: 3}
   SelectBGM: {fileID: 0}
   stageBGM: {fileID: 0}
   ThrowSFX: {fileID: 8300000, guid: a4e0a1b21b335aa46b3d52c8c9b9c8f0, type: 3}
