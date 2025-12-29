@@ -22,8 +22,8 @@ public class TimeManager : MonoBehaviour
     // 시간 종료 이벤트
     public event Action OnTimeEnd;
 
-    private Color nightColor = new Color(0.1f, 0.1f, 0.4f);
-    private Color sunriseColor = new Color(0.5f, 0.5f, 0.4f);
+    [SerializeField] private Color nightColor = new Color(0.1f, 0.1f, 0.4f);
+    [SerializeField] private Color sunriseColor = new Color(0.5f, 0.5f, 0.4f);
     private bool isTimeEnd = false; // 이벤트 중복 방지
 
     private void Awake()
