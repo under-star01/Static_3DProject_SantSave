@@ -286,7 +286,10 @@ public class RankingManager : MonoBehaviour
 
         SaveRanking();  // 이름 확정 후 즉시 저장
         pendingNameIndex = -1;
-        if (nameInputPanel != null) nameInputPanel.SetActive(false);
+        if (nameInputPanel != null)
+        {
+            nameInputPanel.SetActive(false);
+        }
         RefreshUI();
     }
 
