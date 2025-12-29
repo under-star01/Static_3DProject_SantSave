@@ -40,8 +40,6 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Drop.performed += OnDropGift;
         playerInput.Player.CheckSheet.performed += OnCheckSheet;
 
-        GameManager.instance.gameOver += DeActivateInput;
-
         playerInput.Enable();
     }
 
@@ -68,16 +66,24 @@ public class PlayerInput : MonoBehaviour
         playerMove.SetMoveInput(Vector3.zero);
     }
 
-    // PlayerInput 활성화 메소드
-    private void ActivateInput()
+    private void Start()
     {
-        this.enabled = true;
+        GameManager.instance.gameStart += ActivateInput;
+        GameManager.instance.gameOver += DeActivateInput;
+
+        playerInput.Disable();
+    }
+
+    // PlayerInput 활성화 메소드
+    public void ActivateInput()
+    {
+        playerInput.Enable();
     }
 
     // PlayerInput 비활성화 메소드
-    private void DeActivateInput()
+    public void DeActivateInput()
     {
-        this.enabled = false;
+        playerInput.Disable();
     }
 
     // WASD 방향키 이동 메소드

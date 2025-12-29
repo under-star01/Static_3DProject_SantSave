@@ -1137,9 +1137,9 @@ GameObject:
   - component: {fileID: 3581848011669352707}
   - component: {fileID: 870774815283996404}
   - component: {fileID: 2579275205609629169}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hard_Adult_M
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1231,9 +1231,10 @@ MonoBehaviour:
   alertAmount: 20
   killDistance: 3
   caughtFillSpeed: 30
-  alertFillSpeed: 30
+  alertFillSpeed: 2
   turnSpeed: 5
   currentGauge: 0
+  isHeard: 0
 --- !u!114 &870774815283996404
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,13 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance = null;
 
-    [SerializeField] private GameObject checkList;          // 선물 목록 UI
+    [SerializeField] private GameObject inGameCanvas;                // 인게임 Canvas 
+    [SerializeField] private GameObject tutorialCanvas;              // 튜토리얼 Canvas Canvas
+    [SerializeField] private GameObject tutorialPage1;              // 튜토리얼 페이지1
+    [SerializeField] private GameObject tutorialPage2;              // 튜토리얼 페이지2
+    
+    
+    [SerializeField] private GameObject checkList;                   // 선물 목록 UI
     [SerializeField] private List<GameObject> polaroid_List = new(); // 폴라로이드 UI 리스트
     [SerializeField] private List<Slider> skillUI_List = new();      // 스킬 Slider 리스트
     [SerializeField] private TextMeshProUGUI scoreUI;                // 점수 Text UI 
@@ -39,6 +45,39 @@ public class UIManager : MonoBehaviour
             Transform fill = skillUI_List[i].transform.Find("Fill Area/Fill");
             if (fill != null)
                 skillFillImages[(Skill)i] = fill.GetComponent<Image>();
+        }
+    }
+
+    //  이전으로 튜토리얼 페이지 이동
+    public void BeforeTutorial()
+    {
+        if(tutorialPage1 != null && tutorialPage2 != null)
+        {
+            tutorialPage2.SetActive(false);
+            tutorialPage1.SetActive(true);
+        }
+    }
+
+    //  앞으로 튜토리얼 페이지 이동
+    public void AfterTutorial()
+    {
+        if (tutorialPage1 != null && tutorialPage2 != null)
+        {
+            tutorialPage1.SetActive(false);
+            tutorialPage2.SetActive(true);
+        }
+    }
+
+    // 튜토리얼 페이지 종료
+    public void DeActiveTutorial()
+    {
+        if (tutorialCanvas != null && inGameCanvas != null)
+        {
+            tutorialCanvas.SetActive(false);
+            inGameCanvas.SetActive(true);
+
+            // 게임 시작 이벤트 호출
+            GameManager.instance.gameStart?.Invoke();
         }
     }
 

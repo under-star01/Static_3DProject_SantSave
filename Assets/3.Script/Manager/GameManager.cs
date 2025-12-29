@@ -9,6 +9,7 @@ using UnityEngine.Video;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public Action gameStart; // 게임 시작 이벤트
     public Action gameOver; // 게임 종료 이벤트
 
     public bool isAllCorrect = false; // 전체 정답 여부
@@ -131,7 +132,7 @@ public class GameManager : MonoBehaviour
 
         // Ranking UI 표시
         UIManager.instance.ShowRankingUI(true);
-        if (rankingManager != null)
+        if (rankingManager != null && !isTimeOver)
         {
             // 점수 적용 및 UI 표시
             rankingManager.ProcessNewScore(ScoreManager.instance.score);
@@ -156,5 +157,11 @@ public class GameManager : MonoBehaviour
         // 빌드된 게임에서 실행 중일 때
         Application.Quit();
 #endif
+    }
+
+    // Title 씬 복귀 메소드
+    public void ReturnTitle()
+    {
+        SceneManager.LoadScene("Title");
     }
 }

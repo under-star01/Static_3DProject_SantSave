@@ -236,9 +236,10 @@ MonoBehaviour:
   alertAmount: 20
   killDistance: 3
   caughtFillSpeed: 30
-  alertFillSpeed: 30
+  alertFillSpeed: 2
   turnSpeed: 5
   currentGauge: 0
+  isHeard: 0
 --- !u!114 &6174680353293060221
 MonoBehaviour:
   m_ObjectHideFlags: 0
