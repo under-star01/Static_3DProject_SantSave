@@ -189,7 +189,7 @@ public class PlayerMove : MonoBehaviour
             // Run ป๓ลย (Shift)
             if (isRun)
             {
-                playerNoise.StartNoiseCoroutine(5f, 0.5f);
+                playerNoise.StartNoiseCoroutine(6f, 0.5f);
             }
         }
 
