@@ -254,4 +254,9 @@ public class PlayerMove : MonoBehaviour
     {
         AudioManager.Instance.PlayFootstepSFX();
     }
+
+    private void LoudFootstep()
+    {
+        AudioManager.Instance.PlayLoudFootstepSFX();
+    }
 }
