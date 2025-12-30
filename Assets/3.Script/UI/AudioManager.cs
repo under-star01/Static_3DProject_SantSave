@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
     [Header("오디오소스")]
     [SerializeField] private AudioSource bgmSource;      // BGM 전용
     [SerializeField] private AudioSource sfxSource;      // 효과음 전용
-    [SerializeField] private AudioSource loopSfxSource;  // 루프 효과음 전용
+    [SerializeField] private AudioSource systemSource;  // 시스템 전용
 
     [Header("BGM")]
     [SerializeField] private AudioClip titleBGM;
@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip ThrowSFX;
     [SerializeField] private AudioClip BellSFX;
     [SerializeField] private AudioClip FootstepSFX;
+    [SerializeField] private AudioClip LoudFootstepSFX;
     [SerializeField] private AudioClip TransformSFX;
     [SerializeField] private AudioClip PickupSFX;
     [SerializeField] private AudioClip EnterSFX;
@@ -69,9 +70,9 @@ public class AudioManager : MonoBehaviour
             sfxSource.loop = false;
         }
 
-        if (loopSfxSource != null)
+        if (systemSource != null)
         {
-            loopSfxSource.loop = true;
+            systemSource.loop = true;
         }
     }
 
@@ -87,7 +88,7 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        //audioMixer.SetFloat(MUSIC_VOLUME, dB);
+        audioMixer.SetFloat(MUSIC_VOLUME, dB);
         PlayerPrefs.SetFloat(MUSIC_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -95,7 +96,7 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        //audioMixer.SetFloat(SFX_VOLUME, dB);
+        audioMixer.SetFloat(SFX_VOLUME, dB);
         PlayerPrefs.SetFloat(SFX_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -103,7 +104,7 @@ public class AudioManager : MonoBehaviour
     public void SetSystemVolume(float volume)
     {
         float dB = volume > 0.0001f ? Mathf.Log10(volume) * 20 : -80f;
-        //audioMixer.SetFloat(SYSTEM_VOLUME, dB);
+        audioMixer.SetFloat(SYSTEM_VOLUME, dB);
         PlayerPrefs.SetFloat(SYSTEM_VOLUME, volume);
         PlayerPrefs.Save();
     }
@@ -189,6 +190,7 @@ public class AudioManager : MonoBehaviour
     public void PlayThrowSFX() => PlaySFX(ThrowSFX);
     public void PlayBellSFX() => PlaySFX(BellSFX);
     public void PlayFootstepSFX() => PlaySFX(FootstepSFX);
+    public void PlayLoudFootstepSFX() => PlaySFX(LoudFootstepSFX);
     public void PlayTransformSFX() => PlaySFX(TransformSFX);
     public void PlayPickupSFX() => PlaySFX(PickupSFX);
     public void PlayEnterSFX() => PlaySFX(EnterSFX);
@@ -209,17 +211,17 @@ public class AudioManager : MonoBehaviour
     // 루프 효과음 재생 시작
     public void PlayLoopSFX(AudioClip clip)
     {
-        if (loopSfxSource == null || clip == null) return;
+        if (systemSource == null || clip == null) return;
 
-        loopSfxSource.clip = clip;
-        loopSfxSource.Play();
+        systemSource.clip = clip;
+        systemSource.Play();
     }
 
     // 루프 효과음 정지
     public void StopLoopSFX()
     {
-        if (loopSfxSource == null) return;
-        loopSfxSource.Stop();
+        if (systemSource == null) return;
+        systemSource.Stop();
     }
 
     #endregion
@@ -231,7 +233,7 @@ public class AudioManager : MonoBehaviour
     {
         if (bgmSource != null) bgmSource.Stop();
         if (sfxSource != null) sfxSource.Stop();
-        if (loopSfxSource != null) loopSfxSource.Stop();
+        if (systemSource != null) systemSource.Stop();
     }
 
     #endregion

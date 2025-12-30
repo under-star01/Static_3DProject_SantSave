@@ -2909,7 +2909,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 299200913}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ReturnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -5099,7 +5099,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 485571795}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WalkDownPosition
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -7169,7 +7169,7 @@ Transform:
   m_GameObject: {fileID: 653095087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -11423,7 +11423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1035573134}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: DetectFireplace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14371,7 +14371,7 @@ Transform:
   m_GameObject: {fileID: 1362888478}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9, y: 1, z: 9.4}
+  m_LocalPosition: {x: -9, y: 0, z: 9.4}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -15742,7 +15742,7 @@ AudioSource:
   m_GameObject: {fileID: 1455925878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1487973723168251311, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -15839,7 +15839,7 @@ AudioSource:
   m_GameObject: {fileID: 1455925878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 279853017926849580, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -15936,7 +15936,7 @@ AudioSource:
   m_GameObject: {fileID: 1455925878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3402144950306644854, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -16036,10 +16036,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55184f48a16db64483272f3b3527ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   bgmSource: {fileID: 1455925881}
   sfxSource: {fileID: 1455925880}
-  loopSfxSource: {fileID: 1455925879}
+  systemSource: {fileID: 1455925879}
   titleBGM: {fileID: 0}
   SelectBGM: {fileID: 0}
   stageBGM: {fileID: 0}
@@ -19967,6 +19967,135 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805873657}
   m_CullTransparentMesh: 1
+--- !u!1 &1810380386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1810380388}
+  - component: {fileID: 1810380387}
+  m_Layer: 0
+  m_Name: BackgroundMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1810380387
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810380386}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3402144950306644854, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: c8bfc63bc8315cc40b2416b01d6d849f, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1810380388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810380386}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1818070600
 GameObject:
   m_ObjectHideFlags: 0
@@ -23970,7 +24099,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5047998032905331284}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GasStove05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24220,7 +24349,7 @@ GameObject:
   - component: {fileID: 2983776178729370549}
   - component: {fileID: 2258643509105292363}
   - component: {fileID: 4790763852506129396}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25066,7 +25195,7 @@ GameObject:
   - component: {fileID: 6519252687159051621}
   - component: {fileID: 6519252687159051620}
   - component: {fileID: 6519252687159051622}
-  m_Layer: 22
+  m_Layer: 10
   m_Name: Prop_Fireplace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25371,7 +25500,7 @@ GameObject:
   - component: {fileID: 4119449963209177503}
   - component: {fileID: 1778211474246700193}
   - component: {fileID: 6120864062164789917}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25453,7 +25582,7 @@ GameObject:
   - component: {fileID: 2846226176706352720}
   - component: {fileID: 1459615370706496850}
   - component: {fileID: 5447302375095225633}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25569,7 +25698,7 @@ GameObject:
   - component: {fileID: 1818940658866959547}
   - component: {fileID: 4384803852935200686}
   - component: {fileID: 1931075339231086454}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Christmass_tree_outdoor_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26443,7 +26572,7 @@ GameObject:
   - component: {fileID: 5926590076070755952}
   - component: {fileID: 123770326052109304}
   - component: {fileID: 3053412252136875955}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_KitchenCabinet_02_I
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28124,7 +28253,7 @@ GameObject:
   - component: {fileID: 308809706134889308}
   - component: {fileID: 7166776129972078463}
   - component: {fileID: 2473958320818341595}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Carpet_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28229,7 +28358,7 @@ GameObject:
   - component: {fileID: 7185694505229173074}
   - component: {fileID: 8324131642057615317}
   - component: {fileID: 2252465197539518576}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_KitchenCabinet_02_H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28349,7 +28478,7 @@ GameObject:
   - component: {fileID: 3179143946189612229}
   - component: {fileID: 8065870322576326867}
   - component: {fileID: 2377638423658466408}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28391,7 +28520,7 @@ GameObject:
   - component: {fileID: 1899153964203928374}
   - component: {fileID: 1579897965460972887}
   - component: {fileID: 6523668955386139095}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28683,7 +28812,7 @@ GameObject:
   - component: {fileID: 4965655105971171992}
   - component: {fileID: 6450765144712989208}
   - component: {fileID: 1267041429649513245}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Sofa_06_B (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28860,7 +28989,7 @@ GameObject:
   - component: {fileID: 1882625286169221306}
   - component: {fileID: 9152688906622932638}
   - component: {fileID: 9094272526069204715}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29362,7 +29491,7 @@ GameObject:
   - component: {fileID: 557406892922816623}
   - component: {fileID: 1119307925798203756}
   - component: {fileID: 566584708481927900}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_KitchenCabinet_02_H (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30856,7 +30985,7 @@ GameObject:
   - component: {fileID: 4001927052519793979}
   - component: {fileID: 8697385110531970825}
   - component: {fileID: 3703381265128664315}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: door_frame_001 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31986,7 +32115,7 @@ GameObject:
   - component: {fileID: 5908850005021409685}
   - component: {fileID: 4753989215001527821}
   - component: {fileID: 2770056438105296807}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32103,7 +32232,7 @@ GameObject:
   - component: {fileID: 1683153727370316423}
   - component: {fileID: 5035712325007157533}
   - component: {fileID: 511353730262502310}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Sofa_06_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37697,7 +37826,7 @@ GameObject:
   - component: {fileID: 4497807024079805686}
   - component: {fileID: 4629872800362420748}
   - component: {fileID: 7818790351190517278}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_KitchenOven
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39083,7 +39212,7 @@ GameObject:
   - component: {fileID: 8994292901781311363}
   - component: {fileID: 8605132349233076248}
   - component: {fileID: 6438483023230848191}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GasStove05_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40742,7 +40871,7 @@ GameObject:
   - component: {fileID: 2813972125924656038}
   - component: {fileID: 7983085496390775849}
   - component: {fileID: 1467445381507585760}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 3DF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41384,7 +41513,7 @@ GameObject:
   - component: {fileID: 1648532672303818940}
   - component: {fileID: 1655275097806872460}
   - component: {fileID: 5707001999697183732}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42104,7 +42233,7 @@ GameObject:
   - component: {fileID: 8433887414491083763}
   - component: {fileID: 5569554614584833087}
   - component: {fileID: 5054657536507742289}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_KitchenSink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43750,7 +43879,7 @@ GameObject:
   - component: {fileID: 5388513002059748673}
   - component: {fileID: 4308558755312440478}
   - component: {fileID: 7004596103994684419}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_KitchenCabinet_02_I (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43958,7 +44087,7 @@ GameObject:
   - component: {fileID: 4512413197194386976}
   - component: {fileID: 5484489389759724308}
   - component: {fileID: 5956226582030400413}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44042,7 +44171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4963578567819742512}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 3C4  (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45129,7 +45258,7 @@ GameObject:
   - component: {fileID: 6156369438864793563}
   - component: {fileID: 5681268043548494640}
   - component: {fileID: 6897547361592880990}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Sofa_06_B (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49688,7 +49817,7 @@ GameObject:
   - component: {fileID: 3051707881181547539}
   - component: {fileID: 9039195303503521138}
   - component: {fileID: 7584676228575139141}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51073,7 +51202,7 @@ GameObject:
   - component: {fileID: 745366798996038797}
   - component: {fileID: 6940657889434459416}
   - component: {fileID: 2360309028701536037}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: window_body_.001 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51395,7 +51524,7 @@ GameObject:
   - component: {fileID: 4010618233985771883}
   - component: {fileID: 976078991588095029}
   - component: {fileID: 10445710010523517}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Sofa_06_D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53319,7 +53448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2339234158908337772}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54076,7 +54205,7 @@ GameObject:
   - component: {fileID: 4929193004120760439}
   - component: {fileID: 4035207540648095688}
   - component: {fileID: 6827241403963923112}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_Sofa_06_B (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54200,7 +54329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2662036942440971481}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: furniture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56151,7 +56280,7 @@ GameObject:
   - component: {fileID: 2045848052833027276}
   - component: {fileID: 5633160070190051007}
   - component: {fileID: 7005625844404091051}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56803,7 +56932,7 @@ GameObject:
   - component: {fileID: 5517593251831872757}
   - component: {fileID: 2807091900732209644}
   - component: {fileID: 8767777192653527361}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prop_KitchenCabinet_02_I (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57103,7 +57232,7 @@ GameObject:
   - component: {fileID: 5889033263488393258}
   - component: {fileID: 5949209224284599896}
   - component: {fileID: 5161405262101720161}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: window_body_.001 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57486,7 +57615,7 @@ GameObject:
   - component: {fileID: 2044765491541822267}
   - component: {fileID: 213166788648034864}
   - component: {fileID: 2956888258328797711}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58454,7 +58583,7 @@ GameObject:
   - component: {fileID: 3337954587748898435}
   - component: {fileID: 4459284762002454916}
   - component: {fileID: 5401992780017202350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GasStove05_Knob02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59683,7 +59812,7 @@ GameObject:
   - component: {fileID: 1053834690745099131}
   - component: {fileID: 3977473031085548958}
   - component: {fileID: 3251725090833288171}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GasStove05_Knob01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59903,7 +60032,7 @@ GameObject:
   - component: {fileID: 4634594913083857270}
   - component: {fileID: 2127715557453318953}
   - component: {fileID: 2855126850528141984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Christmass_tree_indoor_001_toys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60006,7 +60135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6718417127870615122}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61394,7 +61523,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1709338561747782450}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 3C4  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63629,3 +63758,4 @@ SceneRoots:
   - {fileID: 1981151825}
   - {fileID: 894983041}
   - {fileID: 1455925883}
+  - {fileID: 1810380388}

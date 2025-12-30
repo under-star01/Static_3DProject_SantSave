@@ -1166,6 +1166,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 8f87faaebdffa854ca442c6b050edda0, type: 3}
     - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
+      propertyPath: DropSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: ffee35057c4e47f41a27b55f5263f99b, type: 3}
+    - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
       propertyPath: AlertSFX
       value: 
       objectReference: {fileID: 8300000, guid: 4fa8e304cd0115248942b6cb79d06aef, type: 3}
@@ -1186,6 +1190,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0533f664609215947b40c6349aead876, type: 3}
     - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
+      propertyPath: WakeupSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 1794008865f6ad348a7136bbc72345fa, type: 3}
+    - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
       propertyPath: bgmSource
       value: 
       objectReference: {fileID: 694433593}
@@ -1196,7 +1204,7 @@ PrefabInstance:
     - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
       propertyPath: audioMixer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 24100000, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
     - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
       propertyPath: FootstepSFX
       value: 
@@ -1205,6 +1213,10 @@ PrefabInstance:
       propertyPath: TransformSFX
       value: 
       objectReference: {fileID: 8300000, guid: d0d1fedca624b904e9f0c2e0553da1cf, type: 3}
+    - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
+      propertyPath: systemSource
+      value: 
+      objectReference: {fileID: 694433591}
     - target: {fileID: 8670407490856858083, guid: 872f08364f78335469b59947a7c918b4, type: 3}
       propertyPath: loopSfxSource
       value: 
@@ -1237,7 +1249,7 @@ AudioSource:
   m_GameObject: {fileID: 694433590}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1487973723168251311, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -1334,7 +1346,7 @@ AudioSource:
   m_GameObject: {fileID: 694433590}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 279853017926849580, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -1431,7 +1443,7 @@ AudioSource:
   m_GameObject: {fileID: 694433590}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3402144950306644854, guid: 0b57308b6ec73d0499986efb238ede94, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
