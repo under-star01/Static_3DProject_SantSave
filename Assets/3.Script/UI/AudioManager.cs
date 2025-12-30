@@ -19,8 +19,8 @@ public class AudioManager : MonoBehaviour
 
     [Header("BGM")]
     [SerializeField] private AudioClip titleBGM;
-    [SerializeField] private AudioClip SelectBGM;
-    [SerializeField] private AudioClip stageBGM;
+    [SerializeField] private AudioClip normalBGM;
+    [SerializeField] private AudioClip hardBGM;
 
     [Header("효과음")]
     [SerializeField] private AudioClip ThrowSFX;
@@ -37,7 +37,6 @@ public class AudioManager : MonoBehaviour
 
 
     [Header("UI 소리")]
-    [SerializeField] private AudioClip menuSelectSFX;
     [SerializeField] private AudioClip ButtonSFX;
 
     // Mixer Group 이름
@@ -72,7 +71,7 @@ public class AudioManager : MonoBehaviour
 
         if (systemSource != null)
         {
-            systemSource.loop = true;
+            systemSource.loop = false;
         }
     }
 
@@ -80,6 +79,7 @@ public class AudioManager : MonoBehaviour
     {
         // 저장된 볼륨 로드
         LoadVolumes();
+        PlayTitleBGM();
     }
 
     #region 볼륨 설정 (Audio Mixer 기반)
@@ -165,8 +165,8 @@ public class AudioManager : MonoBehaviour
 
     // BGM 바로가기
     public void PlayTitleBGM() => PlayBGM(titleBGM);
-    public void PlaySelectBGM() => PlayBGM(SelectBGM);
-    public void PlayStageBGM() => PlayBGM(stageBGM);
+    public void PlayNormalBGM() => PlayBGM(normalBGM);
+    public void PlayHardBGM() => PlayBGM(hardBGM);
 
     #endregion
 
@@ -199,30 +199,18 @@ public class AudioManager : MonoBehaviour
     public void PlayWakeupSFX() => PlaySFX(WakeupSFX);
     public void PlayDropSFX() => PlaySFX(DropSFX);
 
-
-    // UI 효과음 바로가기
-    public void PlayMenuSelectSFX() => PlaySFX(menuSelectSFX);
-    public void PlayButtonSFX() => PlaySFX(ButtonSFX);
-
     #endregion
 
-    #region 루프 효과음 제어
+    #region 시스템 효과음 제어
 
-    // 루프 효과음 재생 시작
-    public void PlayLoopSFX(AudioClip clip)
+    public void PlaySystemSFX(AudioClip clip)
     {
         if (systemSource == null || clip == null) return;
-
-        systemSource.clip = clip;
-        systemSource.Play();
+        systemSource.PlayOneShot(clip);
     }
 
-    // 루프 효과음 정지
-    public void StopLoopSFX()
-    {
-        if (systemSource == null) return;
-        systemSource.Stop();
-    }
+    // UI 효과음 바로가기 (systemSource 사용)
+    public void PlayButtonSFX() => PlaySystemSFX(ButtonSFX);
 
     #endregion
 
