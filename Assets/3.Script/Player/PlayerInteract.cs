@@ -48,6 +48,12 @@ public class PlayerInteract : MonoBehaviour
                 return;
             }
         }
+
+        // 상호작용 오브젝트 x + Gift 보유시 선물을 내려놓음
+        if (hasGift)
+        {
+            DropCarriedGift();
+        }
     }
 
     private void OnDrawGizmosSelected()

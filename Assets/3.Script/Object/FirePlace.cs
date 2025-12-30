@@ -9,6 +9,7 @@ public class FirePlace : MonoBehaviour,IInteractable
         if (GameManager.instance.submitCnt >= ChildManager.instance.spawnChild_List.Count)
         {
             // 게임 종료 이벤트 호출
+            TimeManager.instance.isTimer = false;
             GameManager.instance.gameOver?.Invoke();
             AudioManager.Instance.PlayEnterSFX();
         }
