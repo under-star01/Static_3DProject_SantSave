@@ -165,8 +165,8 @@ public class AudioManager : MonoBehaviour
 
     // BGM 바로가기
     public void PlayTitleBGM() => PlayBGM(titleBGM);
-    public void PlaySelectBGM() => PlayBGM(normalBGM);
-    public void PlayStageBGM() => PlayBGM(hardBGM);
+    public void PlayNormalBGM() => PlayBGM(normalBGM);
+    public void PlayHardBGM() => PlayBGM(hardBGM);
 
     #endregion
 

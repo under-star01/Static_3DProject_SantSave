@@ -12,6 +12,7 @@ public class TitleUIManager : MonoBehaviour
     // 난이도 설정 UI 조절 메소드
     public void OnStartClicked()
     {
+        AudioManager.Instance.PlayButtonSFX();
         if (selectLevelUI != null)
         {
             if (selectLevelUI.activeSelf)
@@ -28,6 +29,7 @@ public class TitleUIManager : MonoBehaviour
     // 설정창 UI 조절 메소드
     public void OnOptionClicked()
     {
+        AudioManager.Instance.PlayButtonSFX();
         if (settingUI != null)
         {
             if (settingUI.activeSelf)
@@ -44,6 +46,7 @@ public class TitleUIManager : MonoBehaviour
     // Exit 버튼 호출 메소드
     public void OnExitClicked()
     {
+        AudioManager.Instance.PlayButtonSFX();
 #if UNITY_EDITOR
         // 에디터에서 실행 중일 때
         UnityEditor.EditorApplication.isPlaying = false;
@@ -56,6 +59,15 @@ public class TitleUIManager : MonoBehaviour
     // 씬 로드 메소드
     public void LoadTargetScene(string sceneName)
     {
+        if (sceneName.Equals("Stage_Normal"))
+        {
+            AudioManager.Instance.PlayNormalBGM();
+        }
+        if (sceneName.Equals("Stage_Hard"))
+        {
+            AudioManager.Instance.PlayHardBGM();
+        }
+
         SceneManager.LoadScene(sceneName);
     }
 }
