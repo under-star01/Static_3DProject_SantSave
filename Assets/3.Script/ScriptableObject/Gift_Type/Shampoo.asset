@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Shampoo
   m_EditorClassIdentifier: Assembly-CSharp::GiftType_SO
   giftName: "\uC0F4\uD478"
-  coment: "\uAF2D \uC0F4\uD478\uB97C \uC8FC\uC138\uC694.\\n\uC0B0\uD0C0\uD560\uC544\uBC84\uC9C0\uC758
-    \uB9C8\uBC95\uC758 \uC0F4\uD478\uBA74\\n\uC6B0\uB9AC \uC544\uBE60 \uD0C8\uBAA8\uB3C4
-    \uB0AB\uACA0\uC8E0?"
+  coment: "\uAF2D \uC0F4\uD478\uB97C \uC8FC\uC138\uC694.\\n\uC0B0\uD0C0\uC758 \uB9C8\uBC95\uC758
+    \uC0F4\uD478\uBA74\\n\uC544\uBE60\uC758 \uD0C8\uBAA8\uB3C4 \uB0AB\uACA0\uC8E0?"
   giftPrefab: {fileID: 8434112271777845300, guid: 795483539fdbbf74a91dfd61578254ba, type: 3}

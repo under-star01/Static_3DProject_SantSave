@@ -191,11 +191,6 @@ public class PlayerMove : MonoBehaviour
             {
                 playerNoise.StartNoiseCoroutine(5f, 0.5f);
             }
-            // Walk ป๓ลย (default)
-            else
-            {
-                playerNoise.StartNoiseCoroutine(2.5f, 0.7f);
-            }
         }
 
         moveInput = input;
@@ -220,7 +215,7 @@ public class PlayerMove : MonoBehaviour
     public void RunStop()
     {
         isRun = false;
-        moveSpeed = 3f;
+        moveSpeed = 3.0f;
     }
 
     public Vector3 GetMouseWorldPosition()
