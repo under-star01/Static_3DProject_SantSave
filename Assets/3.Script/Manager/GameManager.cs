@@ -146,22 +146,4 @@ public class GameManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
-
-    // Exit 버튼 호출 메소드
-    public void ExitGame()
-    {
-#if UNITY_EDITOR
-        // 에디터에서 실행 중일 때
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        // 빌드된 게임에서 실행 중일 때
-        Application.Quit();
-#endif
-    }
-
-    // Title 씬 복귀 메소드
-    public void ReturnTitle()
-    {
-        SceneManager.LoadScene("Title");
-    }
 }
