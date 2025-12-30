@@ -19297,7 +19297,7 @@ MonoBehaviour:
   videoClips:
   - {fileID: 32900000, guid: bd53959ccbbe6d344aa781ef37cc8991, type: 3}
   - {fileID: 32900000, guid: 7c33eccbb086e394fa425a285990757c, type: 3}
-  - {fileID: 32900000, guid: 7061c2b307c674f4e80f1f42689221b6, type: 3}
+  - {fileID: 32900000, guid: 4bf8417c0d45e174595396c221dde371, type: 3}
 --- !u!1 &1748099012
 GameObject:
   m_ObjectHideFlags: 0
