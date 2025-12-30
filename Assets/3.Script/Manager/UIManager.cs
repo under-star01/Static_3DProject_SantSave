@@ -78,6 +78,7 @@ public class UIManager : MonoBehaviour
 
             // 게임 시작 이벤트 호출
             GameManager.instance.gameStart?.Invoke();
+            AudioManager.Instance.PlayWhistleSFX();
         }
     }
 

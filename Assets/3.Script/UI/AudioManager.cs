@@ -38,6 +38,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("UI 소리")]
     [SerializeField] private AudioClip ButtonSFX;
+    [SerializeField] private AudioClip WhistleSFX;
 
     // Mixer Group 이름
     private const string MUSIC_VOLUME = "MusicVolume";
@@ -211,6 +212,7 @@ public class AudioManager : MonoBehaviour
 
     // UI 효과음 바로가기 (systemSource 사용)
     public void PlayButtonSFX() => PlaySystemSFX(ButtonSFX);
+    public void PlayWhistleSFX() => PlaySystemSFX(WhistleSFX);
 
     #endregion
 
