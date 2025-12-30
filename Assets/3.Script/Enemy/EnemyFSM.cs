@@ -188,6 +188,7 @@ public class EnemyFSM : MonoBehaviour
     IEnumerator WakeUpState()
     {
         animator.SetTrigger("WakeUp");
+        animator.SetBool("isSleeping", false);
         bubbleCtrl.OnStateChanged("WakeUpState");
         AudioManager.Instance.PlayWakeupSFX();
         WakeUpManager.instance.WakeUp();

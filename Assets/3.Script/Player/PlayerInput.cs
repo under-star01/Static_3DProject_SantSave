@@ -37,7 +37,6 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.Run.performed += OnRunStart;
         playerInput.Player.Run.canceled += OnRunStop;
         playerInput.Player.Pick.performed += OnInteract;
-        playerInput.Player.Drop.performed += OnDropGift;
         playerInput.Player.CheckSheet.performed += OnCheckSheet;
 
         playerInput.Enable();
@@ -55,7 +54,6 @@ public class PlayerInput : MonoBehaviour
         playerInput.Player.DecoySkillThrow.performed -= OnDecoySkillThrow;
         playerInput.Player.Run.performed -= OnRunStart;
         playerInput.Player.Run.canceled -= OnRunStop;
-        playerInput.Player.Drop.performed -= OnDropGift;
         playerInput.Player.CheckSheet.performed -= OnCheckSheet;
 
         GameManager.instance.gameOver -= DeActivateInput;
@@ -152,14 +150,6 @@ public class PlayerInput : MonoBehaviour
         if (playerInteract != null)
         {
             playerInteract.TryInteract();
-        }
-    }
-
-    private void OnDropGift(InputAction.CallbackContext context)
-    {
-        if (playerInteract != null)
-        {
-            playerInteract.DropCarriedGift();
         }
     }
 
