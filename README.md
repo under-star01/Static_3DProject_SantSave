@@ -1,4 +1,4 @@
-☆ Git HUB 사용 규칙 ☆
+☆ Git Hub 사용 규칙 ☆
 
 1. main / develop 브랜치는 직접 push 금지
 
