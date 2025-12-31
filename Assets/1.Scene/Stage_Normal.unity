@@ -16052,7 +16052,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Submit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16193,7 +16193,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1700205294}
   m_HandleRect: {fileID: 1700205292}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -20866,7 +20866,7 @@ GameObject:
   - component: {fileID: 6519252687159051621}
   - component: {fileID: 6519252687159051620}
   - component: {fileID: 6519252687159051622}
-  m_Layer: 10
+  m_Layer: 22
   m_Name: Prop_Fireplace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37407,7 +37407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E : \uC120\uBB3C \uB4E4\uAE30\nG : \uC120\uBB3C \uB193\uAE30\n\uC120\uBB3C\uC744
+  m_text: "E : \uC120\uBB3C \uB4E4\uAE30\n   : \uC120\uBB3C \uB193\uAE30\n\uC120\uBB3C\uC744
     \uB4E0 \uC0C1\uD0DC\uB85C\n\uC2A4\uD0AC \uC0AC\uC6A9 \uBD88\uAC00\uB2A5\n\uD55C\uBC88
     \uB193\uC740 \uC120\uBB3C\uC740\n\uB2E4\uC2DC \uB4E4 \uC218 \uC5C6\uC74C."
   m_isRightToLeft: 0
@@ -49985,7 +49985,7 @@ MonoBehaviour:
   throwForce: 8
   throwAngle: 25
   trajectoryPoints: 20
-  decoyCooldown: 1
+  decoyCooldown: 10
   wallLayer:
     serializedVersion: 2
     m_Bits: 4195328

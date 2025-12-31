@@ -132,7 +132,8 @@ public class GameManager : MonoBehaviour
 
         // Ranking UI 표시
         UIManager.instance.ShowRankingUI(true);
-        if (rankingManager != null && !isTimeOver)
+
+        if (clipIndex == 0 || clipIndex == 1)
         {
             // 점수 적용 및 UI 표시
             rankingManager.ProcessNewScore(ScoreManager.instance.score);
@@ -145,5 +146,10 @@ public class GameManager : MonoBehaviour
         // 현재 씬 이름으로 다시 로드
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void ReturnTitle()
+    {
+        SceneManager.LoadScene("Title");
     }
 }
